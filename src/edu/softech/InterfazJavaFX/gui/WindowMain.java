@@ -21,7 +21,6 @@ import javafx.stage.Stage;
  */
 public class WindowMain extends Application {
 
-    private static final Image IMG_YOGA = new Image(System.class.getResource("/res/lotus.png").toString());
     private static final Image IMG_LOGO = new Image(System.class.getResource("/res/lotus.png").toString());
     private static final Image IMG_SUCURSALES = new Image(System.class.getResource("/res/sucursal.png").toString());
     private static final Image IMG_EMPLEADOS = new Image(System.class.getResource("/res/empleado.png").toString());
@@ -35,30 +34,44 @@ public class WindowMain extends Application {
     private static final Image IMG_SUCURSAL = new Image(System.class.getResource("/res/yoga.png").toString());
 
     FXMLLoader fxmll;
+
     Stage window;
+
     Scene scene;
+
     @FXML
     ImageView imgvLogo;
+
     @FXML
     Button btnSucursales;
+
     @FXML
     Button btnEmpleados;
+
     @FXML
     Button btnClientes;
+
     @FXML
     Button btnProductos;
+
     @FXML
     Button btnServicios;
+
     @FXML
     Button btnReservaciones;
+
     @FXML
     Button btnSalas;
+
     @FXML
     Button btnTratamientos;
+
     @FXML
     Button btnCtrlSala;
+
     @FXML
     ImageView imgvSucursal;
+
     @FXML
     ImageView imgSucursal;
 
@@ -73,14 +86,18 @@ public class WindowMain extends Application {
         scene = new Scene(fxmll.getRoot());
         window = primaryStage;
         window.setScene(scene);
-//        window.setR{esizable(false);
-//        window.resizableProperty().setValue(false);
+
         window.setTitle("MySpa");
         window.getIcons().add(IMG_LOGO);
         window.show();
 
-        imgvLogo.setImage(IMG_YOGA);
+        acomodarContenido();
 
+        cargarImagenes();
+
+    }
+
+    public void acomodarContenido() {
         btnSucursales.setContentDisplay(ContentDisplay.RIGHT);
         btnEmpleados.setContentDisplay(ContentDisplay.RIGHT);
         btnClientes.setContentDisplay(ContentDisplay.RIGHT);
@@ -90,6 +107,11 @@ public class WindowMain extends Application {
         btnSalas.setContentDisplay(ContentDisplay.RIGHT);
         btnTratamientos.setContentDisplay(ContentDisplay.RIGHT);
         btnCtrlSala.setContentDisplay(ContentDisplay.RIGHT);
+    }
+
+    public void cargarImagenes() {
+
+        imgvLogo.setImage(IMG_LOGO);
 
         btnSucursales.setGraphic(new ImageView(IMG_SUCURSALES));
         btnEmpleados.setGraphic(new ImageView(IMG_EMPLEADOS));
@@ -102,7 +124,6 @@ public class WindowMain extends Application {
         btnCtrlSala.setGraphic(new ImageView(IMG_CTRLSALA));
         imgvSucursal.setImage(IMG_SUCURSAL);
         imgSucursal.setImage(IMG_SUCURSAL);
-
     }
 
 }
