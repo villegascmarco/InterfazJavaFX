@@ -1,202 +1,230 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import com.jfoenix.controls.JFXButton?>
-<?import com.jfoenix.controls.JFXTextField?>
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.Cursor?>
 <?import javafx.scene.control.Label?>
-<?import javafx.scene.control.ScrollPane?>
-<?import javafx.scene.control.TreeTableColumn?>
-<?import javafx.scene.control.TreeTableView?>
 <?import javafx.scene.effect.Bloom?>
+<?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="770.0" prefWidth="1280.0" style="-fx-background-color: white;" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1">
-   <left>
-      <VBox alignment="CENTER" nodeOrientation="LEFT_TO_RIGHT" prefHeight="764.0" prefWidth="208.0" style="-fx-background-color: RGB(246,138,31); -fx-pref-height: 760; -fx-pref-width: 255;" BorderPane.alignment="CENTER">
-         <children>
-            <ImageView fx:id="imgvLogo" fitHeight="95.0" fitWidth="125.0" nodeOrientation="INHERIT" pickOnBounds="true" preserveRatio="true">
-               <VBox.margin>
-                  <Insets bottom="25.0" />
-               </VBox.margin></ImageView>
-            <Label alignment="TOP_CENTER" contentDisplay="TOP" nodeOrientation="LEFT_TO_RIGHT" prefHeight="35.0" prefWidth="145.0" text="MySpa" textAlignment="CENTER" textFill="WHITE">
-               <font>
-                  <Font name="System Bold" size="24.0" />
-               </font>
-            </Label>
-            <JFXButton fx:id="btnSucursales" alignment="TOP_LEFT" graphicTextGap="10.0" nodeOrientation="RIGHT_TO_LEFT" prefHeight="75.0" prefWidth="350.0" style="-fx-pref-height: 55px; -fx-pref-width: 350px; -fx-min-height: 65px; -fx-max-height: 65px;" text="Sucursales" textAlignment="JUSTIFY" textFill="WHITE" textOverrun="CLIP">
-               <cursor>
-                  <Cursor fx:constant="HAND" />
-               </cursor>
-               <font>
-                  <Font name="System Bold" size="24.0" />
-               </font>
-               <VBox.margin>
-                  <Insets top="15.0" />
-               </VBox.margin>
-               <padding>
-                  <Insets left="75.0" top="15.0" />
-               </padding>
-            </JFXButton>
-            <JFXButton fx:id="btnEmpleados" alignment="TOP_LEFT" graphicTextGap="10.0" nodeOrientation="RIGHT_TO_LEFT" prefHeight="75.0" prefWidth="240.0" style="-fx-max-height: 55px; -fx-pref-width: 350px; -fx-pref-height: 65px; -fx-min-height: 65px;" text="Empleados" textAlignment="JUSTIFY" textFill="WHITE" textOverrun="CLIP" wrapText="true">
-               <cursor>
-                  <Cursor fx:constant="HAND" />
-               </cursor>
-               <font>
-                  <Font name="System Bold" size="24.0" />
-               </font>
-               <effect>
-                  <Bloom />
-               </effect>
-               <padding>
-                  <Insets left="70.0" top="16.0" />
-               </padding>
-            </JFXButton>
-            <JFXButton fx:id="btnClientes" alignment="BASELINE_LEFT" contentDisplay="RIGHT" graphicTextGap="86.0" nodeOrientation="LEFT_TO_RIGHT" prefHeight="75.0" prefWidth="238.0" style="-fx-max-height: 55px; -fx-pref-width: 350px; -fx-min-height: 65px; -fx-pref-height: 65px;" text="Clientes" textAlignment="JUSTIFY" textFill="WHITE" textOverrun="CLIP" wrapText="true">
-               <font>
-                  <Font name="System Bold" size="24.0" />
-               </font>
-               <cursor>
-                  <Cursor fx:constant="HAND" />
-               </cursor>
-               <effect>
-                  <Bloom />
-               </effect>
-               <padding>
-                  <Insets left="27.0" />
-               </padding>
-            </JFXButton>
-            <JFXButton fx:id="btnProductos" alignment="BASELINE_LEFT" contentDisplay="RIGHT" graphicTextGap="60.0" nodeOrientation="LEFT_TO_RIGHT" prefHeight="81.0" prefWidth="238.0" style="-fx-max-height: 55px; -fx-pref-width: 350px; -fx-min-height: 65px; -fx-pref-height: 65px;" text="Productos" textAlignment="JUSTIFY" textFill="WHITE" textOverrun="CLIP" wrapText="true">
-               <font>
-                  <Font name="System Bold" size="24.0" />
-               </font>
-               <cursor>
-                  <Cursor fx:constant="HAND" />
-               </cursor>
-               <effect>
-                  <Bloom />
-               </effect>
-               <VBox.margin>
-                  <Insets />
-               </VBox.margin>
-               <padding>
-                  <Insets left="28.0" />
-               </padding>
-            </JFXButton>
-            <JFXButton fx:id="btnServicios" alignment="BASELINE_LEFT" contentDisplay="RIGHT" graphicTextGap="77.0" nodeOrientation="LEFT_TO_RIGHT" prefHeight="83.0" prefWidth="234.0" style="-fx-max-height: 75px; -fx-pref-width: 350px; -fx-min-height: 65px; -fx-pref-height: 65px;" text="Servicios" textAlignment="JUSTIFY" textFill="WHITE" textOverrun="CLIP" wrapText="true">
-               <font>
-                  <Font name="System Bold" size="24.0" />
-               </font>
-               <effect>
-                  <Bloom />
-               </effect>
-               <padding>
-                  <Insets left="26.0" />
-               </padding></JFXButton>
-            <JFXButton fx:id="btnReservaciones" alignment="BASELINE_LEFT" contentDisplay="RIGHT" graphicTextGap="20.0" nodeOrientation="LEFT_TO_RIGHT" prefHeight="85.0" prefWidth="243.0" style="-fx-max-height: 55px; -fx-pref-width: 350px; -fx-min-height: 65px; -fx-pref-height: 65px;" text="Reservaciones" textAlignment="JUSTIFY" textFill="WHITE" textOverrun="CLIP" wrapText="true">
-               <font>
-                  <Font name="System Bold" size="24.0" />
-               </font>
-               <effect>
-                  <Bloom />
-               </effect>
-               <padding>
-                  <Insets left="24.0" />
-               </padding></JFXButton>
-            <JFXButton fx:id="btnSalas" alignment="BASELINE_LEFT" contentDisplay="RIGHT" graphicTextGap="120.0" nodeOrientation="LEFT_TO_RIGHT" prefHeight="87.0" prefWidth="253.0" style="-fx-max-height: 55px; -fx-pref-width: 350px; -fx-min-height: 65px; -fx-pref-height: 65px;" text="Salas" textAlignment="JUSTIFY" textFill="WHITE" textOverrun="CLIP" wrapText="true">
-               <cursor>
-                  <Cursor fx:constant="HAND" />
-               </cursor>
-               <font>
-                  <Font name="System Bold" size="24.0" />
-               </font>
-               <effect>
-                  <Bloom />
-               </effect>
-               <padding>
-                  <Insets left="24.0" />
-               </padding>
-            </JFXButton>
-            <JFXButton fx:id="btnCtrlSala" alignment="BASELINE_LEFT" contentDisplay="RIGHT" graphicTextGap="12.0" nodeOrientation="LEFT_TO_RIGHT" prefHeight="89.0" prefWidth="303.0" style="-fx-max-height: 55px; -fx-pref-width: 350px; -fx-min-height: 65px; -fx-pref-height: 65px;" text="Control de sala" textAlignment="JUSTIFY" textFill="WHITE" textOverrun="CLIP" wrapText="true">
-               <cursor>
-                  <Cursor fx:constant="HAND" />
-               </cursor>
-               <font>
-                  <Font name="System Bold" size="24.0" />
-               </font>
-               <effect>
-                  <Bloom />
-               </effect>
-               <padding>
-                  <Insets left="24.0" />
-               </padding>
-            </JFXButton>
-            <JFXButton fx:id="btnTratamientos" alignment="BASELINE_LEFT" contentDisplay="RIGHT" graphicTextGap="75.0" minHeight="69.0" nodeOrientation="LEFT_TO_RIGHT" prefHeight="88.0" prefWidth="300.0" style="-fx-max-height: 55px; -fx-pref-width: 350px; -fx-padding: 25,10,25,10; -fx-min-height: 65px; -fx-pref-height: 65px;" text="Tratamientos" textFill="WHITE" wrapText="true">
-               <cursor>
-                  <Cursor fx:constant="HAND" />
-               </cursor>
-               <font>
-                  <Font name="System Bold" size="14.0" />
-               </font>
-               <effect>
-                  <Bloom />
-               </effect>
-               <VBox.margin>
-                  <Insets />
-               </VBox.margin>
-            </JFXButton>
-         </children>
-         <padding>
-            <Insets top="-25.0" />
-         </padding>
-      </VBox>
-   </left>
-   <right>
-      <AnchorPane prefHeight="200.0" prefWidth="200.0" style="-fx-pref-width: 350px; -fx-background-color: #ffff99;" BorderPane.alignment="CENTER">
-         <children>
-            <Label alignment="TOP_CENTER" contentDisplay="TOP" layoutX="5.0" layoutY="14.0" nodeOrientation="LEFT_TO_RIGHT" prefHeight="50.0" prefWidth="343.0" text="Nombre de la sucursal" textAlignment="CENTER">
-               <font>
-                  <Font name="System Bold" size="32.0" />
-               </font>
-            </Label>
-         </children>
-      </AnchorPane>
-   </right>
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="770.0" prefWidth="1280.0" style="-fx-background-color: white;" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="edu.softech.InterfazJavaFX.controlador.Window_mainController">
+    <left>
+        <VBox alignment="CENTER" nodeOrientation="LEFT_TO_RIGHT" prefHeight="764.0" prefWidth="208.0" style="-fx-background-color: RGB(246,138,31); -fx-pref-height: 760; -fx-pref-width: 255;" BorderPane.alignment="CENTER">
+            <children>
+                <ImageView fx:id="imgvLogo" fitHeight="95.0" fitWidth="125.0" nodeOrientation="INHERIT" pickOnBounds="true" preserveRatio="true">
+                    <VBox.margin>
+                        <Insets bottom="25.0" />
+                    </VBox.margin>
+                    <image>
+                        <Image url="@../../../../../res/lotus.png" />
+                    </image>
+                </ImageView>
+                <Label alignment="CENTER" contentDisplay="TOP" nodeOrientation="LEFT_TO_RIGHT" prefHeight="35.0" prefWidth="145.0" text="MySpa" textAlignment="CENTER" textFill="WHITE">
+                    <font>
+                        <Font name="System Bold" size="24.0" />
+                    </font>
+                </Label>
+                <JFXButton fx:id="btnReservaciones" alignment="BASELINE_LEFT" graphicTextGap="12.0" nodeOrientation="LEFT_TO_RIGHT" onAction="#cargarMenuReservaciones" prefHeight="89.0" prefWidth="303.0" style="-fx-max-height: 55px; -fx-pref-width: 350px; -fx-min-height: 65px; -fx-pref-height: 65px;" text="Reservaciones" textAlignment="JUSTIFY" textFill="WHITE" textOverrun="CLIP" wrapText="true">
+                    <cursor>
+                        <Cursor fx:constant="HAND" />
+                    </cursor>
+                    <font>
+                        <Font name="System Bold" size="24.0" />
+                    </font>
+                    <effect>
+                        <Bloom />
+                    </effect>
+                    <padding>
+                        <Insets left="24.0" />
+                    </padding>
+                    <graphic>
+                        <ImageView fitHeight="32.0" fitWidth="32.0" pickOnBounds="true" preserveRatio="true">
+                            <image>
+                                <Image url="@../../../../../res/reservaciones.png" />
+                            </image>
+                        </ImageView>
+                    </graphic>
+                </JFXButton>
+                <JFXButton fx:id="btnServicios" alignment="BASELINE_LEFT" graphicTextGap="12.0" nodeOrientation="LEFT_TO_RIGHT" onAction="#cargarMenuServicios" prefHeight="89.0" prefWidth="303.0" style="-fx-max-height: 55px; -fx-pref-width: 350px; -fx-min-height: 65px; -fx-pref-height: 65px;" text="Servicios" textAlignment="JUSTIFY" textFill="WHITE" textOverrun="CLIP" wrapText="true">
+                    <cursor>
+                        <Cursor fx:constant="HAND" />
+                    </cursor>
+                    <font>
+                        <Font name="System Bold" size="24.0" />
+                    </font>
+                    <effect>
+                        <Bloom />
+                    </effect>
+                    <padding>
+                        <Insets left="24.0" />
+                    </padding>
+                    <graphic>
+                        <ImageView fitHeight="32.0" fitWidth="32.0" pickOnBounds="true" preserveRatio="true">
+                            <image>
+                                <Image url="@../../../../../res/servicios.png" />
+                            </image>
+                        </ImageView>
+                    </graphic>
+                </JFXButton>
+                <JFXButton fx:id="btnEmpleados" alignment="BASELINE_LEFT" graphicTextGap="12.0" nodeOrientation="LEFT_TO_RIGHT" onAction="#cargarMenuEmpleados" prefHeight="89.0" prefWidth="303.0" style="-fx-max-height: 55px; -fx-pref-width: 350px; -fx-min-height: 65px; -fx-pref-height: 65px;" text="Empleados" textAlignment="JUSTIFY" textFill="WHITE" textOverrun="CLIP" wrapText="true">
+                    <cursor>
+                        <Cursor fx:constant="HAND" />
+                    </cursor>
+                    <font>
+                        <Font name="System Bold" size="24.0" />
+                    </font>
+                    <effect>
+                        <Bloom />
+                    </effect>
+                    <padding>
+                        <Insets left="24.0" />
+                    </padding>
+                    <graphic>
+                        <ImageView fitHeight="32.0" fitWidth="32.0" pickOnBounds="true" preserveRatio="true">
+                            <image>
+                                <Image url="@../../../../../res/empleado.png" />
+                            </image>
+                        </ImageView>
+                    </graphic>
+                </JFXButton>
+                <JFXButton fx:id="btnClientes" alignment="BASELINE_LEFT" graphicTextGap="12.0" nodeOrientation="LEFT_TO_RIGHT" onAction="#cargarMenuClientes" prefHeight="89.0" prefWidth="303.0" style="-fx-max-height: 55px; -fx-pref-width: 350px; -fx-min-height: 65px; -fx-pref-height: 65px;" text="Clientes" textAlignment="JUSTIFY" textFill="WHITE" textOverrun="CLIP" wrapText="true">
+                    <cursor>
+                        <Cursor fx:constant="HAND" />
+                    </cursor>
+                    <font>
+                        <Font name="System Bold" size="24.0" />
+                    </font>
+                    <effect>
+                        <Bloom />
+                    </effect>
+                    <padding>
+                        <Insets left="24.0" />
+                    </padding>
+                    <graphic>
+                        <ImageView fitHeight="32.0" fitWidth="32.0" pickOnBounds="true" preserveRatio="true">
+                            <image>
+                                <Image url="@../../../../../res/cliente.png" />
+                            </image>
+                        </ImageView>
+                    </graphic>
+                </JFXButton>
+                <JFXButton fx:id="btnProductos" alignment="BASELINE_LEFT" graphicTextGap="12.0" nodeOrientation="LEFT_TO_RIGHT" onAction="#cargarMenuProductos" prefHeight="89.0" prefWidth="303.0" style="-fx-max-height: 55px; -fx-pref-width: 350px; -fx-min-height: 65px; -fx-pref-height: 65px;" text="Productos" textAlignment="JUSTIFY" textFill="WHITE" textOverrun="CLIP" wrapText="true">
+                    <cursor>
+                        <Cursor fx:constant="HAND" />
+                    </cursor>
+                    <font>
+                        <Font name="System Bold" size="24.0" />
+                    </font>
+                    <effect>
+                        <Bloom />
+                    </effect>
+                    <padding>
+                        <Insets left="24.0" />
+                    </padding>
+                    <graphic>
+                        <ImageView fitHeight="32.0" fitWidth="32.0" pickOnBounds="true" preserveRatio="true">
+                            <image>
+                                <Image url="@../../../../../res/productos.png" />
+                            </image>
+                        </ImageView>
+                    </graphic>
+                </JFXButton>
+                <JFXButton fx:id="btnTratamientos" alignment="BASELINE_LEFT" graphicTextGap="12.0" nodeOrientation="LEFT_TO_RIGHT" onAction="#cargarMenuTratamientos" prefHeight="89.0" prefWidth="303.0" style="-fx-max-height: 55px; -fx-pref-width: 350px; -fx-min-height: 65px; -fx-pref-height: 65px;" text="Tratamientos" textAlignment="JUSTIFY" textFill="WHITE" textOverrun="CLIP" wrapText="true">
+                    <cursor>
+                        <Cursor fx:constant="HAND" />
+                    </cursor>
+                    <font>
+                        <Font name="System Bold" size="24.0" />
+                    </font>
+                    <effect>
+                        <Bloom />
+                    </effect>
+                    <padding>
+                        <Insets left="24.0" />
+                    </padding>
+                    <graphic>
+                        <ImageView fitHeight="32.0" fitWidth="32.0" pickOnBounds="true" preserveRatio="true">
+                            <image>
+                                <Image url="@../../../../../res/tratamientos.png" />
+                            </image>
+                        </ImageView>
+                    </graphic>
+                </JFXButton>
+                <JFXButton fx:id="btnSalas" alignment="BASELINE_LEFT" graphicTextGap="12.0" nodeOrientation="LEFT_TO_RIGHT" onAction="#cargarMenuSalas" prefHeight="89.0" prefWidth="303.0" style="-fx-max-height: 55px; -fx-pref-width: 350px; -fx-min-height: 65px; -fx-pref-height: 65px;" text="Salas" textAlignment="JUSTIFY" textFill="WHITE" textOverrun="CLIP" wrapText="true">
+                    <cursor>
+                        <Cursor fx:constant="HAND" />
+                    </cursor>
+                    <font>
+                        <Font name="System Bold" size="24.0" />
+                    </font>
+                    <effect>
+                        <Bloom />
+                    </effect>
+                    <padding>
+                        <Insets left="24.0" />
+                    </padding>
+                    <graphic>
+                        <ImageView fitHeight="32.0" fitWidth="32.0" pickOnBounds="true" preserveRatio="true">
+                            <image>
+                                <Image url="@../../../../../res/salas.png" />
+                            </image>
+                        </ImageView>
+                    </graphic>
+                </JFXButton>
+                <JFXButton fx:id="btnSucursales" alignment="BASELINE_LEFT" graphicTextGap="12.0" nodeOrientation="LEFT_TO_RIGHT" onAction="#cargarMenuSucursales" prefHeight="89.0" prefWidth="303.0" style="-fx-max-height: 55px; -fx-pref-width: 350px; -fx-min-height: 65px; -fx-pref-height: 65px;" text="Sucursales" textAlignment="JUSTIFY" textFill="WHITE" textOverrun="CLIP" wrapText="true">
+                    <cursor>
+                        <Cursor fx:constant="HAND" />
+                    </cursor>
+                    <font>
+                        <Font name="System Bold" size="24.0" />
+                    </font>
+                    <effect>
+                        <Bloom />
+                    </effect>
+                    <padding>
+                        <Insets left="24.0" />
+                    </padding>
+                    <graphic>
+                        <ImageView fitHeight="32.0" fitWidth="32.0" pickOnBounds="true" preserveRatio="true">
+                            <image>
+                                <Image url="@../../../../../res/sucursal.png" />
+                            </image>
+                        </ImageView>
+                    </graphic>
+                </JFXButton>
+                <JFXButton fx:id="btnCtrlSala" alignment="BASELINE_LEFT" graphicTextGap="12.0" nodeOrientation="LEFT_TO_RIGHT" onAction="#cargarMenuControlSala" prefHeight="89.0" prefWidth="303.0" style="-fx-max-height: 55px; -fx-pref-width: 350px; -fx-min-height: 65px; -fx-pref-height: 65px;" text="Control de sala" textAlignment="JUSTIFY" textFill="WHITE" textOverrun="CLIP" wrapText="true">
+                    <cursor>
+                        <Cursor fx:constant="HAND" />
+                    </cursor>
+                    <font>
+                        <Font name="System Bold" size="24.0" />
+                    </font>
+                    <effect>
+                        <Bloom />
+                    </effect>
+                    <padding>
+                        <Insets left="24.0" />
+                    </padding>
+                    <graphic>
+                        <ImageView fitHeight="32.0" fitWidth="32.0" pickOnBounds="true" preserveRatio="true">
+                            <image>
+                                <Image url="@../../../../../res/ctrlSala.png" />
+                            </image>
+                        </ImageView>
+                    </graphic>
+                </JFXButton>
+            </children>
+            <padding>
+                <Insets top="-25.0" />
+            </padding>
+        </VBox>
+    </left>
    <center>
-      <ScrollPane hbarPolicy="NEVER" prefHeight="200.0" prefWidth="200.0" vbarPolicy="ALWAYS" vmax="10.0" vvalue="1.0" BorderPane.alignment="CENTER">
-        <content>
-          <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="900.0" prefWidth="553.0">
-               <children>
-                  <ImageView fx:id="imgvSucursal" fitHeight="150.0" fitWidth="200.0" layoutX="54.0" layoutY="291.0" pickOnBounds="true" preserveRatio="true" />
-                  <ImageView fx:id="imgSucursal" fitHeight="150.0" fitWidth="200.0" layoutX="285.0" layoutY="291.0" pickOnBounds="true" preserveRatio="true" />
-                  <Label alignment="TOP_CENTER" contentDisplay="TOP" layoutX="54.0" layoutY="173.0" nodeOrientation="LEFT_TO_RIGHT" prefHeight="53.0" prefWidth="190.0" text="Sucursales:" textAlignment="CENTER">
-                     <font>
-                        <Font name="System Bold" size="36.0" />
-                     </font>
-                  </Label>
-                  <Label layoutX="55.0" layoutY="440.0" text="Nombre de la sucursal" />
-                  <Label layoutX="286.0" layoutY="440.0" text="Nombre de la sucursal" />
-                  <JFXTextField focusColor="#f68a1f" layoutX="55.0" layoutY="92.0" prefHeight="31.0" prefWidth="338.0" text="Buscar sucursal..." />
-                  <JFXButton layoutX="421.0" layoutY="92.0" style="-fx-background-color: #ffbb53;" text="Buscar" />
-                  <TreeTableView layoutX="77.0" layoutY="561.0" prefHeight="200.0" prefWidth="200.0">
-                    <columns>
-                      <TreeTableColumn prefWidth="75.0" text="C1" />
-                      <TreeTableColumn prefWidth="75.0" text="C2" />
-                    </columns>
-                  </TreeTableView>
-                  <TreeTableView layoutX="186.0" layoutY="686.0" prefHeight="200.0" prefWidth="200.0">
-                    <columns>
-                      <TreeTableColumn prefWidth="75.0" text="C1" />
-                      <TreeTableColumn prefWidth="75.0" text="C2" />
-                    </columns>
-                  </TreeTableView>
-               </children>
-            </AnchorPane>
-        </content>
-      </ScrollPane>
+        <AnchorPane fx:id="rootAnchorPane" prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER" />
    </center>
 </BorderPane>
