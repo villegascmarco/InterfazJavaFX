@@ -29,7 +29,7 @@
                         <Font name="System Bold" size="24.0" />
                     </font>
                 </Label>
-                <JFXButton fx:id="btnReservaciones" alignment="BASELINE_LEFT" graphicTextGap="12.0" nodeOrientation="LEFT_TO_RIGHT" prefHeight="89.0" prefWidth="303.0" style="-fx-max-height: 55px; -fx-pref-width: 350px; -fx-min-height: 65px; -fx-pref-height: 65px;" text="Reservaciones" textAlignment="JUSTIFY" textFill="WHITE" textOverrun="CLIP" wrapText="true">
+                <JFXButton fx:id="btnReservaciones" alignment="BASELINE_LEFT" graphicTextGap="12.0" nodeOrientation="LEFT_TO_RIGHT" onAction="#cargarMenuReservaciones" prefHeight="89.0" prefWidth="303.0" style="-fx-max-height: 55px; -fx-pref-width: 350px; -fx-min-height: 65px; -fx-pref-height: 65px;" text="Reservaciones" textAlignment="JUSTIFY" textFill="WHITE" textOverrun="CLIP" wrapText="true">
                     <cursor>
                         <Cursor fx:constant="HAND" />
                     </cursor>
@@ -50,7 +50,7 @@
                         </ImageView>
                     </graphic>
                 </JFXButton>
-                <JFXButton fx:id="btnServicios" alignment="BASELINE_LEFT" graphicTextGap="12.0" nodeOrientation="LEFT_TO_RIGHT" prefHeight="89.0" prefWidth="303.0" style="-fx-max-height: 55px; -fx-pref-width: 350px; -fx-min-height: 65px; -fx-pref-height: 65px;" text="Servicios" textAlignment="JUSTIFY" textFill="WHITE" textOverrun="CLIP" wrapText="true">
+                <JFXButton fx:id="btnServicios" alignment="BASELINE_LEFT" graphicTextGap="12.0" nodeOrientation="LEFT_TO_RIGHT" onAction="#cargarMenuServicios" prefHeight="89.0" prefWidth="303.0" style="-fx-max-height: 55px; -fx-pref-width: 350px; -fx-min-height: 65px; -fx-pref-height: 65px;" text="Servicios" textAlignment="JUSTIFY" textFill="WHITE" textOverrun="CLIP" wrapText="true">
                     <cursor>
                         <Cursor fx:constant="HAND" />
                     </cursor>
@@ -71,7 +71,7 @@
                         </ImageView>
                     </graphic>
                 </JFXButton>
-                <JFXButton fx:id="btnEmpleados" alignment="BASELINE_LEFT" graphicTextGap="12.0" nodeOrientation="LEFT_TO_RIGHT" prefHeight="89.0" prefWidth="303.0" style="-fx-max-height: 55px; -fx-pref-width: 350px; -fx-min-height: 65px; -fx-pref-height: 65px;" text="Empleados" textAlignment="JUSTIFY" textFill="WHITE" textOverrun="CLIP" wrapText="true">
+                <JFXButton fx:id="btnEmpleados" alignment="BASELINE_LEFT" graphicTextGap="12.0" nodeOrientation="LEFT_TO_RIGHT" onAction="#cargarMenuEmpleados" prefHeight="89.0" prefWidth="303.0" style="-fx-max-height: 55px; -fx-pref-width: 350px; -fx-min-height: 65px; -fx-pref-height: 65px;" text="Empleados" textAlignment="JUSTIFY" textFill="WHITE" textOverrun="CLIP" wrapText="true">
                     <cursor>
                         <Cursor fx:constant="HAND" />
                     </cursor>
@@ -113,7 +113,7 @@
                         </ImageView>
                     </graphic>
                 </JFXButton>
-                <JFXButton fx:id="btnProductos" alignment="BASELINE_LEFT" graphicTextGap="12.0" nodeOrientation="LEFT_TO_RIGHT" prefHeight="89.0" prefWidth="303.0" style="-fx-max-height: 55px; -fx-pref-width: 350px; -fx-min-height: 65px; -fx-pref-height: 65px;" text="Productos" textAlignment="JUSTIFY" textFill="WHITE" textOverrun="CLIP" wrapText="true">
+                <JFXButton fx:id="btnProductos" alignment="BASELINE_LEFT" graphicTextGap="12.0" nodeOrientation="LEFT_TO_RIGHT" onAction="#cargarMenuProductos" prefHeight="89.0" prefWidth="303.0" style="-fx-max-height: 55px; -fx-pref-width: 350px; -fx-min-height: 65px; -fx-pref-height: 65px;" text="Productos" textAlignment="JUSTIFY" textFill="WHITE" textOverrun="CLIP" wrapText="true">
                     <cursor>
                         <Cursor fx:constant="HAND" />
                     </cursor>
@@ -134,7 +134,7 @@
                         </ImageView>
                     </graphic>
                 </JFXButton>
-                <JFXButton fx:id="btnTratamientos" alignment="BASELINE_LEFT" graphicTextGap="12.0" nodeOrientation="LEFT_TO_RIGHT" prefHeight="89.0" prefWidth="303.0" style="-fx-max-height: 55px; -fx-pref-width: 350px; -fx-min-height: 65px; -fx-pref-height: 65px;" text="Tratamientos" textAlignment="JUSTIFY" textFill="WHITE" textOverrun="CLIP" wrapText="true">
+                <JFXButton fx:id="btnTratamientos" alignment="BASELINE_LEFT" graphicTextGap="12.0" nodeOrientation="LEFT_TO_RIGHT" onAction="#cargarMenuTratamientos" prefHeight="89.0" prefWidth="303.0" style="-fx-max-height: 55px; -fx-pref-width: 350px; -fx-min-height: 65px; -fx-pref-height: 65px;" text="Tratamientos" textAlignment="JUSTIFY" textFill="WHITE" textOverrun="CLIP" wrapText="true">
                     <cursor>
                         <Cursor fx:constant="HAND" />
                     </cursor>
@@ -155,7 +155,7 @@
                         </ImageView>
                     </graphic>
                 </JFXButton>
-                <JFXButton fx:id="btnSalas" alignment="BASELINE_LEFT" graphicTextGap="12.0" nodeOrientation="LEFT_TO_RIGHT" prefHeight="89.0" prefWidth="303.0" style="-fx-max-height: 55px; -fx-pref-width: 350px; -fx-min-height: 65px; -fx-pref-height: 65px;" text="Salas" textAlignment="JUSTIFY" textFill="WHITE" textOverrun="CLIP" wrapText="true">
+                <JFXButton fx:id="btnSalas" alignment="BASELINE_LEFT" graphicTextGap="12.0" nodeOrientation="LEFT_TO_RIGHT" onAction="#cargarMenuSalas" prefHeight="89.0" prefWidth="303.0" style="-fx-max-height: 55px; -fx-pref-width: 350px; -fx-min-height: 65px; -fx-pref-height: 65px;" text="Salas" textAlignment="JUSTIFY" textFill="WHITE" textOverrun="CLIP" wrapText="true">
                     <cursor>
                         <Cursor fx:constant="HAND" />
                     </cursor>
@@ -176,7 +176,7 @@
                         </ImageView>
                     </graphic>
                 </JFXButton>
-                <JFXButton fx:id="btnSucursales" alignment="BASELINE_LEFT" graphicTextGap="12.0" nodeOrientation="LEFT_TO_RIGHT" prefHeight="89.0" prefWidth="303.0" style="-fx-max-height: 55px; -fx-pref-width: 350px; -fx-min-height: 65px; -fx-pref-height: 65px;" text="Sucursales" textAlignment="JUSTIFY" textFill="WHITE" textOverrun="CLIP" wrapText="true">
+                <JFXButton fx:id="btnSucursales" alignment="BASELINE_LEFT" graphicTextGap="12.0" nodeOrientation="LEFT_TO_RIGHT" onAction="#cargarMenuSucursales" prefHeight="89.0" prefWidth="303.0" style="-fx-max-height: 55px; -fx-pref-width: 350px; -fx-min-height: 65px; -fx-pref-height: 65px;" text="Sucursales" textAlignment="JUSTIFY" textFill="WHITE" textOverrun="CLIP" wrapText="true">
                     <cursor>
                         <Cursor fx:constant="HAND" />
                     </cursor>
@@ -197,7 +197,7 @@
                         </ImageView>
                     </graphic>
                 </JFXButton>
-                <JFXButton fx:id="btnCtrlSala" alignment="BASELINE_LEFT" graphicTextGap="12.0" nodeOrientation="LEFT_TO_RIGHT" prefHeight="89.0" prefWidth="303.0" style="-fx-max-height: 55px; -fx-pref-width: 350px; -fx-min-height: 65px; -fx-pref-height: 65px;" text="Control de sala" textAlignment="JUSTIFY" textFill="WHITE" textOverrun="CLIP" wrapText="true">
+                <JFXButton fx:id="btnCtrlSala" alignment="BASELINE_LEFT" graphicTextGap="12.0" nodeOrientation="LEFT_TO_RIGHT" onAction="#cargarMenuControlSala" prefHeight="89.0" prefWidth="303.0" style="-fx-max-height: 55px; -fx-pref-width: 350px; -fx-min-height: 65px; -fx-pref-height: 65px;" text="Control de sala" textAlignment="JUSTIFY" textFill="WHITE" textOverrun="CLIP" wrapText="true">
                     <cursor>
                         <Cursor fx:constant="HAND" />
                     </cursor>
