@@ -1,5 +1,106 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import com.jfoenix.controls.JFXButton?>
+<?import com.jfoenix.controls.JFXComboBox?>
+<?import com.jfoenix.controls.JFXScrollPane?>
+<?import com.jfoenix.controls.JFXTextArea?>
+<?import com.jfoenix.controls.JFXTextField?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.BorderPane?>
 
-<AnchorPane id="AnchorPane" fx:id="windowClientes" prefHeight="770.0" prefWidth="1025.0" style="-fx-background-color: #cccab5;" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="edu.softech.InterfazJavaFX.controlador.Window_clientesController" />
+<AnchorPane id="AnchorPane" fx:id="windowClientes" prefHeight="770.0" prefWidth="1025.0" style="-fx-background-color: #cccab5;" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="edu.softech.InterfazJavaFX.controlador.Window_clientesController">
+   <children>
+      <BorderPane prefHeight="770.0" prefWidth="1025.0" style="-fx-background-color: green;" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+         <right>
+            <AnchorPane fx:id="apDerecha" prefHeight="710.0" prefWidth="312.0" style="-fx-background-color: e1e2e1;" BorderPane.alignment="CENTER">
+               <children>
+                  <JFXTextField fx:id="txtNombre" focusColor="#f68a1f" labelFloat="true" layoutX="28.0" layoutY="22.0" prefHeight="31.0" prefWidth="242.0" promptText="Nombre" />
+                  <JFXTextField fx:id="txtApellidoPaterno" focusColor="#f68a1f" labelFloat="true" layoutX="28.0" layoutY="75.0" prefHeight="31.0" prefWidth="242.0" promptText="Apellido Paterno" />
+                  <JFXTextField fx:id="txtApellidoMaterno" focusColor="#f68a1f" labelFloat="true" layoutX="28.0" layoutY="130.0" prefHeight="31.0" prefWidth="242.0" promptText="Apellido Materno" />
+                  <JFXComboBox fx:id="cmbGenero" focusColor="#f68a1f" labelFloat="true" layoutX="27.0" layoutY="182.0" prefHeight="31.0" prefWidth="195.0" promptText="Genero" />
+                  <JFXButton fx:id="btnAgregarGenero" contentDisplay="GRAPHIC_ONLY" layoutX="223.0" layoutY="179.0" prefHeight="33.0" prefWidth="0.0" text=".">
+                     <graphic>
+                        <ImageView fitHeight="37.0" fitWidth="27.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../../../../../../res/icoAgregar.png" />
+                           </image>
+                        </ImageView>
+                     </graphic>
+                  </JFXButton>
+                  <JFXTextField fx:id="txtRfc" focusColor="#f68a1f" labelFloat="true" layoutX="28.0" layoutY="233.0" prefHeight="31.0" prefWidth="242.0" promptText="RFC" />
+                  <JFXTextArea fx:id="txtDomicilio" focusColor="#f68a1f" labelFloat="true" layoutX="28.0" layoutY="289.0" prefHeight="111.0" prefWidth="242.0" promptText="Domicilio" />
+                  <JFXTextField fx:id="txtTelefono" focusColor="#f68a1f" labelFloat="true" layoutX="28.0" layoutY="427.0" prefHeight="31.0" prefWidth="242.0" promptText="Teléfono" />
+                  <JFXTextField fx:id="txtCorreoElectronico" focusColor="#f68a1f" labelFloat="true" layoutX="28.0" layoutY="484.0" prefHeight="31.0" prefWidth="242.0" promptText="Correo Electrónico" />
+                  <JFXTextField fx:id="txtUsuario" focusColor="#f68a1f" labelFloat="true" layoutX="28.0" layoutY="539.0" prefHeight="31.0" prefWidth="242.0" promptText="Nombre de usuario" />
+                  <JFXTextField fx:id="txtContrasenia" focusColor="#f68a1f" labelFloat="true" layoutX="28.0" layoutY="594.0" prefHeight="31.0" prefWidth="242.0" promptText="Contraseña" />
+                  <JFXButton fx:id="btnNuevo" layoutX="35.0" layoutY="635.0" prefHeight="31.0" prefWidth="103.0" style="-fx-background-color: #00C851;" text="Nuevo" textFill="WHITE" AnchorPane.bottomAnchor="52.0">
+                     <graphic>
+                        <ImageView fitHeight="20.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../../../../../../res/icoAgregar30px.png" />
+                           </image>
+                        </ImageView>
+                     </graphic>
+                  </JFXButton>
+                  <JFXButton fx:id="btnGuardar" layoutX="35.0" layoutY="673.0" prefHeight="31.0" prefWidth="103.0" style="-fx-background-color: #007E33;" text="Guardar" textFill="WHITE" AnchorPane.bottomAnchor="14.0">
+                     <graphic>
+                        <ImageView fitHeight="13.0" fitWidth="13.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../../../../../../res/icoGuardar30px.png" />
+                           </image>
+                        </ImageView>
+                     </graphic>
+                  </JFXButton>
+                  <JFXButton fx:id="btnEditar" layoutX="156.0" layoutY="635.0" prefHeight="31.0" prefWidth="103.0" style="-fx-background-color: #FF8800;" text="Editar" textFill="WHITE" AnchorPane.bottomAnchor="52.0">
+                     <graphic>
+                        <ImageView fitHeight="18.0" fitWidth="26.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../../../../../../res/icoEditar30px.png" />
+                           </image>
+                        </ImageView>
+                     </graphic>
+                  </JFXButton>
+                  <JFXButton fx:id="btnElminar" layoutX="156.0" layoutY="673.0" prefHeight="31.0" prefWidth="103.0" style="-fx-background-color: #ff4444;" text="Eliminar" textFill="WHITE" AnchorPane.bottomAnchor="14.0">
+                     <graphic>
+                        <ImageView fitHeight="13.0" fitWidth="13.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../../../../../../res/icoEliminar.png" />
+                           </image>
+                        </ImageView>
+                     </graphic>
+                  </JFXButton>
+               </children>
+            </AnchorPane>
+         </right>
+         <center>
+            <AnchorPane fx:id="apIzquierda" prefHeight="718.0" prefWidth="615.0" style="-fx-background-color: e1e2e1; -fx-border-style: solid solid none none;" BorderPane.alignment="CENTER">
+               <children>
+                  <JFXScrollPane layoutX="7.0" layoutY="24.0" AnchorPane.bottomAnchor="57.0" AnchorPane.leftAnchor="6.0" AnchorPane.rightAnchor="25.0" AnchorPane.topAnchor="23.0">
+                     <children>
+                        <TableView fx:id="tbClientes" prefHeight="689.0" prefWidth="990.0">
+                           <columns>
+                              <TableColumn minWidth="75.0" prefWidth="-1.0" text="Estatus" />
+                              <TableColumn minWidth="75.0" prefWidth="-1.0" text="NUC" />
+                              <TableColumn minWidth="75.0" prefWidth="-1.0" text="Usuario" />
+                              <TableColumn minWidth="75.0" prefWidth="-1.0" text="Nombre" />
+                              <TableColumn minWidth="75.0" prefWidth="-1.0" text="Apellido Paterno" />
+                              <TableColumn minWidth="75.0" prefWidth="-1.0" text="Apellido Materno" />
+                              <TableColumn minWidth="75.0" prefWidth="-1.0" text="Genero" />
+                              <TableColumn minWidth="75.0" prefWidth="-1.0" text="RFC" />
+                              <TableColumn minWidth="75.0" prefWidth="-1.0" text="Domicilio" />
+                              <TableColumn minWidth="75.0" prefWidth="-1.0" text="Telefono" />
+                              <TableColumn minWidth="75.0" prefWidth="-1.0" text="Correo Electrónico" />
+                           </columns>
+                        </TableView>
+                     </children>
+                  </JFXScrollPane>
+               </children>
+            </AnchorPane>
+         </center>
+      </BorderPane>
+   </children>
+</AnchorPane>
