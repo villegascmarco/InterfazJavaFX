@@ -4,9 +4,10 @@
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
             <file>file:/D:/Escritorio/InterfazJavaFX/src/edu/softech/InterfazJavaFX/gui/fxml/window_main.fxml</file>
-            <file>file:/D:/Escritorio/InterfazJavaFX/src/edu/softech/InterfazJavaFX/gui/WindowMenu.java</file>
             <file>file:/D:/Escritorio/InterfazJavaFX/src/edu/softech/InterfazJavaFX/gui/WindowMain.java</file>
-            <file>file:/D:/Escritorio/InterfazJavaFX/src/edu/softech/InterfazJavaFX/gui/fxml/window_menu.fxml</file>
+            <file>file:/D:/Escritorio/InterfazJavaFX/src/edu/softech/InterfazJavaFX/gui/fxml/cliente/window_clientes.fxml</file>
+            <file>file:/D:/Escritorio/InterfazJavaFX/src/edu/softech/InterfazJavaFX/gui/WindowClientes.java</file>
+            <file>file:/D:/Escritorio/InterfazJavaFX/src/edu/softech/InterfazJavaFX/controlador/Window_mainController.java</file>
         </group>
     </open-files>
 </project-private>

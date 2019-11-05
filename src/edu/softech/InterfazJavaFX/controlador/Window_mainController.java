@@ -52,7 +52,7 @@ public class Window_mainController implements Initializable {
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        
+
     }
 
     /**
@@ -91,7 +91,7 @@ public class Window_mainController implements Initializable {
         AnchorPane pane = FXMLLoader.load(getClass().getResource("/edu/softech/"
                 + "InterfazJavaFX/gui/fxml/cliente/window_clientes.fxml"));
 
-        rootAnchorPane.getChildren().setAll(pane);
+        rootAnchorPane.getChildren().addAll(pane);
     }
 
     @FXML
@@ -129,7 +129,7 @@ public class Window_mainController implements Initializable {
     @FXML
     public void cargarMenuControlSala(ActionEvent event) throws IOException {
         AnchorPane pane = FXMLLoader.load(getClass().getResource("/edu/softech/"
-                + "InterfazJavaFX/gui/fxml/cliente/window_clientes.fxml"));
+                + "InterfazJavaFX/gui/fxml/controlSala/window_controlSala.fxml"));
 
         rootAnchorPane.getChildren().setAll(pane);
     }

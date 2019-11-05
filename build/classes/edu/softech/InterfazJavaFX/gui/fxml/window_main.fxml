@@ -16,7 +16,7 @@
     <children>
         <BorderPane layoutX="10.0" layoutY="10.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="770.0" prefWidth="1280.0" style="-fx-background-color: white;" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
             <left>
-                <VBox alignment="CENTER" nodeOrientation="LEFT_TO_RIGHT" prefHeight="764.0" prefWidth="208.0" style="-fx-background-color: RGB(246,138,31); -fx-pref-height: 760; -fx-pref-width: 255;" BorderPane.alignment="CENTER">
+                <VBox alignment="CENTER" maxWidth="1.7976931348623157E308" nodeOrientation="LEFT_TO_RIGHT" prefHeight="764.0" prefWidth="208.0" style="-fx-background-color: RGB(246,138,31); -fx-pref-height: 760; -fx-pref-width: 255;" BorderPane.alignment="CENTER">
                     <children>
                         <ImageView fx:id="imgvLogo" fitHeight="95.0" fitWidth="125.0" nodeOrientation="INHERIT" pickOnBounds="true" preserveRatio="true">
                             <VBox.margin>
@@ -227,7 +227,11 @@
                 </VBox>
             </left>
             <center>
-                <AnchorPane fx:id="rootAnchorPane" prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: green;" BorderPane.alignment="CENTER" />
+                <AnchorPane fx:id="rootAnchorPane" prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: green;" BorderPane.alignment="CENTER">
+                    <opaqueInsets>
+                        <Insets />
+                    </opaqueInsets>
+                </AnchorPane>
             </center>
         </BorderPane>
     </children>

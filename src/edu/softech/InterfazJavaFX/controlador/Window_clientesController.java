@@ -25,50 +25,10 @@ import javafx.scene.layout.AnchorPane;
  */
 public class Window_clientesController implements Initializable {
 
-    /**
-     * Los controladores de esta seccion se generan automaticamente al dar doble
-     * click sobre los FXML que no tiene controlador. Los mismo se
-     * refactorizaron en esta carpeta y se modifico el fxml vista que los
-     * referencia.
-     */
-    @FXML
-    private AnchorPane windowClientes;
 
     @FXML
     private AnchorPane apDerecha;
 
-    @FXML
-    private JFXTextField txtNombre;
-
-    @FXML
-    private JFXTextField txtApellidoPaterno;
-
-    @FXML
-    private JFXTextField txtApellidoMaterno;
-
-    @FXML
-    private JFXComboBox<?> cmbGenero;
-
-    @FXML
-    private JFXButton btnAgregarGenero;
-
-    @FXML
-    private JFXTextField txtRfc;
-
-    @FXML
-    private JFXTextArea txtDomicilio;
-
-    @FXML
-    private JFXTextField txtTelefono;
-
-    @FXML
-    private JFXTextField txtCorreoElectronico;
-
-    @FXML
-    private JFXTextField txtUsuario;
-
-    @FXML
-    private JFXTextField txtContrasenia;
 
     @FXML
     private JFXButton btnNuevo;
@@ -83,10 +43,14 @@ public class Window_clientesController implements Initializable {
     private JFXButton btnElminar;
 
     @FXML
-    private AnchorPane apIzquierda;
+    private AnchorPane windowControlSala;
 
     @FXML
-    private TableView<?> tbClientes;
+    private JFXTextField txtSucursal;
+    @FXML
+    private JFXTextField txtSala;
+    @FXML
+    private JFXTextField txtTemperatura;
 
     /**
      * Initializes the controller class.
@@ -100,7 +64,6 @@ public class Window_clientesController implements Initializable {
 //        sp.setVbarPolicy(ScrollPane.ScrollBarPolicy.AS_NEEDED);
     }
 
-    @FXML
     private void mostrarMensaje(ActionEvent event) {
         System.out.println("Hola");
     }

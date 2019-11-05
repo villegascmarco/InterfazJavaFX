@@ -28,7 +28,7 @@ public class WindowClientes extends Application{
         window = primaryStage;
         window.setScene(scene);
 
-        window.setTitle("MySpa");
+        window.setTitle("MySpa2");
         
         window.show();
 
