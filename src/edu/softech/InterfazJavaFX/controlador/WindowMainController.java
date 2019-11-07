@@ -62,7 +62,7 @@ public class WindowMainController implements Initializable {
 
     }
 
-    private void generarResourcFe() {
+    private void generarResource() {
         try {
             pane = FXMLLoader.load(getClass().getResource("/edu/softech/"
                     + "InterfazJavaFX/gui/fxml/pane/Pane" + resource + ".fxml"));
