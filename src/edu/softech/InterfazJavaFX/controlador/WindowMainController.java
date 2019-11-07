@@ -9,6 +9,8 @@ import com.jfoenix.controls.JFXButton;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -22,8 +24,10 @@ import javafx.scene.layout.BorderPane;
  *
  * @author Villegas
  */
-public class Window_mainController implements Initializable {
+public class WindowMainController implements Initializable {
 
+    @FXML
+    private BorderPane contenedorPrincipal;
     @FXML
     private ImageView imgvLogo;
     @FXML
@@ -44,8 +48,11 @@ public class Window_mainController implements Initializable {
     private JFXButton btnSucursales;
     @FXML
     private JFXButton btnCtrlSala;
+
     @FXML
-    private AnchorPane rootAnchorPane;
+    private AnchorPane pane;
+
+    private String resource;
 
     /**
      * Initializes the controller class.
@@ -53,6 +60,17 @@ public class Window_mainController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle rb) {
 
+    }
+
+    private void generarResourcFe() {
+        try {
+            pane = FXMLLoader.load(getClass().getResource("/edu/softech/"
+                    + "InterfazJavaFX/gui/fxml/pane/Pane" + resource + ".fxml"));
+
+            contenedorPrincipal.setCenter(pane);
+        } catch (IOException ex) {
+            Logger.getLogger(WindowMainController.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
     /**
@@ -64,74 +82,65 @@ public class Window_mainController implements Initializable {
      */
     @FXML
     public void cargarMenuReservaciones(ActionEvent event) throws IOException {
-        AnchorPane pane = FXMLLoader.load(getClass().getResource("/edu/softech/"
-                + "InterfazJavaFX/gui/fxml/cliente/window_clientes.fxml"));
+        resource = "Clientes";
 
-        rootAnchorPane.getChildren().setAll(pane);
+        generarResource();
     }
 
     @FXML
     public void cargarMenuServicios(ActionEvent event) throws IOException {
-        AnchorPane pane = FXMLLoader.load(getClass().getResource("/edu/softech/"
-                + "InterfazJavaFX/gui/fxml/cliente/window_clientes.fxml"));
+        resource = "Clientes";
 
-        rootAnchorPane.getChildren().setAll(pane);
+        generarResource();
     }
 
     @FXML
     public void cargarMenuEmpleados(ActionEvent event) throws IOException {
-        AnchorPane pane = FXMLLoader.load(getClass().getResource("/edu/softech/"
-                + "InterfazJavaFX/gui/fxml/cliente/window_clientes.fxml"));
+        resource = "Clientes";
 
-        rootAnchorPane.getChildren().setAll(pane);
+        generarResource();
     }
 
     @FXML
     public void cargarMenuClientes(ActionEvent event) throws IOException {
-        AnchorPane pane = FXMLLoader.load(getClass().getResource("/edu/softech/"
-                + "InterfazJavaFX/gui/fxml/cliente/window_clientes.fxml"));
+        resource = "Clientes";
 
-        rootAnchorPane.getChildren().addAll(pane);
+        generarResource();
     }
 
     @FXML
     public void cargarMenuProductos(ActionEvent event) throws IOException {
-        AnchorPane pane = FXMLLoader.load(getClass().getResource("/edu/softech/"
-                + "InterfazJavaFX/gui/fxml/cliente/window_clientes.fxml"));
+        resource = "Clientes";
 
-        rootAnchorPane.getChildren().setAll(pane);
+        generarResource();
     }
 
     @FXML
     public void cargarMenuTratamientos(ActionEvent event) throws IOException {
-        AnchorPane pane = FXMLLoader.load(getClass().getResource("/edu/softech/"
-                + "InterfazJavaFX/gui/fxml/cliente/window_clientes.fxml"));
+        resource = "Clientes";
 
-        rootAnchorPane.getChildren().setAll(pane);
+        generarResource();
     }
 
     @FXML
     public void cargarMenuSalas(ActionEvent event) throws IOException {
-        AnchorPane pane = FXMLLoader.load(getClass().getResource("/edu/softech/"
-                + "InterfazJavaFX/gui/fxml/cliente/window_clientes.fxml"));
+        resource = "Clientes";
 
-        rootAnchorPane.getChildren().setAll(pane);
+        generarResource();
     }
 
     @FXML
     public void cargarMenuSucursales(ActionEvent event) throws IOException {
-        AnchorPane pane = FXMLLoader.load(getClass().getResource("/edu/softech/"
-                + "InterfazJavaFX/gui/fxml/cliente/window_clientes.fxml"));
+        resource = "Clientes";
 
-        rootAnchorPane.getChildren().setAll(pane);
+        generarResource();
     }
 
     @FXML
     public void cargarMenuControlSala(ActionEvent event) throws IOException {
-        AnchorPane pane = FXMLLoader.load(getClass().getResource("/edu/softech/"
-                + "InterfazJavaFX/gui/fxml/controlSala/window_controlSala.fxml"));
+        resource = "ControlSala";
 
-        rootAnchorPane.getChildren().setAll(pane);
+        generarResource();
     }
 
 }
