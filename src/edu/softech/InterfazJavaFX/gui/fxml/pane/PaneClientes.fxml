@@ -15,114 +15,114 @@
 <?import javafx.scene.layout.FlowPane?>
 <?import javafx.scene.layout.VBox?>
 
-<AnchorPane id="AnchorPane" fx:id="windowClientes" maxHeight="1.7976931348623157E308" maxWidth="3000.0" prefHeight="770.0" prefWidth="1025.0" style="-fx-background-color: #cccab5;" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="edu.softech.InterfazJavaFX.controlador.Window_clientesController">
-   <children>
-      <BorderPane prefHeight="770.0" prefWidth="1025.0" style="-fx-background-color: green;" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
-         <center>
-            <AnchorPane fx:id="apIzquierda" prefHeight="718.0" prefWidth="615.0" style="-fx-background-color: e1e2e1; -fx-border-style: solid solid none none;" BorderPane.alignment="CENTER">
-               <children>
-                  <JFXScrollPane layoutX="7.0" layoutY="24.0" AnchorPane.bottomAnchor="57.0" AnchorPane.leftAnchor="6.0" AnchorPane.rightAnchor="25.0" AnchorPane.topAnchor="23.0">
-                     <children>
-                        <TableView fx:id="tbClientes" prefHeight="689.0" prefWidth="681.0">
-                           <columns>
-                              <TableColumn prefWidth="75.0" text="Estatus" />
-                              <TableColumn prefWidth="75.0" text="NUC" />
-                              <TableColumn prefWidth="75.0" text="Usuario" />
-                              <TableColumn prefWidth="75.0" text="Nombre" />
-                              <TableColumn prefWidth="138.0" text="Apellido Paterno" />
-                              <TableColumn prefWidth="140.0" text="Apellido Materno" />
-                              <TableColumn minWidth="0.0" prefWidth="64.0" text="Genero" />
-                              <TableColumn minWidth="0.0" prefWidth="86.0" text="RFC" />
-                              <TableColumn minWidth="0.0" prefWidth="0.0" text="Domicilio" />
-                              <TableColumn prefWidth="22.0" text="Telefono" />
-                              <TableColumn prefWidth="75.0" text="Correo Electrónico" />
-                           </columns>
-                        </TableView>
-                     </children>
-                  </JFXScrollPane>
-               </children>
-            </AnchorPane>
-         </center>
-         <right>
-            <JFXScrollPane BorderPane.alignment="CENTER">
-               <children>
-                  <AnchorPane fx:id="apDerecha" prefHeight="710.0" prefWidth="312.0" style="-fx-background-color: e1e2e1;">
-                     <children>
-                        <VBox prefHeight="710.0" prefWidth="312.0" spacing="30.0">
-                           <children>
-                              <JFXTextField fx:id="txtNombre" focusColor="#f68a1f" labelFloat="true" prefHeight="31.0" prefWidth="242.0" promptText="Nombre" />
-                              <JFXTextField fx:id="txtApellidoPaterno" focusColor="#f68a1f" labelFloat="true" prefHeight="31.0" prefWidth="242.0" promptText="Apellido Paterno" />
-                              <JFXTextField fx:id="txtApellidoMaterno" focusColor="#f68a1f" labelFloat="true" prefHeight="31.0" prefWidth="242.0" promptText="Apellido Materno" />
-                              <FlowPane hgap="25.0" prefHeight="200.0" prefWidth="200.0">
-                                 <children>
-                                    <JFXComboBox fx:id="cmbGenero" focusColor="#f68a1f" labelFloat="true" prefHeight="31.0" prefWidth="195.0" promptText="Genero" />
-                                    <JFXButton fx:id="btnAgregarGenero" contentDisplay="GRAPHIC_ONLY" prefHeight="33.0" prefWidth="0.0" text=".">
-                                       <graphic>
-                                          <ImageView fitHeight="37.0" fitWidth="27.0" pickOnBounds="true" preserveRatio="true">
-                                             <image>
-                                                <Image url="@../../../../../../res/icoAgregar.png" />
-                                             </image>
-                                          </ImageView>
-                                       </graphic>
-                                    </JFXButton>
-                                 </children>
-                              </FlowPane>
-                              <JFXTextField fx:id="txtRfc" focusColor="#f68a1f" labelFloat="true" prefHeight="31.0" prefWidth="242.0" promptText="RFC" />
-                              <JFXTextArea fx:id="txtDomicilio" focusColor="#f68a1f" labelFloat="true" prefHeight="111.0" prefWidth="242.0" promptText="Domicilio" />
-                              <JFXTextField fx:id="txtTelefono" focusColor="#f68a1f" labelFloat="true" prefHeight="31.0" prefWidth="242.0" promptText="Teléfono" />
-                              <JFXTextField fx:id="txtCorreoElectronico" focusColor="#f68a1f" labelFloat="true" prefHeight="31.0" prefWidth="242.0" promptText="Correo Electrónico" />
-                              <JFXTextField fx:id="txtUsuario" focusColor="#f68a1f" labelFloat="true" prefHeight="31.0" prefWidth="242.0" promptText="Nombre de usuario" />
-                              <JFXTextField fx:id="txtContrasenia" focusColor="#f68a1f" labelFloat="true" prefHeight="31.0" prefWidth="242.0" promptText="Contraseña" />
-                              <FlowPane hgap="60.0" prefHeight="200.0" prefWidth="200.0" vgap="10.0">
-                                 <children>
-                                    <JFXButton fx:id="btnNuevo" prefHeight="31.0" prefWidth="103.0" style="-fx-background-color: #00C851;" text="Nuevo" textFill="WHITE">
-                                       <graphic>
-                                          <ImageView fitHeight="20.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
-                                             <image>
-                                                <Image url="@../../../../../../res/icoAgregar30px.png" />
-                                             </image>
-                                          </ImageView>
-                                       </graphic>
-                                    </JFXButton>
-                                    <JFXButton fx:id="btnGuardar" prefHeight="31.0" prefWidth="103.0" style="-fx-background-color: #007E33;" text="Guardar" textFill="WHITE">
-                                       <graphic>
-                                          <ImageView fitHeight="13.0" fitWidth="13.0" pickOnBounds="true" preserveRatio="true">
-                                             <image>
-                                                <Image url="@../../../../../../res/icoGuardar30px.png" />
-                                             </image>
-                                          </ImageView>
-                                       </graphic>
-                                    </JFXButton>
-                                    <JFXButton fx:id="btnEditar" prefHeight="31.0" prefWidth="103.0" style="-fx-background-color: #FF8800;" text="Editar" textFill="WHITE">
-                                       <graphic>
-                                          <ImageView fitHeight="18.0" fitWidth="26.0" pickOnBounds="true" preserveRatio="true">
-                                             <image>
-                                                <Image url="@../../../../../../res/icoEditar30px.png" />
-                                             </image>
-                                          </ImageView>
-                                       </graphic>
-                                    </JFXButton>
-                                    <JFXButton fx:id="btnElminar" prefHeight="31.0" prefWidth="103.0" style="-fx-background-color: #ff4444;" text="Eliminar" textFill="WHITE">
-                                       <graphic>
-                                          <ImageView fitHeight="13.0" fitWidth="13.0" pickOnBounds="true" preserveRatio="true">
-                                             <image>
-                                                <Image url="@../../../../../../res/icoEliminar.png" />
-                                             </image>
-                                          </ImageView>
-                                       </graphic>
-                                    </JFXButton>
-                                 </children>
-                              </FlowPane>
-                           </children>
-                           <padding>
-                              <Insets left="20.0" right="20.0" top="30.0" />
-                           </padding>
-                        </VBox>
-                     </children>
-                  </AnchorPane>
-               </children>
-            </JFXScrollPane>
-         </right>
-      </BorderPane>
-   </children>
+<AnchorPane id="AnchorPane" fx:id="windowClientes" maxHeight="1.7976931348623157E308" maxWidth="3000.0" prefHeight="770.0" prefWidth="1025.0" style="-fx-background-color: #cccab5;" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="edu.softech.InterfazJavaFX.controlador.PaneClientesControlador">
+    <children>
+        <BorderPane prefHeight="770.0" prefWidth="1025.0" style="-fx-background-color: green;" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+            <center>
+                <AnchorPane fx:id="apIzquierda" prefHeight="718.0" prefWidth="615.0" style="-fx-background-color: e1e2e1; -fx-border-style: solid solid none none;" BorderPane.alignment="CENTER">
+                    <children>
+                        <JFXScrollPane layoutX="7.0" layoutY="24.0" AnchorPane.bottomAnchor="57.0" AnchorPane.leftAnchor="6.0" AnchorPane.rightAnchor="25.0" AnchorPane.topAnchor="23.0">
+                            <children>
+                                <TableView fx:id="tbClientes" prefHeight="689.0" prefWidth="681.0">
+                                    <columns>
+                                        <TableColumn prefWidth="75.0" text="Estatus" />
+                                        <TableColumn prefWidth="75.0" text="NUC" />
+                                        <TableColumn prefWidth="75.0" text="Usuario" />
+                                        <TableColumn prefWidth="75.0" text="Nombre" />
+                                        <TableColumn prefWidth="138.0" text="Apellido Paterno" />
+                                        <TableColumn prefWidth="140.0" text="Apellido Materno" />
+                                        <TableColumn minWidth="0.0" prefWidth="64.0" text="Genero" />
+                                        <TableColumn minWidth="0.0" prefWidth="86.0" text="RFC" />
+                                        <TableColumn minWidth="0.0" prefWidth="0.0" text="Domicilio" />
+                                        <TableColumn prefWidth="22.0" text="Telefono" />
+                                        <TableColumn prefWidth="75.0" text="Correo Electrónico" />
+                                    </columns>
+                                </TableView>
+                            </children>
+                        </JFXScrollPane>
+                    </children>
+                </AnchorPane>
+            </center>
+            <right>
+                <JFXScrollPane BorderPane.alignment="CENTER">
+                    <children>
+                        <AnchorPane fx:id="apDerecha" prefHeight="710.0" prefWidth="312.0" style="-fx-background-color: e1e2e1;">
+                            <children>
+                                <VBox prefHeight="710.0" prefWidth="312.0" spacing="30.0">
+                                    <children>
+                                        <JFXTextField fx:id="txtNombre" focusColor="#f68a1f" labelFloat="true" prefHeight="31.0" prefWidth="242.0" promptText="Nombre" />
+                                        <JFXTextField fx:id="txtApellidoPaterno" focusColor="#f68a1f" labelFloat="true" prefHeight="31.0" prefWidth="242.0" promptText="Apellido Paterno" />
+                                        <JFXTextField fx:id="txtApellidoMaterno" focusColor="#f68a1f" labelFloat="true" prefHeight="31.0" prefWidth="242.0" promptText="Apellido Materno" />
+                                        <FlowPane hgap="25.0" prefHeight="200.0" prefWidth="200.0">
+                                            <children>
+                                                <JFXComboBox fx:id="cmbGenero" focusColor="#f68a1f" labelFloat="true" prefHeight="31.0" prefWidth="195.0" promptText="Genero" />
+                                                <JFXButton fx:id="btnAgregarGenero" contentDisplay="GRAPHIC_ONLY" prefHeight="33.0" prefWidth="0.0" text=".">
+                                                    <graphic>
+                                                        <ImageView fitHeight="37.0" fitWidth="27.0" pickOnBounds="true" preserveRatio="true">
+                                                            <image>
+                                                                <Image url="@../../../../../../res/icoAgregar.png" />
+                                                            </image>
+                                                        </ImageView>
+                                                    </graphic>
+                                                </JFXButton>
+                                            </children>
+                                        </FlowPane>
+                                        <JFXTextField fx:id="txtRfc" focusColor="#f68a1f" labelFloat="true" prefHeight="31.0" prefWidth="242.0" promptText="RFC" />
+                                        <JFXTextArea fx:id="txtDomicilio" focusColor="#f68a1f" labelFloat="true" prefHeight="111.0" prefWidth="242.0" promptText="Domicilio" />
+                                        <JFXTextField fx:id="txtTelefono" focusColor="#f68a1f" labelFloat="true" prefHeight="31.0" prefWidth="242.0" promptText="Teléfono" />
+                                        <JFXTextField fx:id="txtCorreoElectronico" focusColor="#f68a1f" labelFloat="true" prefHeight="31.0" prefWidth="242.0" promptText="Correo Electrónico" />
+                                        <JFXTextField fx:id="txtUsuario" focusColor="#f68a1f" labelFloat="true" prefHeight="31.0" prefWidth="242.0" promptText="Nombre de usuario" />
+                                        <JFXTextField fx:id="txtContrasenia" focusColor="#f68a1f" labelFloat="true" prefHeight="31.0" prefWidth="242.0" promptText="Contraseña" />
+                                        <FlowPane hgap="60.0" prefHeight="200.0" prefWidth="200.0" vgap="10.0">
+                                            <children>
+                                                <JFXButton fx:id="btnNuevo" prefHeight="31.0" prefWidth="103.0" style="-fx-background-color: #00C851;" text="Nuevo" textFill="WHITE">
+                                                    <graphic>
+                                                        <ImageView fitHeight="20.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
+                                                            <image>
+                                                                <Image url="@../../../../../../res/icoAgregar30px.png" />
+                                                            </image>
+                                                        </ImageView>
+                                                    </graphic>
+                                                </JFXButton>
+                                                <JFXButton fx:id="btnGuardar" prefHeight="31.0" prefWidth="103.0" style="-fx-background-color: #007E33;" text="Guardar" textFill="WHITE">
+                                                    <graphic>
+                                                        <ImageView fitHeight="13.0" fitWidth="13.0" pickOnBounds="true" preserveRatio="true">
+                                                            <image>
+                                                                <Image url="@../../../../../../res/icoGuardar30px.png" />
+                                                            </image>
+                                                        </ImageView>
+                                                    </graphic>
+                                                </JFXButton>
+                                                <JFXButton fx:id="btnEditar" prefHeight="31.0" prefWidth="103.0" style="-fx-background-color: #FF8800;" text="Editar" textFill="WHITE">
+                                                    <graphic>
+                                                        <ImageView fitHeight="18.0" fitWidth="26.0" pickOnBounds="true" preserveRatio="true">
+                                                            <image>
+                                                                <Image url="@../../../../../../res/icoEditar30px.png" />
+                                                            </image>
+                                                        </ImageView>
+                                                    </graphic>
+                                                </JFXButton>
+                                                <JFXButton fx:id="btnElminar" prefHeight="31.0" prefWidth="103.0" style="-fx-background-color: #ff4444;" text="Eliminar" textFill="WHITE">
+                                                    <graphic>
+                                                        <ImageView fitHeight="13.0" fitWidth="13.0" pickOnBounds="true" preserveRatio="true">
+                                                            <image>
+                                                                <Image url="@../../../../../../res/icoEliminar.png" />
+                                                            </image>
+                                                        </ImageView>
+                                                    </graphic>
+                                                </JFXButton>
+                                            </children>
+                                        </FlowPane>
+                                    </children>
+                                    <padding>
+                                        <Insets left="20.0" right="20.0" top="30.0" />
+                                    </padding>
+                                </VBox>
+                            </children>
+                        </AnchorPane>
+                    </children>
+                </JFXScrollPane>
+            </right>
+        </BorderPane>
+    </children>
 </AnchorPane>
