@@ -14,23 +14,23 @@ import javafx.stage.Stage;
  *
  * @author Villegas
  */
-public class WindowClientes extends Application{
-    FXMLLoader fxmll;
-
-    Stage window;
-
-    Scene scene;
-    
-    @Override
-    public void start(Stage primaryStage) throws Exception {
-        fxmll.load();
-        scene = new Scene(fxmll.getRoot());
-        window = primaryStage;
-        window.setScene(scene);
-
-        window.setTitle("MySpa");
-        
-        window.show();
-
-    }
+public class WindowClientes {
+//    FXMLLoader fxmll;
+//
+//    Stage window;
+//
+//    Scene scene;
+//    
+//    @Override
+//    public void start(Stage primaryStage) throws Exception {
+//        fxmll.load();
+//        scene = new Scene(fxmll.getRoot());
+//        window = primaryStage;
+//        window.setScene(scene);
+//
+//        window.setTitle("MySpa2");
+//        
+//        window.show();
+//
+//    }
 }
