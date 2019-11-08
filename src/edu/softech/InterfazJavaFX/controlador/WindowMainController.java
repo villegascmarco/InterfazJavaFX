@@ -131,7 +131,7 @@ public class WindowMainController implements Initializable {
 
     @FXML
     public void cargarMenuSucursales(ActionEvent event) throws IOException {
-        resource = "Clientes";
+        resource = "Sucursales";
 
         generarResource();
     }
