@@ -5,17 +5,30 @@
  */
 package edu.softech.InterfazJavaFX.controlador;
 
+import com.google.gson.Gson;
+import com.google.gson.JsonArray;
+import com.google.gson.JsonElement;
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXComboBox;
 import com.jfoenix.controls.JFXTextArea;
+
 import com.jfoenix.controls.JFXTextField;
+import edu.softech.InterfazJavaFX.api.Api;
+import edu.softech.InterfazJavaFX.modelo.Cliente;
+import java.io.IOException;
 import java.net.URL;
+import java.util.LinkedList;
+import java.util.Queue;
 import java.util.ResourceBundle;
-import javafx.event.ActionEvent;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.control.ScrollPane;
+import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
+import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.AnchorPane;
 
 /**
@@ -25,10 +38,98 @@ import javafx.scene.layout.AnchorPane;
  */
 public class PaneClientesControlador implements Initializable {
 
+    @FXML
+    private AnchorPane windowClientes;
+
+    @FXML
+    private AnchorPane apIzquierda;
+
+    @FXML
+    private TableView<Cliente> tbClientes;
+
+    @FXML
+    private TableColumn<Cliente, Integer> colIdPersona;
+
+    @FXML
+    private TableColumn<Cliente, String> colNombre;
+
+    @FXML
+    private TableColumn<Cliente, String> colApellidoPaterno;
+
+    @FXML
+    private TableColumn<Cliente, String> colApellidoMaterno;
+
+    @FXML
+    private TableColumn<Cliente, String> colGenero;
+
+    @FXML
+    private TableColumn<Cliente, String> colDomicilio;
+
+    @FXML
+    private TableColumn<Cliente, String> coltelefono;
+
+    @FXML
+    private TableColumn<Cliente, String> colRfc;
+
+    @FXML
+    private TableColumn<Cliente, Integer> colIdCliente;
+
+    @FXML
+    private TableColumn<Cliente, String> colNumeroUnico;
+
+    @FXML
+    private TableColumn<Cliente, String> colCorreo;
+
+    @FXML
+    private TableColumn<Cliente, Integer> colEstatus;
+
+    @FXML
+    private TableColumn<Cliente, Integer> colIdUsuario;
+
+    @FXML
+    private TableColumn<Cliente, String> colNombreUsuario;
+
+    @FXML
+    private TableColumn<Cliente, String> colContrasenia;
+
+    @FXML
+    private TableColumn<Cliente, String> colRol;
 
     @FXML
     private AnchorPane apDerecha;
 
+    @FXML
+    private JFXTextField txtNombre;
+
+    @FXML
+    private JFXTextField txtApellidoPaterno;
+
+    @FXML
+    private JFXTextField txtApellidoMaterno;
+
+    @FXML
+    private JFXComboBox<?> cmbGenero;
+
+    @FXML
+    private JFXButton btnAgregarGenero;
+
+    @FXML
+    private JFXTextField txtRfc;
+
+    @FXML
+    private JFXTextArea txtDomicilio;
+
+    @FXML
+    private JFXTextField txtTelefono;
+
+    @FXML
+    private JFXTextField txtCorreoElectronico;
+
+    @FXML
+    private JFXTextField txtUsuario;
+
+    @FXML
+    private JFXTextField txtContrasenia;
 
     @FXML
     private JFXButton btnNuevo;
@@ -42,30 +143,154 @@ public class PaneClientesControlador implements Initializable {
     @FXML
     private JFXButton btnElminar;
 
-    @FXML
-    private AnchorPane windowControlSala;
+    Api api = new Api();
 
-    @FXML
-    private JFXTextField txtSucursal;
-    @FXML
-    private JFXTextField txtSala;
-    @FXML
-    private JFXTextField txtTemperatura;
+    Gson gson = new Gson();
 
     /**
      * Initializes the controller class.
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-//        ScrollPane sp = new ScrollPane();
-//        sp.setContent(tbClientes);
-//        sp.setPrefSize(681, 689);
-//        sp.setHbarPolicy(ScrollPane.ScrollBarPolicy.AS_NEEDED);
-//        sp.setVbarPolicy(ScrollPane.ScrollBarPolicy.AS_NEEDED);
+        try {
+            inicializarTabla();
+        } catch (IOException ex) {
+            Logger.getLogger(PaneClientesControlador.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
-    private void mostrarMensaje(ActionEvent event) {
-        System.out.println("Hola");
+    private void inicializarTabla() throws IOException {
+        tbClientes.setItems(obtenerDatos());
+//        tbClientes.autosize();
+
+        //idPersona
+        colIdPersona = new TableColumn<>("idPersona");
+        colIdPersona.setMinWidth(50);
+        colIdPersona.setCellValueFactory(
+                new PropertyValueFactory<>("idPersona"));
+
+        //Nombre
+        colNombre = new TableColumn<>("Nombre");
+        colNombre.setMinWidth(50);
+        colNombre.setCellValueFactory(
+                new PropertyValueFactory<>("nombre"));
+
+        //ApellidoPaterno
+        colApellidoPaterno = new TableColumn<>("Apellido Paterno");
+        colApellidoPaterno.setMinWidth(50);
+        colApellidoPaterno.setCellValueFactory(
+                new PropertyValueFactory<>("apellidoPaterno"));
+
+        //ApellidoMaterno
+        colApellidoMaterno = new TableColumn<>("Apellido Materno");
+        colApellidoMaterno.setMinWidth(50);
+        colApellidoMaterno.setCellValueFactory(
+                new PropertyValueFactory<>("apellidoMaterno"));
+
+        //Genero
+        colGenero = new TableColumn<>("Genero");
+        colGenero.setMinWidth(50);
+        colGenero.setCellValueFactory(
+                new PropertyValueFactory<>("genero"));
+
+        //Domicilio
+        colDomicilio = new TableColumn<>("Domicilio");
+        colDomicilio.setMinWidth(50);
+        colDomicilio.setCellValueFactory(
+                new PropertyValueFactory<>("domicilio"));
+
+        //Telefono
+        coltelefono = new TableColumn<>("Telefono");
+        coltelefono.setMinWidth(50);
+        coltelefono.setCellValueFactory(
+                new PropertyValueFactory<>("telefono"));
+
+        //Rfc
+        colRfc = new TableColumn<>("Rfc");
+        colRfc.setMinWidth(50);
+        colRfc.setCellValueFactory(
+                new PropertyValueFactory<>("rfc"));
+
+        //idCliente
+        colIdCliente = new TableColumn<>("idCliente");
+        colIdCliente.setMinWidth(50);
+        colIdCliente.setCellValueFactory(
+                new PropertyValueFactory<>("idCliente"));
+
+        //idPersona
+        colIdPersona = new TableColumn<>("idPersona");
+        colIdPersona.setMinWidth(50);
+        colIdPersona.setCellValueFactory(
+                new PropertyValueFactory<>("idPersona"));
+
+        //Numero Unico de Cliente
+        colNumeroUnico = new TableColumn<>("NUC");
+        colNumeroUnico.setMinWidth(50);
+        colNumeroUnico.setCellValueFactory(
+                new PropertyValueFactory<>("numeroUnico"));
+
+        //Correo electronico
+        colCorreo = new TableColumn<>("Correo Electronico");
+        colCorreo.setMinWidth(50);
+        colCorreo.setCellValueFactory(
+                new PropertyValueFactory<>("correo"));
+
+        //Estatus
+        colEstatus = new TableColumn<>("Estatus");
+        colEstatus.setMinWidth(50);
+        colEstatus.setCellValueFactory(
+                new PropertyValueFactory<>("estatus"));
+
+        //idUsuario
+        colIdUsuario = new TableColumn<>("idUsuario");
+        colIdUsuario.setMinWidth(50);
+        colIdUsuario.setCellValueFactory(
+                new PropertyValueFactory<>("idUsuario"));
+
+        //Nombre Usuario
+        colNombreUsuario = new TableColumn<>("Nombre Usuario");
+        colNombreUsuario.setMinWidth(50);
+        colNombreUsuario.setCellValueFactory(
+                new PropertyValueFactory<>("nombreUsuario"));
+
+        //Contraseña
+        colContrasenia = new TableColumn<>("Contraseña");
+        colContrasenia.setMinWidth(50);
+        colContrasenia.setCellValueFactory(
+                new PropertyValueFactory<>("contrasenia"));
+
+        tbClientes.getColumns().addAll(
+                colIdPersona, colNombre, colApellidoPaterno,
+                colApellidoMaterno, colGenero, colDomicilio,
+                coltelefono, colRfc,
+                colIdCliente, colNumeroUnico, colCorreo, colEstatus,
+                colIdUsuario, colNombreUsuario, colContrasenia
+        );
+    }
+
+    private ObservableList<Cliente> obtenerDatos() throws IOException {
+        ObservableList<Cliente> clientes
+                = FXCollections.observableArrayList();
+
+        JsonArray jsonArray = api.consultarListado("cliente");
+
+        Cliente c;
+        Queue cola = new LinkedList();
+
+        for (JsonElement jsonElement : jsonArray) {
+            c = gson.fromJson(jsonElement, Cliente.class);
+            clientes.add(c);
+        }
+
+        return clientes;
+    }
+
+    @FXML
+    private void cargarTabla() throws IOException {
+
+//        lista = FXCollections.observableArrayList();
+//
+//        tbClientes.setItems(lista);
     }
 
 }
