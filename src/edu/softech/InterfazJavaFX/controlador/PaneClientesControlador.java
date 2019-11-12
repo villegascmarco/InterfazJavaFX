@@ -22,14 +22,19 @@ import java.util.Queue;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javafx.beans.property.SimpleIntegerProperty;
+import javafx.beans.property.SimpleStringProperty;
+import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableColumn.CellDataFeatures;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.AnchorPane;
+import javafx.util.Callback;
 
 /**
  * FXML Controller class
@@ -45,7 +50,7 @@ public class PaneClientesControlador implements Initializable {
     private AnchorPane apIzquierda;
 
     @FXML
-    private TableView<Cliente> tbClientes;
+    private TableView<Cliente> tblClientes;
 
     @FXML
     private TableColumn<Cliente, Integer> colIdPersona;
@@ -160,111 +165,126 @@ public class PaneClientesControlador implements Initializable {
     }
 
     private void inicializarTabla() throws IOException {
-        tbClientes.setItems(obtenerDatos());
-//        tbClientes.autosize();
+        tblClientes.setItems(obtenerDatos());
+        tblClientes.autosize();
+        tblClientes.setDisable(false);
 
         //idPersona
         colIdPersona = new TableColumn<>("idPersona");
-        colIdPersona.setMinWidth(50);
+//        colIdPersona.setMinWidth(50);
         colIdPersona.setCellValueFactory(
                 new PropertyValueFactory<>("idPersona"));
 
         //Nombre
         colNombre = new TableColumn<>("Nombre");
-        colNombre.setMinWidth(50);
+//        colNombre.setMinWidth(50);
         colNombre.setCellValueFactory(
                 new PropertyValueFactory<>("nombre"));
 
         //ApellidoPaterno
         colApellidoPaterno = new TableColumn<>("Apellido Paterno");
-        colApellidoPaterno.setMinWidth(50);
+//        colApellidoPaterno.setMinWidth(50);
         colApellidoPaterno.setCellValueFactory(
                 new PropertyValueFactory<>("apellidoPaterno"));
 
         //ApellidoMaterno
         colApellidoMaterno = new TableColumn<>("Apellido Materno");
-        colApellidoMaterno.setMinWidth(50);
+//        colApellidoMaterno.setMinWidth(50);
         colApellidoMaterno.setCellValueFactory(
                 new PropertyValueFactory<>("apellidoMaterno"));
 
         //Genero
         colGenero = new TableColumn<>("Genero");
-        colGenero.setMinWidth(50);
+//        colGenero.setMinWidth(50);
         colGenero.setCellValueFactory(
                 new PropertyValueFactory<>("genero"));
 
         //Domicilio
         colDomicilio = new TableColumn<>("Domicilio");
-        colDomicilio.setMinWidth(50);
+//        colDomicilio.setMinWidth(50);
         colDomicilio.setCellValueFactory(
                 new PropertyValueFactory<>("domicilio"));
 
         //Telefono
         coltelefono = new TableColumn<>("Telefono");
-        coltelefono.setMinWidth(50);
+//        coltelefono.setMinWidth(50);
         coltelefono.setCellValueFactory(
                 new PropertyValueFactory<>("telefono"));
 
         //Rfc
         colRfc = new TableColumn<>("Rfc");
-        colRfc.setMinWidth(50);
+//        colRfc.setMinWidth(50);
         colRfc.setCellValueFactory(
                 new PropertyValueFactory<>("rfc"));
 
         //idCliente
         colIdCliente = new TableColumn<>("idCliente");
-        colIdCliente.setMinWidth(50);
+//        colIdCliente.setMinWidth(50);
         colIdCliente.setCellValueFactory(
                 new PropertyValueFactory<>("idCliente"));
 
         //idPersona
         colIdPersona = new TableColumn<>("idPersona");
-        colIdPersona.setMinWidth(50);
+//        colIdPersona.setMinWidth(50);
         colIdPersona.setCellValueFactory(
                 new PropertyValueFactory<>("idPersona"));
 
         //Numero Unico de Cliente
         colNumeroUnico = new TableColumn<>("NUC");
-        colNumeroUnico.setMinWidth(50);
+//        colNumeroUnico.setMinWidth(50);
         colNumeroUnico.setCellValueFactory(
                 new PropertyValueFactory<>("numeroUnico"));
 
         //Correo electronico
         colCorreo = new TableColumn<>("Correo Electronico");
-        colCorreo.setMinWidth(50);
+//        colCorreo.setMinWidth(50);
         colCorreo.setCellValueFactory(
                 new PropertyValueFactory<>("correo"));
 
         //Estatus
         colEstatus = new TableColumn<>("Estatus");
-        colEstatus.setMinWidth(50);
+//        colEstatus.setMinWidth(50);
         colEstatus.setCellValueFactory(
                 new PropertyValueFactory<>("estatus"));
 
         //idUsuario
         colIdUsuario = new TableColumn<>("idUsuario");
-        colIdUsuario.setMinWidth(50);
-        colIdUsuario.setCellValueFactory(
-                new PropertyValueFactory<>("idUsuario"));
+//        colIdUsuario.setMinWidth(50);
+        colIdUsuario.setCellValueFactory(new Callback<CellDataFeatures<Cliente, Integer>, ObservableValue<Integer>>() {
+            @Override
+            public ObservableValue<Integer> call(CellDataFeatures<Cliente, Integer> param) {
+                return new SimpleIntegerProperty(param.getValue().
+                        getUsuario().getIdUsuario()).asObject();
+            }
+        });
 
         //Nombre Usuario
         colNombreUsuario = new TableColumn<>("Nombre Usuario");
-        colNombreUsuario.setMinWidth(50);
-        colNombreUsuario.setCellValueFactory(
-                new PropertyValueFactory<>("nombreUsuario"));
+//        colNombreUsuario.setMinWidth(50);
+        colNombreUsuario.setCellValueFactory(new Callback<CellDataFeatures<Cliente, String>, ObservableValue<String>>() {
+            @Override
+            public ObservableValue<String> call(CellDataFeatures<Cliente, String> param) {
+                return new SimpleStringProperty(param.getValue().getUsuario().getNombreUsuario());
+            }
 
-        //Contraseña
-        colContrasenia = new TableColumn<>("Contraseña");
-        colContrasenia.setMinWidth(50);
-        colContrasenia.setCellValueFactory(
-                new PropertyValueFactory<>("contrasenia"));
+        });
 
-        tbClientes.getColumns().addAll(
+//        //Contraseña
+//        colContrasenia = new TableColumn<>("Contraseña");
+////        colContrasenia.setMinWidth(50);
+//        colContrasenia.setCellValueFactory(new Callback<CellDataFeatures<Cliente, String>, ObservableValue<String>>() {
+//            @Override
+//            public ObservableValue<String> call(CellDataFeatures<Cliente, String> param) {
+//                return new SimpleStringProperty(param.getValue().getUsuario().getContrasenia());
+//            }
+//
+//        });
+        tblClientes.getColumns().addAll(
                 colIdPersona, colNombre, colApellidoPaterno,
                 colApellidoMaterno, colGenero, colDomicilio,
                 coltelefono, colRfc,
                 colIdCliente, colNumeroUnico, colCorreo, colEstatus,
-                colIdUsuario, colNombreUsuario, colContrasenia
+                colIdUsuario, colNombreUsuario
         );
     }
 
@@ -290,7 +310,7 @@ public class PaneClientesControlador implements Initializable {
 
 //        lista = FXCollections.observableArrayList();
 //
-//        tbClientes.setItems(lista);
+//        tblClientes.setItems(lista);
     }
 
 }

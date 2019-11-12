@@ -14,15 +14,15 @@
 <?import javafx.scene.layout.FlowPane?>
 <?import javafx.scene.layout.VBox?>
 
-<AnchorPane id="AnchorPane" fx:id="windowClientes" maxHeight="1.7976931348623157E308" maxWidth="3000.0" prefHeight="770.0" prefWidth="1025.0" style="-fx-background-color: #cccab5;" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="edu.softech.InterfazJavaFX.controlador.PaneClientesControlador">
+<AnchorPane id="AnchorPane" fx:id="windowClientes" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="0.0" minWidth="0.0" prefHeight="770.0" prefWidth="1025.0" style="-fx-background-color: #cccab5;" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="edu.softech.InterfazJavaFX.controlador.PaneClientesControlador">
     <children>
         <BorderPane prefHeight="770.0" prefWidth="1025.0" style="-fx-background-color: green;" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
             <center>
-                <AnchorPane fx:id="apIzquierda" prefHeight="718.0" prefWidth="615.0" style="-fx-background-color: e1e2e1; -fx-border-style: solid solid none none;" BorderPane.alignment="CENTER">
+                <AnchorPane fx:id="apIzquierda" style="-fx-background-color: e1e2e1; -fx-border-style: solid solid none none;" BorderPane.alignment="CENTER">
                     <children>
-                        <JFXScrollPane layoutX="7.0" layoutY="24.0" minWidth="0.0" AnchorPane.bottomAnchor="57.0" AnchorPane.leftAnchor="6.0" AnchorPane.rightAnchor="25.0" AnchorPane.topAnchor="23.0">
+                        <JFXScrollPane layoutX="7.0" layoutY="24.0" minWidth="0.0" AnchorPane.bottomAnchor="57.0" AnchorPane.leftAnchor="6.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="23.0">
                             <children>
-                                <TableView fx:id="tbClientes" prefHeight="689.0" prefWidth="681.0" />
+                                <TableView fx:id="tblClientes" />
                             </children>
                         </JFXScrollPane>
                     </children>
@@ -58,7 +58,7 @@
                                         <JFXTextField fx:id="txtCorreoElectronico" focusColor="#f68a1f" labelFloat="true" prefHeight="31.0" prefWidth="242.0" promptText="Correo Electrónico" />
                                         <JFXTextField fx:id="txtUsuario" focusColor="#f68a1f" labelFloat="true" prefHeight="31.0" prefWidth="242.0" promptText="Nombre de usuario" />
                                         <JFXTextField fx:id="txtContrasenia" focusColor="#f68a1f" labelFloat="true" prefHeight="31.0" prefWidth="242.0" promptText="Contraseña" />
-                                        <FlowPane hgap="60.0" prefHeight="200.0" prefWidth="200.0" vgap="10.0">
+                                        <FlowPane alignment="CENTER" hgap="20.0" prefHeight="200.0" prefWidth="200.0" vgap="20.0">
                                             <children>
                                                 <JFXButton fx:id="btnNuevo" onAction="#cargarTabla" prefHeight="31.0" prefWidth="103.0" style="-fx-background-color: #00C851;" text="Nuevo" textFill="WHITE">
                                                     <graphic>
