@@ -13,6 +13,7 @@ import java.net.URL;
 import java.util.ResourceBundle;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.layout.AnchorPane;
 
@@ -27,6 +28,16 @@ public class PaneTratamientosController implements Initializable {
     private AnchorPane windowTratamientos;
     @FXML
     private TableView<?> tbProductos;
+    @FXML
+    private TableColumn<?, ?> colIdTratamiento;
+    @FXML
+    private TableColumn<?, ?> colNombre;
+    @FXML
+    private TableColumn<?, ?> colDescripcion;
+    @FXML
+    private TableColumn<?, ?> colCosto;
+    @FXML
+    private TableColumn<?, ?> colEstatus;
     @FXML
     private JFXTextField txtNombre;
     @FXML
