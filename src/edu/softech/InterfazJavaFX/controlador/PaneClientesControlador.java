@@ -15,6 +15,7 @@ import com.jfoenix.controls.JFXTextArea;
 import com.jfoenix.controls.JFXTextField;
 import edu.softech.InterfazJavaFX.api.Api;
 import edu.softech.InterfazJavaFX.modelo.Cliente;
+import edu.softech.InterfazJavaFX.modelo.Usuario;
 import java.io.IOException;
 import java.net.URL;
 import java.util.LinkedList;
@@ -33,6 +34,7 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableColumn.CellDataFeatures;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.util.Callback;
 
@@ -113,7 +115,7 @@ public class PaneClientesControlador implements Initializable {
     private JFXTextField txtApellidoMaterno;
 
     @FXML
-    private JFXComboBox<?> cmbGenero;
+    private JFXComboBox cmbGenero;
 
     @FXML
     private JFXButton btnAgregarGenero;
@@ -159,6 +161,10 @@ public class PaneClientesControlador implements Initializable {
     public void initialize(URL url, ResourceBundle rb) {
         try {
             inicializarTabla();
+            inicializarControladores();
+            llenarComboBoxes();
+            api.metodoPost();
+
         } catch (IOException ex) {
             Logger.getLogger(PaneClientesControlador.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -288,6 +294,10 @@ public class PaneClientesControlador implements Initializable {
         );
     }
 
+    private void llenarComboBoxes() {
+        cmbGenero.getItems().addAll("F", "M", "O");
+    }
+
     private ObservableList<Cliente> obtenerDatos() throws IOException {
         ObservableList<Cliente> clientes
                 = FXCollections.observableArrayList();
@@ -305,12 +315,37 @@ public class PaneClientesControlador implements Initializable {
         return clientes;
     }
 
-    @FXML
-    private void cargarTabla() throws IOException {
+    private void inicializarControladores() throws IOException {
 
-//        lista = FXCollections.observableArrayList();
-//
-//        tblClientes.setItems(lista);
+        tblClientes.setOnMouseClicked((MouseEvent x) -> {
+            llenarCampos();
+        });
+        tblClientes.setOnKeyReleased(x -> {
+            llenarCampos();
+        });
+
+    }
+
+    private void llenarCampos() {
+        if (tblClientes.getSelectionModel().getSelectedItem() != null) {
+
+            Cliente c = tblClientes.getSelectionModel().getSelectedItem();
+            Usuario u = c.getUsuario();
+
+            txtNombre.setText(c.getNombre());
+            txtApellidoPaterno.setText(c.getApellidoPaterno());
+            txtApellidoMaterno.setText(c.getApellidoMaterno());
+
+            cmbGenero.getSelectionModel().select(c.getGenero());
+
+            txtRfc.setText(c.getRfc());
+            txtDomicilio.setText(c.getDomicilio());
+            txtTelefono.setText(c.getTelefono());
+            txtCorreoElectronico.setText(c.getCorreo());
+
+            txtUsuario.setText(u.getNombreUsuario());
+            txtContrasenia.setText(u.getContrasenia());
+        }
     }
 
 }

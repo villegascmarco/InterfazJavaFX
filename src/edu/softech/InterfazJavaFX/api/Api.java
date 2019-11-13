@@ -8,12 +8,19 @@ package edu.softech.InterfazJavaFX.api;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
+import edu.softech.InterfazJavaFX.modelo.Cliente;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.io.Reader;
+import java.io.UnsupportedEncodingException;
+import java.lang.reflect.Field;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.net.URLEncoder;
+import java.util.LinkedHashMap;
+import java.util.Map;
 
 /**
  *
@@ -128,5 +135,14 @@ public final class Api {
 
         return json;
 
+    }
+
+    public void metodoPost() throws MalformedURLException, UnsupportedEncodingException, IOException {
+
+        Cliente c = new Cliente();
+
+        for (Field f : c.getClass().getFields()) {
+            System.out.println(f.getName());
+        }
     }
 }
