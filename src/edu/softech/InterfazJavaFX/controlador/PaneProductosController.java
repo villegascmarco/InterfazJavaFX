@@ -12,6 +12,7 @@ import java.net.URL;
 import java.util.ResourceBundle;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.layout.AnchorPane;
 
@@ -27,15 +28,21 @@ public class PaneProductosController implements Initializable {
     @FXML
     private TableView<?> tbProductos;
     @FXML
+    private TableColumn<?, ?> colIdProducto;
+    @FXML
+    private TableColumn<?, ?> colNombre;
+    @FXML
+    private TableColumn<?, ?> colMarca;
+    @FXML
+    private TableColumn<?, ?> colEstatus;
+    @FXML
+    private TableColumn<?, ?> colPrecioUso;
+    @FXML
     private JFXTextField txtNombre;
     @FXML
-    private JFXComboBox<?> txtMarca;
-    @FXML
-    private JFXButton btnAgregarMarca;
+    private JFXTextField txtPrecioUso;
     @FXML
     private JFXComboBox<?> cmbEstatus;
-    @FXML
-    private JFXTextField txtPrecioUso;
     @FXML
     private JFXButton btnNuevo;
     @FXML
