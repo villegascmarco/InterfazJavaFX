@@ -32,7 +32,7 @@
             <center>
                 <AnchorPane prefHeight="416.0" prefWidth="417.0" style="-fx-background-color: e1e2e1;" BorderPane.alignment="CENTER">
                <children>
-                  <FlowPane hgap="30.0" prefHeight="200.0" prefWidth="1000.0" vgap="50.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                  <FlowPane hgap="30.0" prefHeight="200.0" prefWidth="1000.0" vgap="50.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="30.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                      <children>
                         <Pane prefHeight="128.0" prefWidth="400.0" style="-fx-background-color: #4285F4; -fx-effect: dropshadow(gaussian, rgb(0.0, 0.0, 0.0, 0.15), 6.0, 0.7, 0.0,1.5);">
                            <children>
@@ -122,6 +122,9 @@
                      </padding>
                   </FlowPane>
                </children>
+               <BorderPane.margin>
+                  <Insets />
+               </BorderPane.margin>
                 </AnchorPane>
             </center>
         </BorderPane>
