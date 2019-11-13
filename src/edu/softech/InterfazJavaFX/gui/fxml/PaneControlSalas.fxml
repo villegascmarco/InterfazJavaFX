@@ -32,63 +32,85 @@
             <center>
                 <AnchorPane prefHeight="416.0" prefWidth="417.0" style="-fx-background-color: e1e2e1;" BorderPane.alignment="CENTER">
                <children>
-                  <FlowPane hgap="50.0" prefHeight="200.0" prefWidth="200.0" vgap="50.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                  <FlowPane hgap="30.0" prefHeight="200.0" prefWidth="1000.0" vgap="50.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                      <children>
-                        <Pane prefHeight="128.0" prefWidth="277.0" style="-fx-background-color: #DD4B39; -fx-effect: dropshadow(gaussian, rgb(0.0, 0.0, 0.0, 0.15), 6.0, 0.7, 0.0,1.5);">
+                        <Pane prefHeight="128.0" prefWidth="400.0" style="-fx-background-color: #4285F4; -fx-effect: dropshadow(gaussian, rgb(0.0, 0.0, 0.0, 0.15), 6.0, 0.7, 0.0,1.5);">
                            <children>
-                              <Pane prefHeight="128.0" prefWidth="92.0" style="-fx-background-color: #B13C2E;" />
-                              <VBox layoutX="93.0" layoutY="12.0" prefHeight="105.0" prefWidth="185.0" spacing="10.0">
+                              <Pane prefHeight="128.0" prefWidth="92.0" style="-fx-background-color: #0d47a1;" />
+                              <VBox layoutX="92.0" layoutY="12.0" prefHeight="105.0" prefWidth="287.0" spacing="10.0">
                                  <children>
-                                    <VBox prefHeight="54.0" prefWidth="155.0">
+                                    <VBox prefHeight="55.0" prefWidth="282.0">
                                        <children>
-                                          <Label prefHeight="27.0" prefWidth="155.0" style="-fx-font-size: 18; -fx-font-weight: bold; -fx-text-fill: white;" text="Sala" />
-                                          <Label prefHeight="27.0" prefWidth="155.0" style="-fx-font-size: 16; -fx-font-weight: bold; -fx-text-fill: white;" text="Sucursal" />
+                                          <Label prefHeight="27.0" prefWidth="155.0" style="-fx-font-size: 18; -fx-font-weight: bold; -fx-text-fill: white;" text="Sala">
+                                             <padding>
+                                                <Insets left="40.0" />
+                                             </padding></Label>
+                                          <Label prefHeight="27.0" prefWidth="155.0" style="-fx-font-size: 16; -fx-font-weight: bold; -fx-text-fill: white;" text="Sucursal">
+                                             <padding>
+                                                <Insets left="40.0" />
+                                             </padding></Label>
                                        </children>
                                        <padding>
                                           <Insets left="10.0" />
                                        </padding>
                                     </VBox>
-                                    <ProgressBar minHeight="-Infinity" opacity="0.78" prefHeight="5.0" prefWidth="182.0" progress="0.36" styleClass="custom-progress-bar" />
+                                    <ProgressBar minHeight="-Infinity" opacity="0.78" prefHeight="5.0" prefWidth="300.0" progress="0.54" styleClass="custom-progress-bar" />
                                     <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="27.0" prefWidth="155.0" style="-fx-font-size: 16; -fx-font-weight: bold; -fx-text-fill: white;" text="32°C" />
                                  </children>
                               </VBox>
                            </children>
                         </Pane>
-                        <Pane prefHeight="128.0" prefWidth="277.0" style="-fx-background-color: #F39C12; -fx-effect: dropshadow(gaussian, rgb(0.0, 0.0, 0.0, 0.15), 6.0, 0.7, 0.0,1.5);">
+                        <Pane prefHeight="128.0" prefWidth="400.0" style="-fx-background-color: #4285F4; -fx-effect: dropshadow(gaussian, rgb(0.0, 0.0, 0.0, 0.15), 6.0, 0.7, 0.0,1.5);">
                            <children>
-                              <Pane prefHeight="128.0" prefWidth="92.0" style="-fx-background-color: #C37D0E;" />
-                              <VBox layoutX="93.0" layoutY="12.0" prefHeight="105.0" prefWidth="185.0" spacing="10.0">
+                              <Pane prefHeight="128.0" prefWidth="92.0" style="-fx-background-color: #0d47a1;" />
+                              <VBox layoutX="92.0" layoutY="12.0" prefHeight="105.0" prefWidth="287.0" spacing="10.0">
                                  <children>
-                                    <VBox prefHeight="54.0" prefWidth="155.0">
+                                    <VBox prefHeight="55.0" prefWidth="282.0">
                                        <children>
-                                          <Label prefHeight="27.0" prefWidth="155.0" style="-fx-font-size: 18; -fx-font-weight: bold; -fx-text-fill: white;" text="Sala" />
-                                          <Label prefHeight="27.0" prefWidth="155.0" style="-fx-font-size: 16; -fx-font-weight: bold; -fx-text-fill: white;" text="Sucursal" />
+                                          <Label prefHeight="27.0" prefWidth="155.0" style="-fx-font-size: 18; -fx-font-weight: bold; -fx-text-fill: white;" text="Sala">
+                                             <padding>
+                                                <Insets left="40.0" />
+                                             </padding>
+                                          </Label>
+                                          <Label prefHeight="27.0" prefWidth="155.0" style="-fx-font-size: 16; -fx-font-weight: bold; -fx-text-fill: white;" text="Sucursal">
+                                             <padding>
+                                                <Insets left="40.0" />
+                                             </padding>
+                                          </Label>
                                        </children>
                                        <padding>
                                           <Insets left="10.0" />
                                        </padding>
                                     </VBox>
-                                    <ProgressBar minHeight="-Infinity" opacity="0.78" prefHeight="5.0" prefWidth="182.0" progress="0.77" styleClass="custom-progress-bar" />
+                                    <ProgressBar minHeight="-Infinity" opacity="0.78" prefHeight="5.0" prefWidth="300.0" progress="0.54" styleClass="custom-progress-bar" />
                                     <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="27.0" prefWidth="155.0" style="-fx-font-size: 16; -fx-font-weight: bold; -fx-text-fill: white;" text="32°C" />
                                  </children>
                               </VBox>
                            </children>
                         </Pane>
-                        <Pane prefHeight="128.0" prefWidth="277.0" style="-fx-background-color: #00A65A; -fx-effect: dropshadow(gaussian, rgb(0.0, 0.0, 0.0, 0.15), 6.0, 0.7, 0.0,1.5);">
+                        <Pane prefHeight="128.0" prefWidth="400.0" style="-fx-background-color: #4285F4; -fx-effect: dropshadow(gaussian, rgb(0.0, 0.0, 0.0, 0.15), 6.0, 0.7, 0.0,1.5);">
                            <children>
-                              <Pane prefHeight="128.0" prefWidth="92.0" style="-fx-background-color: #008548;" />
-                              <VBox layoutX="93.0" layoutY="12.0" prefHeight="105.0" prefWidth="185.0" spacing="10.0">
+                              <Pane prefHeight="128.0" prefWidth="92.0" style="-fx-background-color: #0d47a1;" />
+                              <VBox layoutX="92.0" layoutY="12.0" prefHeight="105.0" prefWidth="287.0" spacing="10.0">
                                  <children>
-                                    <VBox prefHeight="54.0" prefWidth="155.0">
+                                    <VBox prefHeight="55.0" prefWidth="282.0">
                                        <children>
-                                          <Label prefHeight="27.0" prefWidth="155.0" style="-fx-font-size: 18; -fx-font-weight: bold; -fx-text-fill: white;" text="Sala" />
-                                          <Label prefHeight="27.0" prefWidth="155.0" style="-fx-font-size: 16; -fx-font-weight: bold; -fx-text-fill: white;" text="Sucursal" />
+                                          <Label prefHeight="27.0" prefWidth="155.0" style="-fx-font-size: 18; -fx-font-weight: bold; -fx-text-fill: white;" text="Sala">
+                                             <padding>
+                                                <Insets left="40.0" />
+                                             </padding>
+                                          </Label>
+                                          <Label prefHeight="27.0" prefWidth="155.0" style="-fx-font-size: 16; -fx-font-weight: bold; -fx-text-fill: white;" text="Sucursal">
+                                             <padding>
+                                                <Insets left="40.0" />
+                                             </padding>
+                                          </Label>
                                        </children>
                                        <padding>
                                           <Insets left="10.0" />
                                        </padding>
                                     </VBox>
-                                    <ProgressBar minHeight="-Infinity" opacity="0.78" prefHeight="5.0" prefWidth="182.0" progress="0.54" styleClass="custom-progress-bar" />
+                                    <ProgressBar minHeight="-Infinity" opacity="0.78" prefHeight="5.0" prefWidth="300.0" progress="0.54" styleClass="custom-progress-bar" />
                                     <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="27.0" prefWidth="155.0" style="-fx-font-size: 16; -fx-font-weight: bold; -fx-text-fill: white;" text="32°C" />
                                  </children>
                               </VBox>
@@ -96,7 +118,7 @@
                         </Pane>
                      </children>
                      <padding>
-                        <Insets bottom="100.0" left="100.0" right="100.0" top="100.0" />
+                        <Insets bottom="30.0" left="30.0" right="30.0" top="100.0" />
                      </padding>
                   </FlowPane>
                </children>
