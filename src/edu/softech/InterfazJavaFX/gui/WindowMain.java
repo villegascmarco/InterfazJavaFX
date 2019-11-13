@@ -30,7 +30,8 @@ public class WindowMain extends Application {
         window.setScene(scene);
 
         window.setMinHeight(768);
-        window.setMinWidth(1366);
+        window.setMinWidth(1100);
+//        window.setMinWidth(1366);
 
         window.setTitle("MySpa");
         window.getIcons().add(IMG_LOGO);

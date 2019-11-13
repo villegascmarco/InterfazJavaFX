@@ -16,13 +16,13 @@
 <?import javafx.scene.layout.FlowPane?>
 <?import javafx.scene.layout.VBox?>
 
-<AnchorPane id="AnchorPane" fx:id="windowEmpleado" prefHeight="770.0" prefWidth="1025.0" style="-fx-background-color: #cccab5;" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1">
+<AnchorPane id="AnchorPane" fx:id="windowEmpleado" prefHeight="770.0" prefWidth="1025.0" style="-fx-background-color: e1e2e1;" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1">
     <children>
-        <BorderPane prefHeight="770.0" prefWidth="1025.0" style="-fx-background-color: green;" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+        <BorderPane prefHeight="770.0" prefWidth="1025.0" style="-fx-background-color: e1e2e1;" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
             <center>
-                <AnchorPane fx:id="apIzquierda" prefHeight="770.0" prefWidth="536.0" style="-fx-background-color: e1e2e1; -fx-border-style: solid solid none none;" BorderPane.alignment="CENTER">
+                <AnchorPane fx:id="apIzquierda" prefHeight="770.0" prefWidth="536.0" style="-fx-background-color: e1e2e1;" BorderPane.alignment="CENTER">
                     <children>
-                        <JFXScrollPane AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                        <JFXScrollPane style="-fx-background-color: e1e2e1;" AnchorPane.bottomAnchor="57.0" AnchorPane.leftAnchor="6.0" AnchorPane.rightAnchor="6.0" AnchorPane.topAnchor="23.0">
                             <children>
                                 <TableView prefHeight="768.0" prefWidth="479.0">
                                     <columns>
@@ -46,12 +46,18 @@
                 </AnchorPane>
             </center>
          <right>
-            <ScrollPane BorderPane.alignment="CENTER">
+            <ScrollPane style="-fx-background-color: e1e2e1;" BorderPane.alignment="CENTER">
                <content>
-                      <AnchorPane fx:id="apDerecha" prefHeight="710.0" prefWidth="312.0" style="-fx-background-color: e1e2e1;">
+                      <AnchorPane fx:id="apDerecha" prefWidth="312.0" style="-fx-background-color: e1e2e1;">
                      <children>
-                        <VBox prefHeight="710.0" prefWidth="312.0" spacing="30.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
+                        <VBox prefHeight="710.0" prefWidth="312.0" spacing="30.0" style="-fx-background-color: e1e2e1;" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                            <children>
+                              <FlowPane alignment="CENTER" hgap="60.0" prefHeight="8.0" prefWidth="272.0" rowValignment="TOP" style="-fx-background-color: e1e2e1;" vgap="15.0">
+                                 <children>
+                                    <Label text="Fotografia" textFill="#4d4d4d" />
+                                    <ImageView fx:id="imgFotografia" fitHeight="162.0" fitWidth="162.0" pickOnBounds="true" preserveRatio="true" />
+                                 </children>
+                              </FlowPane>
                                     <JFXTextField fx:id="txtNombre" focusColor="#f68a1f" labelFloat="true" prefHeight="31.0" prefWidth="242.0" promptText="Nombre" />
                                     <JFXTextField fx:id="txtApellidoPaterno" focusColor="#f68a1f" labelFloat="true" prefHeight="31.0" prefWidth="242.0" promptText="Apellido Paterno" />
                                     <JFXTextField fx:id="txtApellidoMaterno" focusColor="#f68a1f" labelFloat="true" prefHeight="31.0" prefWidth="242.0" promptText="Apellido Materno" />
@@ -76,13 +82,7 @@
                                     <JFXTextField fx:id="txtUsuario" focusColor="#f68a1f" labelFloat="true" prefHeight="31.0" prefWidth="242.0" promptText="Nombre de usuario" />
                                     <JFXTextField fx:id="txtContrasenia" focusColor="#f68a1f" labelFloat="true" prefHeight="31.0" prefWidth="242.0" promptText="Contraseña" />
                               <JFXComboBox fx:id="cmbPuesto" focusColor="#f68a1f" labelFloat="true" prefHeight="29.0" prefWidth="294.0" promptText="Puesto" />
-                              <FlowPane alignment="CENTER" hgap="15.0" prefHeight="200.0" prefWidth="200.0" rowValignment="TOP" vgap="15.0">
-                                 <children>
-                                    <Label text="Fotografía:" />
-                                    <ImageView fx:id="imgFotografia" fitHeight="150.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true" />
-                                 </children>
-                              </FlowPane>
-                              <FlowPane alignment="CENTER" hgap="15.0" prefHeight="200.0" prefWidth="200.0" rowValignment="TOP" vgap="15.0">
+                              <FlowPane alignment="CENTER" hgap="15.0" prefHeight="200.0" prefWidth="200.0" rowValignment="TOP" style="-fx-background-color: e1e2e1;" vgap="15.0">
                                  <children>
                                     <JFXButton fx:id="btnNuevo" prefHeight="31.0" prefWidth="103.0" style="-fx-background-color: #00C851;" text="Nuevo" textFill="WHITE">
                                        <graphic>

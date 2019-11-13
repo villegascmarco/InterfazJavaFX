@@ -306,10 +306,11 @@ public class PaneClientesControlador implements Initializable {
 
         Cliente c;
         Queue cola = new LinkedList();
-
-        for (JsonElement jsonElement : jsonArray) {
-            c = gson.fromJson(jsonElement, Cliente.class);
-            clientes.add(c);
+        if (jsonArray != null) {
+            for (JsonElement jsonElement : jsonArray) {
+                c = gson.fromJson(jsonElement, Cliente.class);
+                clientes.add(c);
+            }
         }
 
         return clientes;
