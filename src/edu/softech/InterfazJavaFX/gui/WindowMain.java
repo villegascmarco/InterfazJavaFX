@@ -29,6 +29,9 @@ public class WindowMain extends Application {
         window = primaryStage;
         window.setScene(scene);
 
+        window.setMinHeight(768);
+        window.setMinWidth(1366);
+
         window.setTitle("MySpa");
         window.getIcons().add(IMG_LOGO);
         window.show();
