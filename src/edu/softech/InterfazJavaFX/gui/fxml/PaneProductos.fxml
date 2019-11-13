@@ -14,13 +14,13 @@
 <?import javafx.scene.layout.FlowPane?>
 <?import javafx.scene.layout.VBox?>
 
-<AnchorPane fx:id="windowProductos" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="0.0" minWidth="0.0" prefHeight="770.0" prefWidth="1025.0" style="-fx-background-color: #cccab5;" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="edu.softech.InterfazJavaFX.controlador.PaneProductosController">
+<AnchorPane fx:id="windowProductos" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="0.0" minWidth="0.0" prefHeight="770.0" prefWidth="1025.0" style="-fx-background-color: #cccab5;" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="edu.softech.InterfazJavaFX.controlador.PaneProductosControlador">
    <children>
       <BorderPane prefHeight="770.0" prefWidth="1025.0" style="-fx-background-color: green;" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <center>
-            <AnchorPane style="-fx-background-color: e1e2e1; -fx-border-style: solid solid none none;" BorderPane.alignment="CENTER">
+            <AnchorPane style="-fx-background-color: e1e2e1;" BorderPane.alignment="CENTER">
                <children>
-                  <JFXScrollPane layoutX="16.0" layoutY="14.0" prefHeight="373.0" prefWidth="681.0" AnchorPane.bottomAnchor="57.0" AnchorPane.leftAnchor="16.0" AnchorPane.rightAnchor="16.0" AnchorPane.topAnchor="14.0">
+                  <JFXScrollPane layoutX="16.0" layoutY="14.0" prefHeight="373.0" prefWidth="681.0" AnchorPane.bottomAnchor="57.0" AnchorPane.leftAnchor="6.0" AnchorPane.rightAnchor="6.0" AnchorPane.topAnchor="23.0">
                      <children>
                         <TableView fx:id="tbProductos" prefHeight="689.0" prefWidth="681.0">
                           <columns>

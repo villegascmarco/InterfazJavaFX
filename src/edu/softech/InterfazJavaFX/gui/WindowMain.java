@@ -18,7 +18,7 @@ public class WindowMain extends Application {
 
     public WindowMain() {
         fxmll = new FXMLLoader(System.class.getResource("/edu/softech/"
-                + "InterfazJavaFX/gui/fxml/window_main.fxml"));
+                + "InterfazJavaFX/gui/fxml/WindowMain.fxml"));
         //  fxmll.setController(this); Quitamos esta linea para crear un controlador para cada seccion
     }
 

@@ -22,7 +22,7 @@ import javafx.scene.layout.AnchorPane;
  *
  * @author logic
  */
-public class PaneTratamientosController implements Initializable {
+public class PaneTratamientosControlador implements Initializable {
 
     @FXML
     private AnchorPane windowTratamientos;

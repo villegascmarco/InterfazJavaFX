@@ -18,9 +18,9 @@
     <children>
         <BorderPane prefHeight="770.0" prefWidth="1025.0" style="-fx-background-color: green;" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
             <center>
-                <AnchorPane fx:id="apIzquierda" style="-fx-background-color: e1e2e1; -fx-border-style: solid solid none none;" BorderPane.alignment="CENTER">
+                <AnchorPane fx:id="apIzquierda" style="-fx-background-color: e1e2e1;" BorderPane.alignment="CENTER">
                     <children>
-                        <JFXScrollPane layoutX="7.0" layoutY="24.0" minWidth="0.0" AnchorPane.bottomAnchor="57.0" AnchorPane.leftAnchor="6.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="23.0">
+                        <JFXScrollPane layoutX="7.0" layoutY="24.0" minWidth="0.0" AnchorPane.bottomAnchor="57.0" AnchorPane.leftAnchor="6.0" AnchorPane.rightAnchor="6.0" AnchorPane.topAnchor="23.0">
                             <children>
                                 <TableView fx:id="tblClientes" />
                             </children>
@@ -56,7 +56,7 @@
                                         <JFXTextArea fx:id="txtDomicilio" focusColor="#f68a1f" labelFloat="true" prefHeight="111.0" prefWidth="242.0" promptText="Domicilio" />
                                         <JFXTextField fx:id="txtTelefono" focusColor="#f68a1f" labelFloat="true" prefHeight="31.0" prefWidth="242.0" promptText="Teléfono" />
                                         <JFXTextField fx:id="txtCorreoElectronico" focusColor="#f68a1f" labelFloat="true" prefHeight="31.0" prefWidth="242.0" promptText="Correo Electrónico" />
-                                        <JFXTextField fx:id="txtUsuario" focusColor="#f68a1f" labelFloat="true" prefHeight="31.0" prefWidth="242.0" promptText="Nombre de usuario" />
+                                        <JFXTextField fx:id="txtUsuario" focusColor="#f68a1f" labelFloat="true" prefHeight="31.0" prefWidth="242.0" promptText="Nombre de Usuario" />
                                         <JFXTextField fx:id="txtContrasenia" focusColor="#f68a1f" labelFloat="true" prefHeight="31.0" prefWidth="242.0" promptText="Contraseña" />
                                         <FlowPane alignment="CENTER" hgap="20.0" prefHeight="200.0" prefWidth="200.0" vgap="20.0">
                                             <children>

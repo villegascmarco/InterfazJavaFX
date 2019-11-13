@@ -21,7 +21,7 @@ import javafx.scene.layout.AnchorPane;
  *
  * @author logic
  */
-public class PaneProductosController implements Initializable {
+public class PaneProductosControlador implements Initializable {
 
     @FXML
     private AnchorPane windowProductos;

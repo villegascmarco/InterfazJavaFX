@@ -24,7 +24,7 @@ import javafx.scene.layout.BorderPane;
  *
  * @author Villegas
  */
-public class WindowMainController implements Initializable {
+public class WindowMainControlador implements Initializable {
 
     @FXML
     private BorderPane contenedorPrincipal;
@@ -65,11 +65,11 @@ public class WindowMainController implements Initializable {
     private void generarResource() {
         try {
             pane = FXMLLoader.load(getClass().getResource("/edu/softech/"
-                    + "InterfazJavaFX/gui/fxml/pane/Pane" + resource + ".fxml"));
+                    + "InterfazJavaFX/gui/fxml/Pane" + resource + ".fxml"));
 
             contenedorPrincipal.setCenter(pane);
         } catch (IOException ex) {
-            Logger.getLogger(WindowMainController.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(WindowMainControlador.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
@@ -82,21 +82,21 @@ public class WindowMainController implements Initializable {
      */
     @FXML
     public void cargarMenuReservaciones(ActionEvent event) throws IOException {
-        resource = "Clientes";
+        resource = "Trabajando";
 
         generarResource();
     }
 
     @FXML
     public void cargarMenuServicios(ActionEvent event) throws IOException {
-        resource = "Clientes";
+        resource = "Trabajando";
 
         generarResource();
     }
 
     @FXML
     public void cargarMenuEmpleados(ActionEvent event) throws IOException {
-        resource = "Clientes";
+        resource = "Trabajando";
 
         generarResource();
     }
@@ -124,7 +124,7 @@ public class WindowMainController implements Initializable {
 
     @FXML
     public void cargarMenuSalas(ActionEvent event) throws IOException {
-        resource = "Clientes";
+        resource = "Trabajando";
 
         generarResource();
     }
