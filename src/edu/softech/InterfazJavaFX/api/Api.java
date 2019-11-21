@@ -98,10 +98,26 @@ public final class Api {
         return json;
     }
 
+    public String quitarEspacios(String enlance) {
+        String respuesta = "";
+
+        enlance = enlance.trim();
+
+        //Remplazamos los espacios por %20 para que no haya errores
+        for (int i = 0; i < enlance.length(); i++) {
+            if (enlance.charAt(i) == ' ') {
+                respuesta += "%20";
+            } else {
+                respuesta += enlance.charAt(i);
+            }
+        }
+
+        return respuesta;
+    }
+
     public JsonElement modificarCliente(Cliente c) {
         Usuario u = c.getUsuario();
         JsonElement json = null;
-        String acumulador = "";
 
         String enlance = RUTA
                 + "cliente?"
@@ -117,18 +133,8 @@ public final class Api {
                 + "&domicilio=" + c.getDomicilio()
                 + "&numeroUnicoCliente=" + c.getNumeroUnico();
         try {
-            enlance = enlance.trim();
 
-            //Remplazamos los espacios por %20 para que no haya errores
-            for (int i = 0; i < enlance.length(); i++) {
-                if (enlance.charAt(i) == ' ') {
-                    acumulador += "%20";
-                } else {
-                    acumulador += enlance.charAt(i);
-                }
-            }
-
-            enlance = acumulador;
+            enlance = quitarEspacios(enlance);
 
             url = new URL(enlance);
             HttpURLConnection connHttp

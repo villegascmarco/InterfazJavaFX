@@ -46,12 +46,6 @@ import javafx.util.Callback;
 public class PaneClientesControlador implements Initializable {
 
     @FXML
-    private AnchorPane windowClientes;
-
-    @FXML
-    private AnchorPane apIzquierda;
-
-    @FXML
     private TableView<Cliente> tblClientes;
 
     @FXML
@@ -97,15 +91,6 @@ public class PaneClientesControlador implements Initializable {
     private TableColumn<Cliente, String> colNombreUsuario;
 
     @FXML
-    private TableColumn<Cliente, String> colContrasenia;
-
-    @FXML
-    private TableColumn<Cliente, String> colRol;
-
-    @FXML
-    private AnchorPane apDerecha;
-
-    @FXML
     private JFXTextField txtNombre;
 
     @FXML
@@ -116,9 +101,6 @@ public class PaneClientesControlador implements Initializable {
 
     @FXML
     private JFXComboBox cmbGenero;
-
-    @FXML
-    private JFXButton btnAgregarGenero;
 
     @FXML
     private JFXTextField txtRfc;
@@ -161,6 +143,122 @@ public class PaneClientesControlador implements Initializable {
     private final String UNC_NUEVO = "-jfx-unfocus-color: #00C851;";
     private final String UNC_ELIMINAR = "-jfx-unfocus-color: #ff4444;";
 
+    public TableView<Cliente> getTblClientes() {
+        return tblClientes;
+    }
+
+    public TableColumn<Cliente, Integer> getColIdPersona() {
+        return colIdPersona;
+    }
+
+    public TableColumn<Cliente, String> getColNombre() {
+        return colNombre;
+    }
+
+    public TableColumn<Cliente, String> getColApellidoPaterno() {
+        return colApellidoPaterno;
+    }
+
+    public TableColumn<Cliente, String> getColApellidoMaterno() {
+        return colApellidoMaterno;
+    }
+
+    public TableColumn<Cliente, String> getColGenero() {
+        return colGenero;
+    }
+
+    public TableColumn<Cliente, String> getColDomicilio() {
+        return colDomicilio;
+    }
+
+    public TableColumn<Cliente, String> getColtelefono() {
+        return coltelefono;
+    }
+
+    public TableColumn<Cliente, String> getColRfc() {
+        return colRfc;
+    }
+
+    public TableColumn<Cliente, Integer> getColIdCliente() {
+        return colIdCliente;
+    }
+
+    public TableColumn<Cliente, String> getColNumeroUnico() {
+        return colNumeroUnico;
+    }
+
+    public TableColumn<Cliente, String> getColCorreo() {
+        return colCorreo;
+    }
+
+    public TableColumn<Cliente, Integer> getColEstatus() {
+        return colEstatus;
+    }
+
+    public TableColumn<Cliente, Integer> getColIdUsuario() {
+        return colIdUsuario;
+    }
+
+    public TableColumn<Cliente, String> getColNombreUsuario() {
+        return colNombreUsuario;
+    }
+
+    public JFXTextField getTxtNombre() {
+        return txtNombre;
+    }
+
+    public JFXTextField getTxtApellidoPaterno() {
+        return txtApellidoPaterno;
+    }
+
+    public JFXTextField getTxtApellidoMaterno() {
+        return txtApellidoMaterno;
+    }
+
+    public JFXComboBox getCmbGenero() {
+        return cmbGenero;
+    }
+
+    public JFXTextField getTxtRfc() {
+        return txtRfc;
+    }
+
+    public JFXTextArea getTxtDomicilio() {
+        return txtDomicilio;
+    }
+
+    public JFXTextField getTxtTelefono() {
+        return txtTelefono;
+    }
+
+    public JFXTextField getTxtCorreoElectronico() {
+        return txtCorreoElectronico;
+    }
+
+    public JFXTextField getTxtUsuario() {
+        return txtUsuario;
+    }
+
+    public JFXTextField getTxtContrasenia() {
+        return txtContrasenia;
+    }
+
+    public JFXButton getBtnNuevo() {
+        return btnNuevo;
+    }
+
+    public JFXButton getBtnGuardar() {
+        return btnGuardar;
+    }
+
+    public JFXButton getBtnEditar() {
+        return btnEditar;
+    }
+
+    public JFXButton getBtnElminar() {
+        return btnElminar;
+    }
+    
     /**
      * Initializes the controller class.
      *
