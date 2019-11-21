@@ -6,12 +6,15 @@
 package edu.softech.InterfazJavaFX.api;
 
 import com.google.gson.JsonArray;
+import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
-import edu.softech.InterfazJavaFX.modelo.Cliente;
+import edu.softech.MySpa.modelo.Cliente;
+import edu.softech.MySpa.modelo.Usuario;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.io.OutputStreamWriter;
 import java.io.Reader;
 import java.io.UnsupportedEncodingException;
 import java.lang.reflect.Field;
@@ -20,7 +23,12 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLEncoder;
 import java.util.LinkedHashMap;
+import java.util.LinkedList;
 import java.util.Map;
+import java.util.Queue;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import sun.net.www.http.HttpClient;
 
 /**
  *
@@ -88,6 +96,72 @@ public final class Api {
         }
 
         return json;
+    }
+
+    public JsonElement modificarCliente(Cliente c) {
+        Usuario u = c.getUsuario();
+        JsonElement json = null;
+        String acumulador = "";
+
+        String enlance = RUTA
+                + "cliente?"
+                + "nombre=" + c.getNombre()
+                + "&apellidoPaterno=" + c.getApellidoPaterno()
+                + "&apellidoMaterno=" + c.getApellidoMaterno()
+                + "&genero=" + c.getGenero()
+                + "&telefono=" + c.getTelefono()
+                + "&rfc=" + c.getRfc()
+                + "&nombreUsuario=" + u.getNombreUsuario()
+                + "&correo=" + c.getCorreo()
+                + "&contrasenia=" + u.getContrasenia()
+                + "&domicilio=" + c.getDomicilio()
+                + "&numeroUnicoCliente=" + c.getNumeroUnico();
+        try {
+            enlance = enlance.trim();
+
+            //Remplazamos los espacios por %20 para que no haya errores
+            for (int i = 0; i < enlance.length(); i++) {
+                if (enlance.charAt(i) == ' ') {
+                    acumulador += "%20";
+                } else {
+                    acumulador += enlance.charAt(i);
+                }
+            }
+
+            enlance = acumulador;
+
+            url = new URL(enlance);
+            HttpURLConnection connHttp
+                    = (HttpURLConnection) url.openConnection();
+
+            connHttp.setRequestMethod("PUT");
+            connHttp.setRequestProperty("datatype", "json");
+
+            respuestaServidor = connHttp.getResponseCode();
+
+            if (respuestaServidor == HttpURLConnection.HTTP_OK) {
+                isr = new InputStreamReader(connHttp.getInputStream());
+                br = new BufferedReader(isr);
+
+                contenidoRespuesta = "";
+
+                while ((lineaActual = br.readLine()) != null) {
+                    contenidoRespuesta += lineaActual;
+                }
+
+                br.close();
+
+                connHttp.disconnect();
+                json = parser.parse(contenidoRespuesta);
+                return json;
+            }
+
+        } catch (MalformedURLException ex) {
+            Logger.getLogger(Api.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (IOException ex) {
+            Logger.getLogger(Api.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return null;
     }
 
     /**

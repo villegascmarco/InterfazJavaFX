@@ -14,8 +14,8 @@ import com.jfoenix.controls.JFXTextArea;
 
 import com.jfoenix.controls.JFXTextField;
 import edu.softech.InterfazJavaFX.api.Api;
-import edu.softech.InterfazJavaFX.modelo.Cliente;
-import edu.softech.InterfazJavaFX.modelo.Usuario;
+import edu.softech.MySpa.modelo.Cliente;
+import edu.softech.MySpa.modelo.Usuario;
 import java.io.IOException;
 import java.net.URL;
 import java.util.LinkedList;
@@ -154,8 +154,18 @@ public class PaneClientesControlador implements Initializable {
 
     Gson gson = new Gson();
 
+    private String opcion = null;
+
+    private final String UNC_EDITAR = "-jfx-unfocus-color: f68a1f;";
+    private final String UNC_DEFAULT = "-jfx-unfocus-color: #4d4d4d;";
+    private final String UNC_NUEVO = "-jfx-unfocus-color: #00C851;";
+    private final String UNC_ELIMINAR = "-jfx-unfocus-color: #ff4444;";
+
     /**
      * Initializes the controller class.
+     *
+     * @param url
+     * @param rb
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
@@ -163,6 +173,8 @@ public class PaneClientesControlador implements Initializable {
             inicializarTabla();
             inicializarControladores();
             llenarComboBoxes();
+            inicializarOyentes();
+
             api.metodoPost();
 
         } catch (IOException ex) {
@@ -298,19 +310,107 @@ public class PaneClientesControlador implements Initializable {
         cmbGenero.getItems().addAll("F", "M", "O");
     }
 
+    private void inicializarOyentes() {
+        btnEditar.setOnAction(x -> {
+            cambiarCampos(UNC_EDITAR, true);
+            opcion = "PUT";
+        });
+
+        btnGuardar.setOnAction(x -> {
+            try {
+                cambiarCampos(UNC_DEFAULT, false);
+                prepararDatos();
+                opcion = null;
+            } catch (IOException ex) {
+                Logger.getLogger(PaneClientesControlador.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        });
+
+        btnNuevo.setOnAction(x -> {
+            cambiarCampos(UNC_NUEVO, true);
+            opcion = "POST";
+        });
+
+        btnElminar.setOnAction(x -> {
+            cambiarCampos(UNC_ELIMINAR, false);
+            opcion = "DELETE";
+        });
+    }
+
+    private void cambiarCampos(String estilo, boolean editable) {
+        txtNombre.setStyle(estilo);
+        txtNombre.setEditable(editable);
+
+        txtApellidoPaterno.setStyle(estilo);
+        txtApellidoPaterno.setEditable(editable);
+
+        txtApellidoMaterno.setStyle(estilo);
+        txtApellidoMaterno.setEditable(editable);
+
+//        cmbGenero.setStyle(estilo);
+//        cmbGenero.setEditable(editable);
+//
+        txtRfc.setStyle(estilo);
+        txtRfc.setEditable(editable);
+
+        txtDomicilio.setStyle(estilo);
+        txtDomicilio.setEditable(editable);
+
+        txtTelefono.setStyle(estilo);
+        txtTelefono.setEditable(editable);
+
+        txtCorreoElectronico.setStyle(estilo);
+        txtCorreoElectronico.setEditable(editable);
+
+        txtUsuario.setStyle(estilo);
+        txtUsuario.setEditable(editable);
+
+        txtContrasenia.setStyle(estilo);
+        txtContrasenia.setEditable(editable);
+    }
+
+    private boolean prepararDatos() throws IOException {
+
+        if (opcion != null && tblClientes.getSelectionModel().getSelectedItem() != null) {
+            Cliente c = tblClientes.getSelectionModel().getSelectedItem();
+            Usuario u = c.getUsuario();
+
+            c.setNombre(txtNombre.getText());
+            c.setApellidoPaterno(txtApellidoPaterno.getText());
+            c.setApellidoMaterno(txtApellidoMaterno.getText());
+            c.setGenero(cmbGenero.getSelectionModel().getSelectedItem().toString());
+            c.setRfc(txtRfc.getText());
+            c.setDomicilio(txtDomicilio.getText());
+            c.setTelefono(txtTelefono.getText());
+            c.setCorreo(txtCorreoElectronico.getText());
+            u.setNombreUsuario(txtUsuario.getText());
+            //u.setContrasenia(txtContrasenia.getText());
+
+            switch (opcion) {
+                case "PUT":
+                    api.modificarCliente(c);
+                    break;
+            }
+
+            inicializarTabla();
+        }
+
+        return true;
+    }
+
     private ObservableList<Cliente> obtenerDatos() throws IOException {
         ObservableList<Cliente> clientes
                 = FXCollections.observableArrayList();
 
         JsonArray jsonArray = api.consultarListado("cliente");
-
+        if (jsonArray == null) {
+            return null;
+        }
         Cliente c;
-        Queue cola = new LinkedList();
-        if (jsonArray != null) {
-            for (JsonElement jsonElement : jsonArray) {
-                c = gson.fromJson(jsonElement, Cliente.class);
-                clientes.add(c);
-            }
+
+        for (JsonElement jsonElement : jsonArray) {
+            c = gson.fromJson(jsonElement, Cliente.class);
+            clientes.add(c);
         }
 
         return clientes;
@@ -329,7 +429,6 @@ public class PaneClientesControlador implements Initializable {
 
     private void llenarCampos() {
         if (tblClientes.getSelectionModel().getSelectedItem() != null) {
-
             Cliente c = tblClientes.getSelectionModel().getSelectedItem();
             Usuario u = c.getUsuario();
 
@@ -347,6 +446,8 @@ public class PaneClientesControlador implements Initializable {
             txtUsuario.setText(u.getNombreUsuario());
             txtContrasenia.setText(u.getContrasenia());
         }
+        cambiarCampos(UNC_DEFAULT, false);
+        opcion = null;
     }
 
 }
