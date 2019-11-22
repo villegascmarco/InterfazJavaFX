@@ -58,7 +58,7 @@ public final class Api {
 
         parser = new JsonParser();
 
-        JsonArray json = null;
+        JsonArray json = null;                
 
         url = new URL(ruta);
 
