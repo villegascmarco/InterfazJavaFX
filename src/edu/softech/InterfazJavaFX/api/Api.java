@@ -6,21 +6,23 @@
 package edu.softech.InterfazJavaFX.api;
 
 import com.google.gson.JsonArray;
+import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
-import edu.softech.InterfazJavaFX.modelo.Cliente;
+import edu.softech.MySpa.modelo.Cliente;
+import edu.softech.MySpa.modelo.Usuario;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.io.Reader;
 import java.io.UnsupportedEncodingException;
 import java.lang.reflect.Field;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
+import java.net.URISyntaxException;
 import java.net.URL;
 import java.net.URLEncoder;
-import java.util.LinkedHashMap;
-import java.util.Map;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
@@ -90,6 +92,59 @@ public final class Api {
         return json;
     }
 
+    public JsonElement modificarCliente(Cliente c) throws URISyntaxException {
+        Usuario u = c.getUsuario();
+        JsonElement json = null;
+
+        String enlance = RUTA
+                + "cliente?"
+                + "nombre=" + URLEncoder.encode(c.getNombre())
+                + "&apellidoPaterno=" + URLEncoder.encode(c.getApellidoPaterno())
+                + "&apellidoMaterno=" + URLEncoder.encode(c.getApellidoMaterno())
+                + "&genero=" + URLEncoder.encode(c.getGenero())
+                + "&telefono=" + URLEncoder.encode(c.getTelefono())
+                + "&rfc=" + URLEncoder.encode(c.getRfc())
+                + "&nombreUsuario=" + u.getNombreUsuario()
+                + "&correo=" + URLEncoder.encode(c.getCorreo())
+                + "&contrasenia=" + u.getContrasenia()
+                + "&domicilio=" + URLEncoder.encode(c.getDomicilio())
+                + "&numeroUnicoCliente=" + URLEncoder.encode(c.getNumeroUnico());
+        try {
+
+            url = new URL(enlance);
+            HttpURLConnection connHttp
+                    = (HttpURLConnection) url.openConnection();
+
+            connHttp.setRequestMethod("PUT");
+            connHttp.setRequestProperty("datatype", "json");
+
+            respuestaServidor = connHttp.getResponseCode();
+
+            if (respuestaServidor == HttpURLConnection.HTTP_OK) {
+                isr = new InputStreamReader(connHttp.getInputStream());
+                br = new BufferedReader(isr);
+
+                contenidoRespuesta = "";
+
+                while ((lineaActual = br.readLine()) != null) {
+                    contenidoRespuesta += lineaActual;
+                }
+
+                br.close();
+
+                connHttp.disconnect();
+                json = parser.parse(contenidoRespuesta);
+                return json;
+            }
+
+        } catch (MalformedURLException ex) {
+            Logger.getLogger(Api.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (IOException ex) {
+            Logger.getLogger(Api.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return null;
+    }
+
     /**
      * Este metodo regresa sólo un objeto de tipo Json
      *
@@ -137,12 +192,4 @@ public final class Api {
 
     }
 
-    public void metodoPost() throws MalformedURLException, UnsupportedEncodingException, IOException {
-
-        Cliente c = new Cliente();
-
-        for (Field f : c.getClass().getFields()) {
-            System.out.println(f.getName());
-        }
-    }
 }

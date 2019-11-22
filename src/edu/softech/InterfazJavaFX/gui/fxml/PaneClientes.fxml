@@ -35,9 +35,9 @@
                             <children>
                                 <VBox prefHeight="710.0" prefWidth="312.0" spacing="30.0">
                                     <children>
-                                        <JFXTextField fx:id="txtNombre" focusColor="#f68a1f" labelFloat="true" prefHeight="31.0" prefWidth="242.0" promptText="Nombre" />
-                                        <JFXTextField fx:id="txtApellidoPaterno" focusColor="#f68a1f" labelFloat="true" prefHeight="31.0" prefWidth="242.0" promptText="Apellido Paterno" />
-                                        <JFXTextField fx:id="txtApellidoMaterno" focusColor="#f68a1f" labelFloat="true" prefHeight="31.0" prefWidth="242.0" promptText="Apellido Materno" />
+                                        <JFXTextField fx:id="txtNombre" editable="false" focusColor="#f68a1f" labelFloat="true" prefHeight="31.0" prefWidth="242.0" promptText="Nombre" />
+                                        <JFXTextField fx:id="txtApellidoPaterno" editable="false" focusColor="#f68a1f" labelFloat="true" prefHeight="31.0" prefWidth="242.0" promptText="Apellido Paterno" />
+                                        <JFXTextField fx:id="txtApellidoMaterno" editable="false" focusColor="#f68a1f" labelFloat="true" prefHeight="31.0" prefWidth="242.0" promptText="Apellido Materno" />
                                         <FlowPane hgap="25.0" prefHeight="200.0" prefWidth="200.0">
                                             <children>
                                                 <JFXComboBox fx:id="cmbGenero" focusColor="#f68a1f" labelFloat="true" prefHeight="31.0" prefWidth="195.0" promptText="Genero" />
@@ -52,12 +52,12 @@
                                                 </JFXButton>
                                             </children>
                                         </FlowPane>
-                                        <JFXTextField fx:id="txtRfc" focusColor="#f68a1f" labelFloat="true" prefHeight="31.0" prefWidth="242.0" promptText="RFC" />
-                                        <JFXTextArea fx:id="txtDomicilio" focusColor="#f68a1f" labelFloat="true" prefHeight="111.0" prefWidth="242.0" promptText="Domicilio" />
-                                        <JFXTextField fx:id="txtTelefono" focusColor="#f68a1f" labelFloat="true" prefHeight="31.0" prefWidth="242.0" promptText="Teléfono" />
-                                        <JFXTextField fx:id="txtCorreoElectronico" focusColor="#f68a1f" labelFloat="true" prefHeight="31.0" prefWidth="242.0" promptText="Correo Electrónico" />
-                                        <JFXTextField fx:id="txtUsuario" focusColor="#f68a1f" labelFloat="true" prefHeight="31.0" prefWidth="242.0" promptText="Nombre de Usuario" />
-                                        <JFXTextField fx:id="txtContrasenia" focusColor="#f68a1f" labelFloat="true" prefHeight="31.0" prefWidth="242.0" promptText="Contraseña" />
+                                        <JFXTextField fx:id="txtRfc" editable="false" focusColor="#f68a1f" labelFloat="true" prefHeight="31.0" prefWidth="242.0" promptText="RFC" />
+                                        <JFXTextArea fx:id="txtDomicilio" editable="false" focusColor="#f68a1f" labelFloat="true" prefHeight="111.0" prefWidth="242.0" promptText="Domicilio" />
+                                        <JFXTextField fx:id="txtTelefono" editable="false" focusColor="#f68a1f" labelFloat="true" prefHeight="31.0" prefWidth="242.0" promptText="Teléfono" />
+                                        <JFXTextField fx:id="txtCorreoElectronico" editable="false" focusColor="#f68a1f" labelFloat="true" prefHeight="31.0" prefWidth="242.0" promptText="Correo Electrónico" />
+                                        <JFXTextField fx:id="txtUsuario" editable="false" focusColor="#f68a1f" labelFloat="true" prefHeight="31.0" prefWidth="242.0" promptText="Nombre de Usuario" />
+                                        <JFXTextField fx:id="txtContrasenia" editable="false" focusColor="#f68a1f" labelFloat="true" prefHeight="31.0" prefWidth="242.0" promptText="Contraseña" />
                                         <FlowPane alignment="CENTER" hgap="20.0" prefHeight="200.0" prefWidth="200.0" vgap="20.0">
                                             <children>
                                                 <JFXButton fx:id="btnNuevo" prefHeight="31.0" prefWidth="103.0" style="-fx-background-color: #00C851;" text="Nuevo" textFill="WHITE">
