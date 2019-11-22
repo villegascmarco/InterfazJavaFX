@@ -17,12 +17,13 @@ import edu.softech.InterfazJavaFX.api.Api;
 import edu.softech.MySpa.modelo.Cliente;
 import edu.softech.MySpa.modelo.Usuario;
 import java.io.IOException;
+import java.net.ConnectException;
+import java.net.URISyntaxException;
 import java.net.URL;
-import java.util.LinkedList;
-import java.util.Queue;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javafx.application.Platform;
 import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.value.ObservableValue;
@@ -30,12 +31,12 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.Alert;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableColumn.CellDataFeatures;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.MouseEvent;
-import javafx.scene.layout.AnchorPane;
 import javafx.util.Callback;
 
 /**
@@ -258,7 +259,7 @@ public class PaneClientesControlador implements Initializable {
     public JFXButton getBtnElminar() {
         return btnElminar;
     }
-    
+
     /**
      * Initializes the controller class.
      *
@@ -269,11 +270,8 @@ public class PaneClientesControlador implements Initializable {
     public void initialize(URL url, ResourceBundle rb) {
         try {
             inicializarTabla();
-            inicializarControladores();
             llenarComboBoxes();
             inicializarOyentes();
-
-            api.metodoPost();
 
         } catch (IOException ex) {
             Logger.getLogger(PaneClientesControlador.class.getName()).log(Level.SEVERE, null, ex);
@@ -281,6 +279,8 @@ public class PaneClientesControlador implements Initializable {
     }
 
     private void inicializarTabla() throws IOException {
+        tblClientes.getColumns().clear();
+
         tblClientes.setItems(obtenerDatos());
         tblClientes.autosize();
         tblClientes.setDisable(false);
@@ -409,6 +409,14 @@ public class PaneClientesControlador implements Initializable {
     }
 
     private void inicializarOyentes() {
+
+        tblClientes.setOnMouseClicked((MouseEvent x) -> {
+            llenarCampos();
+        });
+        tblClientes.setOnKeyReleased(x -> {
+            llenarCampos();
+        });
+
         btnEditar.setOnAction(x -> {
             cambiarCampos(UNC_EDITAR, true);
             opcion = "PUT";
@@ -418,8 +426,9 @@ public class PaneClientesControlador implements Initializable {
             try {
                 cambiarCampos(UNC_DEFAULT, false);
                 prepararDatos();
-                opcion = null;
             } catch (IOException ex) {
+                Logger.getLogger(PaneClientesControlador.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (URISyntaxException ex) {
                 Logger.getLogger(PaneClientesControlador.class.getName()).log(Level.SEVERE, null, ex);
             }
         });
@@ -467,7 +476,7 @@ public class PaneClientesControlador implements Initializable {
         txtContrasenia.setEditable(editable);
     }
 
-    private boolean prepararDatos() throws IOException {
+    private boolean prepararDatos() throws IOException, URISyntaxException {
 
         if (opcion != null && tblClientes.getSelectionModel().getSelectedItem() != null) {
             Cliente c = tblClientes.getSelectionModel().getSelectedItem();
@@ -483,14 +492,38 @@ public class PaneClientesControlador implements Initializable {
             c.setCorreo(txtCorreoElectronico.getText());
             u.setNombreUsuario(txtUsuario.getText());
             //u.setContrasenia(txtContrasenia.getText());
+            Platform.runLater(() -> {
 
-            switch (opcion) {
-                case "PUT":
-                    api.modificarCliente(c);
-                    break;
-            }
+                double precio = 0;
+                Alert alerta = new Alert(Alert.AlertType.INFORMATION);
+                alerta.setTitle("Consultando servidor... ");
+                alerta.setContentText("Consultando datos del servidor...");
 
-            inicializarTabla();
+                try {
+                    alerta.show();
+
+                    switch (opcion) {
+                        case "PUT":
+                            api.modificarCliente(c);
+                            opcion = null;
+                            break;
+                    }
+                    inicializarTabla();
+
+                    alerta.hide();
+                } catch (java.net.UnknownHostException uhe) {
+                    Alert a = new Alert(Alert.AlertType.ERROR);
+
+                    alerta.hide();
+
+                    a.setTitle("Sin servicio a internet");
+                    a.setContentText("No se pudo conectar con el servicio de divisas");
+                    a.showAndWait();
+                } catch (Exception ex) {
+                    Logger.getLogger(PaneClientesControlador.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            });
+
         }
 
         return true;
@@ -499,30 +532,50 @@ public class PaneClientesControlador implements Initializable {
     private ObservableList<Cliente> obtenerDatos() throws IOException {
         ObservableList<Cliente> clientes
                 = FXCollections.observableArrayList();
+        Platform.runLater(() -> {
 
-        JsonArray jsonArray = api.consultarListado("cliente");
-        if (jsonArray == null) {
-            return null;
-        }
-        Cliente c;
+            double precio = 0;
+            Alert alerta = new Alert(Alert.AlertType.INFORMATION);
+            alerta.setTitle("Consultando servidor... ");
+            alerta.setContentText("Consultando datos del servidor...");
 
-        for (JsonElement jsonElement : jsonArray) {
-            c = gson.fromJson(jsonElement, Cliente.class);
-            clientes.add(c);
-        }
+            try {
+                alerta.show();
+
+                JsonArray jsonArray = api.consultarListado("cliente");
+                if (jsonArray == null) {
+                    return;
+                }
+                Cliente c;
+
+                for (JsonElement jsonElement : jsonArray) {
+                    c = gson.fromJson(jsonElement, Cliente.class);
+                    clientes.add(c);
+                }
+
+                alerta.hide();
+            } catch (java.net.UnknownHostException uhe) {
+                Alert a = new Alert(Alert.AlertType.ERROR);
+
+                alerta.hide();
+
+                a.setTitle("Sin servicio a internet");
+                a.setContentText("No se pudo conectar con el servicio");
+                a.showAndWait();
+            } catch (ConnectException ex) {
+                Alert a = new Alert(Alert.AlertType.ERROR);
+
+                alerta.hide();
+
+                a.setTitle("Servidor no disponible");
+                a.setContentText("No se pudo conectar con el servicio");
+                a.showAndWait();
+            } catch (Exception ex) {
+                Logger.getLogger(PaneClientesControlador.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        });
 
         return clientes;
-    }
-
-    private void inicializarControladores() throws IOException {
-
-        tblClientes.setOnMouseClicked((MouseEvent x) -> {
-            llenarCampos();
-        });
-        tblClientes.setOnKeyReleased(x -> {
-            llenarCampos();
-        });
-
     }
 
     private void llenarCampos() {

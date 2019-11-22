@@ -14,21 +14,13 @@ import edu.softech.MySpa.modelo.Usuario;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.io.OutputStreamWriter;
-import java.io.Reader;
-import java.io.UnsupportedEncodingException;
-import java.lang.reflect.Field;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
+import java.net.URISyntaxException;
 import java.net.URL;
 import java.net.URLEncoder;
-import java.util.LinkedHashMap;
-import java.util.LinkedList;
-import java.util.Map;
-import java.util.Queue;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import sun.net.www.http.HttpClient;
 
 /**
  *
@@ -98,43 +90,24 @@ public final class Api {
         return json;
     }
 
-    public String quitarEspacios(String enlance) {
-        String respuesta = "";
-
-        enlance = enlance.trim();
-
-        //Remplazamos los espacios por %20 para que no haya errores
-        for (int i = 0; i < enlance.length(); i++) {
-            if (enlance.charAt(i) == ' ') {
-                respuesta += "%20";
-            } else {
-                respuesta += enlance.charAt(i);
-            }
-        }
-
-        return respuesta;
-    }
-
-    public JsonElement modificarCliente(Cliente c) {
+    public JsonElement modificarCliente(Cliente c) throws URISyntaxException {
         Usuario u = c.getUsuario();
         JsonElement json = null;
 
         String enlance = RUTA
                 + "cliente?"
-                + "nombre=" + c.getNombre()
-                + "&apellidoPaterno=" + c.getApellidoPaterno()
-                + "&apellidoMaterno=" + c.getApellidoMaterno()
-                + "&genero=" + c.getGenero()
-                + "&telefono=" + c.getTelefono()
-                + "&rfc=" + c.getRfc()
+                + "nombre=" + URLEncoder.encode(c.getNombre())
+                + "&apellidoPaterno=" + URLEncoder.encode(c.getApellidoPaterno())
+                + "&apellidoMaterno=" + URLEncoder.encode(c.getApellidoMaterno())
+                + "&genero=" + URLEncoder.encode(c.getGenero())
+                + "&telefono=" + URLEncoder.encode(c.getTelefono())
+                + "&rfc=" + URLEncoder.encode(c.getRfc())
                 + "&nombreUsuario=" + u.getNombreUsuario()
-                + "&correo=" + c.getCorreo()
+                + "&correo=" + URLEncoder.encode(c.getCorreo())
                 + "&contrasenia=" + u.getContrasenia()
-                + "&domicilio=" + c.getDomicilio()
-                + "&numeroUnicoCliente=" + c.getNumeroUnico();
+                + "&domicilio=" + URLEncoder.encode(c.getDomicilio())
+                + "&numeroUnicoCliente=" + URLEncoder.encode(c.getNumeroUnico());
         try {
-
-            enlance = quitarEspacios(enlance);
 
             url = new URL(enlance);
             HttpURLConnection connHttp
@@ -217,12 +190,4 @@ public final class Api {
 
     }
 
-    public void metodoPost() throws MalformedURLException, UnsupportedEncodingException, IOException {
-
-        Cliente c = new Cliente();
-
-        for (Field f : c.getClass().getFields()) {
-            System.out.println(f.getName());
-        }
-    }
 }
