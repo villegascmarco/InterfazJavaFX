@@ -19,12 +19,12 @@ public class Notificacion {
 
     public void agregado(String objeto, String titulo, String texto) {
         notificacion = Notifications.create()
-                .title(titulo)
-                .text(texto)
+                .title("TITULO")
+                .text("TEXTO")
                 .graphic(null)
                 .hideAfter(Duration.seconds(5))
                 .position(Pos.TOP_LEFT);
-        notificacion.show();
+        notificacion.showConfirm();
 
     }
 }

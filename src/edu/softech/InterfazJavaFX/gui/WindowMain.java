@@ -3,6 +3,7 @@ package edu.softech.InterfazJavaFX.gui;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
 import javafx.scene.image.Image;
 import javafx.stage.Stage;
 
@@ -15,6 +16,8 @@ public class WindowMain extends Application {
     Stage window;
 
     Scene scene;
+
+    Alert alert;
 
     public WindowMain() {
         fxmll = new FXMLLoader(System.class.getResource("/edu/softech/"
@@ -29,6 +32,8 @@ public class WindowMain extends Application {
         window = primaryStage;
         window.setScene(scene);
 
+        alert = new Alert(Alert.AlertType.NONE);
+
         window.setMinHeight(768);
         window.setMinWidth(1100);
 //        window.setMinWidth(1366);
@@ -37,6 +42,13 @@ public class WindowMain extends Application {
         window.getIcons().add(IMG_LOGO);
         window.show();
 
+    }
+
+    public void mostrarAlerta(String titulo, String mensaje, Alert.AlertType tipoAlerta) {
+        alert.setTitle(titulo);
+        alert.setContentText(mensaje);
+        alert.setAlertType(tipoAlerta);
+        alert.showAndWait();
     }
 
 }

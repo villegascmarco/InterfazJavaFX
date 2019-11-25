@@ -11,9 +11,9 @@ import com.google.gson.JsonElement;
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXComboBox;
 import com.jfoenix.controls.JFXTextArea;
-
 import com.jfoenix.controls.JFXTextField;
 import edu.softech.InterfazJavaFX.api.Api;
+import edu.softech.InterfazJavaFX.notificacion.Notificacion;
 import edu.softech.MySpa.modelo.Cliente;
 import edu.softech.MySpa.modelo.Usuario;
 import java.io.IOException;
@@ -29,8 +29,11 @@ import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.geometry.Pos;
 import javafx.scene.control.Alert;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableColumn.CellDataFeatures;
@@ -38,6 +41,8 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.MouseEvent;
 import javafx.util.Callback;
+import javafx.util.Duration;
+import org.controlsfx.control.Notifications;
 
 /**
  * FXML Controller class
@@ -504,13 +509,17 @@ public class PaneClientesControlador implements Initializable {
 
                     switch (opcion) {
                         case "PUT":
-                            api.modificarCliente(c);
+
+                            Cliente cs = gson.fromJson(api.modificarCliente(c), Cliente.class);
+
                             opcion = null;
                             break;
                     }
                     inicializarTabla();
 
                     alerta.hide();
+                    Notificacion kk = new Notificacion();
+                    kk.agregado(opcion, opcion, opcion);
                 } catch (java.net.UnknownHostException uhe) {
                     Alert a = new Alert(Alert.AlertType.ERROR);
 
