@@ -14,15 +14,16 @@ import com.jfoenix.controls.JFXTextArea;
 
 import com.jfoenix.controls.JFXTextField;
 import edu.softech.InterfazJavaFX.api.Api;
-import edu.softech.InterfazJavaFX.modelo.Cliente;
-import edu.softech.InterfazJavaFX.modelo.Usuario;
+import edu.softech.MySpa.modelo.Cliente;
+import edu.softech.MySpa.modelo.Usuario;
 import java.io.IOException;
+import java.net.ConnectException;
+import java.net.URISyntaxException;
 import java.net.URL;
-import java.util.LinkedList;
-import java.util.Queue;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javafx.application.Platform;
 import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.value.ObservableValue;
@@ -30,12 +31,12 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.Alert;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableColumn.CellDataFeatures;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.MouseEvent;
-import javafx.scene.layout.AnchorPane;
 import javafx.util.Callback;
 
 /**
@@ -44,12 +45,6 @@ import javafx.util.Callback;
  * @author Villegas
  */
 public class PaneClientesControlador implements Initializable {
-
-    @FXML
-    private AnchorPane windowClientes;
-
-    @FXML
-    private AnchorPane apIzquierda;
 
     @FXML
     private TableView<Cliente> tblClientes;
@@ -97,15 +92,6 @@ public class PaneClientesControlador implements Initializable {
     private TableColumn<Cliente, String> colNombreUsuario;
 
     @FXML
-    private TableColumn<Cliente, String> colContrasenia;
-
-    @FXML
-    private TableColumn<Cliente, String> colRol;
-
-    @FXML
-    private AnchorPane apDerecha;
-
-    @FXML
     private JFXTextField txtNombre;
 
     @FXML
@@ -116,9 +102,6 @@ public class PaneClientesControlador implements Initializable {
 
     @FXML
     private JFXComboBox cmbGenero;
-
-    @FXML
-    private JFXButton btnAgregarGenero;
 
     @FXML
     private JFXTextField txtRfc;
@@ -154,16 +137,141 @@ public class PaneClientesControlador implements Initializable {
 
     Gson gson = new Gson();
 
+    private String opcion = null;
+
+    private final String UNC_EDITAR = "-jfx-unfocus-color: f68a1f;";
+    private final String UNC_DEFAULT = "-jfx-unfocus-color: #4d4d4d;";
+    private final String UNC_NUEVO = "-jfx-unfocus-color: #00C851;";
+    private final String UNC_ELIMINAR = "-jfx-unfocus-color: #ff4444;";
+
+    public TableView<Cliente> getTblClientes() {
+        return tblClientes;
+    }
+
+    public TableColumn<Cliente, Integer> getColIdPersona() {
+        return colIdPersona;
+    }
+
+    public TableColumn<Cliente, String> getColNombre() {
+        return colNombre;
+    }
+
+    public TableColumn<Cliente, String> getColApellidoPaterno() {
+        return colApellidoPaterno;
+    }
+
+    public TableColumn<Cliente, String> getColApellidoMaterno() {
+        return colApellidoMaterno;
+    }
+
+    public TableColumn<Cliente, String> getColGenero() {
+        return colGenero;
+    }
+
+    public TableColumn<Cliente, String> getColDomicilio() {
+        return colDomicilio;
+    }
+
+    public TableColumn<Cliente, String> getColtelefono() {
+        return coltelefono;
+    }
+
+    public TableColumn<Cliente, String> getColRfc() {
+        return colRfc;
+    }
+
+    public TableColumn<Cliente, Integer> getColIdCliente() {
+        return colIdCliente;
+    }
+
+    public TableColumn<Cliente, String> getColNumeroUnico() {
+        return colNumeroUnico;
+    }
+
+    public TableColumn<Cliente, String> getColCorreo() {
+        return colCorreo;
+    }
+
+    public TableColumn<Cliente, Integer> getColEstatus() {
+        return colEstatus;
+    }
+
+    public TableColumn<Cliente, Integer> getColIdUsuario() {
+        return colIdUsuario;
+    }
+
+    public TableColumn<Cliente, String> getColNombreUsuario() {
+        return colNombreUsuario;
+    }
+
+    public JFXTextField getTxtNombre() {
+        return txtNombre;
+    }
+
+    public JFXTextField getTxtApellidoPaterno() {
+        return txtApellidoPaterno;
+    }
+
+    public JFXTextField getTxtApellidoMaterno() {
+        return txtApellidoMaterno;
+    }
+
+    public JFXComboBox getCmbGenero() {
+        return cmbGenero;
+    }
+
+    public JFXTextField getTxtRfc() {
+        return txtRfc;
+    }
+
+    public JFXTextArea getTxtDomicilio() {
+        return txtDomicilio;
+    }
+
+    public JFXTextField getTxtTelefono() {
+        return txtTelefono;
+    }
+
+    public JFXTextField getTxtCorreoElectronico() {
+        return txtCorreoElectronico;
+    }
+
+    public JFXTextField getTxtUsuario() {
+        return txtUsuario;
+    }
+
+    public JFXTextField getTxtContrasenia() {
+        return txtContrasenia;
+    }
+
+    public JFXButton getBtnNuevo() {
+        return btnNuevo;
+    }
+
+    public JFXButton getBtnGuardar() {
+        return btnGuardar;
+    }
+
+    public JFXButton getBtnEditar() {
+        return btnEditar;
+    }
+
+    public JFXButton getBtnElminar() {
+        return btnElminar;
+    }
+
     /**
      * Initializes the controller class.
+     *
+     * @param url
+     * @param rb
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         try {
             inicializarTabla();
-            inicializarControladores();
             llenarComboBoxes();
-            api.metodoPost();
+            inicializarOyentes();
 
         } catch (IOException ex) {
             Logger.getLogger(PaneClientesControlador.class.getName()).log(Level.SEVERE, null, ex);
@@ -171,6 +279,8 @@ public class PaneClientesControlador implements Initializable {
     }
 
     private void inicializarTabla() throws IOException {
+        tblClientes.getColumns().clear();
+
         tblClientes.setItems(obtenerDatos());
         tblClientes.autosize();
         tblClientes.setDisable(false);
@@ -298,25 +408,7 @@ public class PaneClientesControlador implements Initializable {
         cmbGenero.getItems().addAll("F", "M", "O");
     }
 
-    private ObservableList<Cliente> obtenerDatos() throws IOException {
-        ObservableList<Cliente> clientes
-                = FXCollections.observableArrayList();
-
-        JsonArray jsonArray = api.consultarListado("cliente");
-
-        Cliente c;
-        Queue cola = new LinkedList();
-        if (jsonArray != null) {
-            for (JsonElement jsonElement : jsonArray) {
-                c = gson.fromJson(jsonElement, Cliente.class);
-                clientes.add(c);
-            }
-        }
-
-        return clientes;
-    }
-
-    private void inicializarControladores() throws IOException {
+    private void inicializarOyentes() {
 
         tblClientes.setOnMouseClicked((MouseEvent x) -> {
             llenarCampos();
@@ -325,11 +417,169 @@ public class PaneClientesControlador implements Initializable {
             llenarCampos();
         });
 
+        btnEditar.setOnAction(x -> {
+            cambiarCampos(UNC_EDITAR, true);
+            opcion = "PUT";
+        });
+
+        btnGuardar.setOnAction(x -> {
+            try {
+                cambiarCampos(UNC_DEFAULT, false);
+                prepararDatos();
+            } catch (IOException ex) {
+                Logger.getLogger(PaneClientesControlador.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (URISyntaxException ex) {
+                Logger.getLogger(PaneClientesControlador.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        });
+
+        btnNuevo.setOnAction(x -> {
+            cambiarCampos(UNC_NUEVO, true);
+            opcion = "POST";
+        });
+
+        btnElminar.setOnAction(x -> {
+            cambiarCampos(UNC_ELIMINAR, false);
+            opcion = "DELETE";
+        });
+    }
+
+    private void cambiarCampos(String estilo, boolean editable) {
+        txtNombre.setStyle(estilo);
+        txtNombre.setEditable(editable);
+
+        txtApellidoPaterno.setStyle(estilo);
+        txtApellidoPaterno.setEditable(editable);
+
+        txtApellidoMaterno.setStyle(estilo);
+        txtApellidoMaterno.setEditable(editable);
+
+//        cmbGenero.setStyle(estilo);
+//        cmbGenero.setEditable(editable);
+//
+        txtRfc.setStyle(estilo);
+        txtRfc.setEditable(editable);
+
+        txtDomicilio.setStyle(estilo);
+        txtDomicilio.setEditable(editable);
+
+        txtTelefono.setStyle(estilo);
+        txtTelefono.setEditable(editable);
+
+        txtCorreoElectronico.setStyle(estilo);
+        txtCorreoElectronico.setEditable(editable);
+
+        txtUsuario.setStyle(estilo);
+        txtUsuario.setEditable(editable);
+
+        txtContrasenia.setStyle(estilo);
+        txtContrasenia.setEditable(editable);
+    }
+
+    private boolean prepararDatos() throws IOException, URISyntaxException {
+
+        if (opcion != null && tblClientes.getSelectionModel().getSelectedItem() != null) {
+            Cliente c = tblClientes.getSelectionModel().getSelectedItem();
+            Usuario u = c.getUsuario();
+
+            c.setNombre(txtNombre.getText());
+            c.setApellidoPaterno(txtApellidoPaterno.getText());
+            c.setApellidoMaterno(txtApellidoMaterno.getText());
+            c.setGenero(cmbGenero.getSelectionModel().getSelectedItem().toString());
+            c.setRfc(txtRfc.getText());
+            c.setDomicilio(txtDomicilio.getText());
+            c.setTelefono(txtTelefono.getText());
+            c.setCorreo(txtCorreoElectronico.getText());
+            u.setNombreUsuario(txtUsuario.getText());
+            //u.setContrasenia(txtContrasenia.getText());
+            Platform.runLater(() -> {
+
+                double precio = 0;
+                Alert alerta = new Alert(Alert.AlertType.INFORMATION);
+                alerta.setTitle("Consultando servidor... ");
+                alerta.setContentText("Consultando datos del servidor...");
+
+                try {
+                    alerta.show();
+
+                    switch (opcion) {
+                        case "PUT":
+                            api.modificarCliente(c);
+                            opcion = null;
+                            break;
+                    }
+                    inicializarTabla();
+
+                    alerta.hide();
+                } catch (java.net.UnknownHostException uhe) {
+                    Alert a = new Alert(Alert.AlertType.ERROR);
+
+                    alerta.hide();
+
+                    a.setTitle("Sin servicio a internet");
+                    a.setContentText("No se pudo conectar con el servicio de divisas");
+                    a.showAndWait();
+                } catch (Exception ex) {
+                    Logger.getLogger(PaneClientesControlador.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            });
+
+        }
+
+        return true;
+    }
+
+    private ObservableList<Cliente> obtenerDatos() throws IOException {
+        ObservableList<Cliente> clientes
+                = FXCollections.observableArrayList();
+        Platform.runLater(() -> {
+
+            double precio = 0;
+            Alert alerta = new Alert(Alert.AlertType.INFORMATION);
+            alerta.setTitle("Consultando servidor... ");
+            alerta.setContentText("Consultando datos del servidor...");
+
+            try {
+                alerta.show();
+
+                JsonArray jsonArray = api.consultarListado("cliente");
+                if (jsonArray == null) {
+                    return;
+                }
+                Cliente c;
+
+                for (JsonElement jsonElement : jsonArray) {
+                    c = gson.fromJson(jsonElement, Cliente.class);
+                    clientes.add(c);
+                }
+
+                alerta.hide();
+            } catch (java.net.UnknownHostException uhe) {
+                Alert a = new Alert(Alert.AlertType.ERROR);
+
+                alerta.hide();
+
+                a.setTitle("Sin servicio a internet");
+                a.setContentText("No se pudo conectar con el servicio");
+                a.showAndWait();
+            } catch (ConnectException ex) {
+                Alert a = new Alert(Alert.AlertType.ERROR);
+
+                alerta.hide();
+
+                a.setTitle("Servidor no disponible");
+                a.setContentText("No se pudo conectar con el servicio");
+                a.showAndWait();
+            } catch (Exception ex) {
+                Logger.getLogger(PaneClientesControlador.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        });
+
+        return clientes;
     }
 
     private void llenarCampos() {
         if (tblClientes.getSelectionModel().getSelectedItem() != null) {
-
             Cliente c = tblClientes.getSelectionModel().getSelectedItem();
             Usuario u = c.getUsuario();
 
@@ -347,6 +597,8 @@ public class PaneClientesControlador implements Initializable {
             txtUsuario.setText(u.getNombreUsuario());
             txtContrasenia.setText(u.getContrasenia());
         }
+        cambiarCampos(UNC_DEFAULT, false);
+        opcion = null;
     }
 
 }
