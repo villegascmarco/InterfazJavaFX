@@ -24,7 +24,7 @@
                     <children>
                         <JFXScrollPane style="-fx-background-color: e1e2e1;" AnchorPane.bottomAnchor="57.0" AnchorPane.leftAnchor="6.0" AnchorPane.rightAnchor="6.0" AnchorPane.topAnchor="23.0">
                             <children>
-                                <TableView prefHeight="768.0" prefWidth="479.0">
+                                <TableView prefHeight="768.0" prefWidth="479.0" tableMenuButtonVisible="true">
                                     <columns>
                                         <TableColumn prefWidth="75.0" text="NmEmpleado" />
                                         <TableColumn prefWidth="75.0" text="Nombre" />
@@ -46,7 +46,7 @@
                 </AnchorPane>
             </center>
          <right>
-            <ScrollPane style="-fx-background-color: e1e2e1;" BorderPane.alignment="CENTER">
+            <ScrollPane hbarPolicy="NEVER" style="-fx-background-color: e1e2e1;" BorderPane.alignment="CENTER">
                <content>
                       <AnchorPane fx:id="apDerecha" prefWidth="312.0" style="-fx-background-color: e1e2e1;">
                      <children>
