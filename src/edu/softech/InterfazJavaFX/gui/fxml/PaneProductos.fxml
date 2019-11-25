@@ -49,6 +49,8 @@
                               <JFXTextField fx:id="txtNombre" alignment="TOP_LEFT" focusColor="#f68a1f" labelFloat="true" promptText="Nombre" />
                               <JFXTextField focusColor="#f68a1f" labelFloat="true" promptText="Marca" />
                               <JFXTextField fx:id="txtPrecioUso" focusColor="#f68a1f" labelFloat="true" promptText="Precio Uso" />
+                              <JFXTextField fx:id="txtCantidad" focusColor="#f68a1f" promptText="Cantidad" />
+                              <JFXTextField fx:id="txtSucursal" promptText="Sucursal" />
                               <JFXComboBox fx:id="cmbEstatus" focusColor="#f68a1f" labelFloat="true" prefWidth="272.0" promptText="Estatus" />
                               <FlowPane alignment="CENTER" hgap="20.0" rowValignment="TOP" vgap="20.0">
                                  <children>

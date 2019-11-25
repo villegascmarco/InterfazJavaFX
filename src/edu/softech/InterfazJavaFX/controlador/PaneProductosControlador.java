@@ -42,6 +42,10 @@ public class PaneProductosControlador implements Initializable {
     @FXML
     private JFXTextField txtPrecioUso;
     @FXML
+    private JFXTextField txtCantidad;
+    @FXML
+    private JFXTextField txtSucursal;
+    @FXML
     private JFXComboBox<?> cmbEstatus;
     @FXML
     private JFXButton btnNuevo;
