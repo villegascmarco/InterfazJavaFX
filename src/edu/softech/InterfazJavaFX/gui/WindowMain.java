@@ -15,7 +15,7 @@ public class WindowMain extends Application {
     Stage window;
 
     Scene scene;
-
+    
     public WindowMain() {
         fxmll = new FXMLLoader(System.class.getResource("/edu/softech/"
                 + "InterfazJavaFX/gui/fxml/WindowMain.fxml"));
