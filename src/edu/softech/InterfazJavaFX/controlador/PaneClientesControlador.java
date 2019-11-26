@@ -13,9 +13,9 @@ import com.jfoenix.controls.JFXComboBox;
 import com.jfoenix.controls.JFXTextArea;
 import com.jfoenix.controls.JFXTextField;
 import edu.softech.InterfazJavaFX.api.Api;
-import edu.softech.InterfazJavaFX.notificacion.Notificacion;
 import edu.softech.MySpa.modelo.Cliente;
 import edu.softech.MySpa.modelo.Usuario;
+import edu.softech.InterfazJavaFX.gui.WindowMain;
 import java.io.IOException;
 import java.net.ConnectException;
 import java.net.URISyntaxException;
@@ -29,11 +29,8 @@ import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.geometry.Pos;
 import javafx.scene.control.Alert;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableColumn.CellDataFeatures;
@@ -41,8 +38,6 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.MouseEvent;
 import javafx.util.Callback;
-import javafx.util.Duration;
-import org.controlsfx.control.Notifications;
 
 /**
  * FXML Controller class
@@ -141,6 +136,8 @@ public class PaneClientesControlador implements Initializable {
     Api api = new Api();
 
     Gson gson = new Gson();
+
+    WindowMain main = new WindowMain();
 
     private String opcion = null;
 
@@ -286,8 +283,8 @@ public class PaneClientesControlador implements Initializable {
     private void inicializarTabla() throws IOException {
         tblClientes.getColumns().clear();
 
+        
         tblClientes.setItems(obtenerDatos());
-        tblClientes.autosize();
         tblClientes.setDisable(false);
 
         //idPersona
@@ -500,12 +497,9 @@ public class PaneClientesControlador implements Initializable {
             Platform.runLater(() -> {
 
                 double precio = 0;
-                Alert alerta = new Alert(Alert.AlertType.INFORMATION);
-                alerta.setTitle("Consultando servidor... ");
-                alerta.setContentText("Consultando datos del servidor...");
-
                 try {
-                    alerta.show();
+
+                    main.mostrarAlerta("Consultando servidor... ", "Consultando datos del servidor...", Alert.AlertType.INFORMATION);
 
                     switch (opcion) {
                         case "PUT":
@@ -517,17 +511,14 @@ public class PaneClientesControlador implements Initializable {
                     }
                     inicializarTabla();
 
-                    alerta.hide();
-                    Notificacion kk = new Notificacion();
-                    kk.agregado(opcion, opcion, opcion);
+                    main.ocultarAlerta();
+
                 } catch (java.net.UnknownHostException uhe) {
-                    Alert a = new Alert(Alert.AlertType.ERROR);
 
-                    alerta.hide();
+                    main.ocultarAlerta();
 
-                    a.setTitle("Sin servicio a internet");
-                    a.setContentText("No se pudo conectar con el servicio de divisas");
-                    a.showAndWait();
+                    main.mostrarAlerta("Sin servicio a internet", "No se pudo conectar", Alert.AlertType.ERROR);
+
                 } catch (Exception ex) {
                     Logger.getLogger(PaneClientesControlador.class.getName()).log(Level.SEVERE, null, ex);
                 }
@@ -544,12 +535,9 @@ public class PaneClientesControlador implements Initializable {
         Platform.runLater(() -> {
 
             double precio = 0;
-            Alert alerta = new Alert(Alert.AlertType.INFORMATION);
-            alerta.setTitle("Consultando servidor... ");
-            alerta.setContentText("Consultando datos del servidor...");
 
             try {
-                alerta.show();
+                main.mostrarAlerta("Consultando servidor... ", "Consultando datos del servidor...", Alert.AlertType.INFORMATION);
 
                 JsonArray jsonArray = api.consultarListado("cliente");
                 if (jsonArray == null) {
@@ -562,23 +550,17 @@ public class PaneClientesControlador implements Initializable {
                     clientes.add(c);
                 }
 
-                alerta.hide();
+                main.ocultarAlerta();
             } catch (java.net.UnknownHostException uhe) {
-                Alert a = new Alert(Alert.AlertType.ERROR);
 
-                alerta.hide();
+                main.ocultarAlerta();
 
-                a.setTitle("Sin servicio a internet");
-                a.setContentText("No se pudo conectar con el servicio");
-                a.showAndWait();
+                main.mostrarAlerta("Sin servicio a internet", "No se pudo conectar con el servicio", Alert.AlertType.ERROR);
+
             } catch (ConnectException ex) {
-                Alert a = new Alert(Alert.AlertType.ERROR);
 
-                alerta.hide();
+                main.mostrarAlerta("Servidor no disponible", "No se pudo conectar con el servicio", Alert.AlertType.ERROR);
 
-                a.setTitle("Servidor no disponible");
-                a.setContentText("No se pudo conectar con el servicio");
-                a.showAndWait();
             } catch (Exception ex) {
                 Logger.getLogger(PaneClientesControlador.class.getName()).log(Level.SEVERE, null, ex);
             }

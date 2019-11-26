@@ -1,11 +1,16 @@
 package edu.softech.InterfazJavaFX.gui;
 
 import javafx.application.Application;
+import javafx.application.Platform;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.image.Image;
 import javafx.stage.Stage;
+import javafx.util.Duration;
+import tray.animations.AnimationType;
+import tray.notification.NotificationType;
+import tray.notification.TrayNotification;
 
 public class WindowMain extends Application {
 
@@ -17,7 +22,9 @@ public class WindowMain extends Application {
 
     Scene scene;
 
-    Alert alert;
+    Alert alert = new Alert(Alert.AlertType.NONE);
+
+    TrayNotification tray;
 
     public WindowMain() {
         fxmll = new FXMLLoader(System.class.getResource("/edu/softech/"
@@ -45,10 +52,30 @@ public class WindowMain extends Application {
     }
 
     public void mostrarAlerta(String titulo, String mensaje, Alert.AlertType tipoAlerta) {
+
         alert.setTitle(titulo);
         alert.setContentText(mensaje);
         alert.setAlertType(tipoAlerta);
         alert.showAndWait();
+
+    }
+
+    public void ocultarAlerta() {
+
+        alert.hide();
+
+    }
+
+    public void mostrarNotificacion(String titulo, String mensaje, NotificationType tipo) {
+        tray = new TrayNotification();
+
+        tray.setTitle(titulo);
+        tray.setMessage(mensaje);
+//        tray.setRectangleFill(Paint.valueOf("#2A9A84"));
+        tray.setAnimationType(AnimationType.POPUP);
+        tray.setNotificationType(tipo);
+        tray.showAndDismiss(Duration.seconds(2));
+
     }
 
 }
