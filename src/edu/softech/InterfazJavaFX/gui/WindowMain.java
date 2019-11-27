@@ -5,6 +5,10 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.image.Image;
 import javafx.stage.Stage;
+import javafx.util.Duration;
+import tray.animations.AnimationType;
+import tray.notification.NotificationType;
+import tray.notification.TrayNotification;
 
 public class WindowMain extends Application {
 
@@ -15,7 +19,9 @@ public class WindowMain extends Application {
     Stage window;
 
     Scene scene;
-    
+
+    TrayNotification tray;
+
     public WindowMain() {
         fxmll = new FXMLLoader(System.class.getResource("/edu/softech/"
                 + "InterfazJavaFX/gui/fxml/WindowMain.fxml"));
@@ -36,6 +42,18 @@ public class WindowMain extends Application {
         window.setTitle("MySpa");
         window.getIcons().add(IMG_LOGO);
         window.show();
+
+    }
+
+    public void mostrarNotificacion(String titulo, String mensaje, NotificationType tipo) {
+        tray = new TrayNotification();
+
+        tray.setTitle(titulo);
+        tray.setMessage(mensaje);
+//        tray.setRectangleFill(Paint.valueOf("#2A9A84"));
+        tray.setAnimationType(AnimationType.POPUP);
+        tray.setNotificationType(tipo);
+        tray.showAndDismiss(Duration.seconds(2));
 
     }
 

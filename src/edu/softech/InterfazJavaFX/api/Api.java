@@ -38,8 +38,6 @@ public final class Api {
 
     private String lineaActual = null;
 
-    private String contenidoRespuesta = null;
-
     private JsonParser parser = null;
 
     private URL url;
@@ -60,84 +58,48 @@ public final class Api {
 
         JsonArray json = null;
 
-        url = new URL(ruta);
+        try {
 
-        HttpURLConnection connHttp
-                = (HttpURLConnection) url.openConnection();
+            json = parser.parse(hacerPeticion(ruta, "GET")).getAsJsonArray();
 
-        connHttp.setRequestMethod("GET");
-        connHttp.setRequestProperty("datatype", "json");
-
-        respuestaServidor = connHttp.getResponseCode();
-
-        if (respuestaServidor == HttpURLConnection.HTTP_OK) {
-            isr = new InputStreamReader(connHttp.getInputStream());
-            br = new BufferedReader(isr);
-
-            contenidoRespuesta = "";
-
-            while ((lineaActual = br.readLine()) != null) {
-                contenidoRespuesta += lineaActual;
-            }
-
-            br.close();
-
-            connHttp.disconnect();
-
-            json = parser.parse(contenidoRespuesta).getAsJsonArray();
+        } catch (Exception ex) {
+            Logger.getLogger(Api.class.getName()).log(Level.SEVERE, null, ex);
         }
 
         return json;
     }
 
-    public JsonElement modificarCliente(Cliente c) throws URISyntaxException {
-        Usuario u = c.getUsuario();
-        JsonElement json = null;
+    public JsonElement manejarCliente(Cliente c, String opcion) {
+        String enlace = RUTA + "cliente?";
+        if (!opcion.equals("DELETE")) {
+            enlace += "nombre=" + URLEncoder.encode(c.getNombre())
+                    + "&apellidoPaterno=" + URLEncoder.encode(c.getApellidoPaterno())
+                    + "&apellidoMaterno=" + URLEncoder.encode(c.getApellidoMaterno())
+                    + "&genero=" + URLEncoder.encode(c.getGenero())
+                    + "&telefono=" + URLEncoder.encode(c.getTelefono())
+                    + "&rfc=" + URLEncoder.encode(c.getRfc())
+                    + "&nombreUsuario=" + c.getUsuario().getNombreUsuario()
+                    + "&correo=" + URLEncoder.encode(c.getCorreo())
+                    + "&contrasenia=" + c.getUsuario().getContrasenia()
+                    + "&domicilio=" + URLEncoder.encode(c.getDomicilio());
+        } else {
+            enlace += "numeroUnicoCliente=" + URLEncoder.encode(c.getNumeroUnico())
+                    + "&nombreUsuario=" + URLEncoder.encode(c.getUsuario().getNombreUsuario());
+        }
 
-        String enlance = RUTA
-                + "cliente?"
-                + "nombre=" + URLEncoder.encode(c.getNombre())
-                + "&apellidoPaterno=" + URLEncoder.encode(c.getApellidoPaterno())
-                + "&apellidoMaterno=" + URLEncoder.encode(c.getApellidoMaterno())
-                + "&genero=" + URLEncoder.encode(c.getGenero())
-                + "&telefono=" + URLEncoder.encode(c.getTelefono())
-                + "&rfc=" + URLEncoder.encode(c.getRfc())
-                + "&nombreUsuario=" + u.getNombreUsuario()
-                + "&correo=" + URLEncoder.encode(c.getCorreo())
-                + "&contrasenia=" + u.getContrasenia()
-                + "&domicilio=" + URLEncoder.encode(c.getDomicilio())
-                + "&numeroUnicoCliente=" + URLEncoder.encode(c.getNumeroUnico());
+        if (opcion.equals("PUT")) {
+            enlace += "&numeroUnicoCliente=" + URLEncoder.encode(c.getNumeroUnico());
+        }
         try {
-
-            url = new URL(enlance);
-            HttpURLConnection connHttp
-                    = (HttpURLConnection) url.openConnection();
-
-            connHttp.setRequestMethod("PUT");
-            connHttp.setRequestProperty("datatype", "json");
-
-            respuestaServidor = connHttp.getResponseCode();
-
-            if (respuestaServidor == HttpURLConnection.HTTP_OK) {
-                isr = new InputStreamReader(connHttp.getInputStream());
-                br = new BufferedReader(isr);
-
-                contenidoRespuesta = "";
-
-                while ((lineaActual = br.readLine()) != null) {
-                    contenidoRespuesta += lineaActual;
-                }
-
-                br.close();
-
-                connHttp.disconnect();
-                json = parser.parse(contenidoRespuesta);
-                return json;
-            }
+            JsonElement json = parser.parse(hacerPeticion(enlace, opcion));
+            System.out.println(json);
+            return json;
 
         } catch (MalformedURLException ex) {
             Logger.getLogger(Api.class.getName()).log(Level.SEVERE, null, ex);
         } catch (IOException ex) {
+            Logger.getLogger(Api.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (Exception ex) {
             Logger.getLogger(Api.class.getName()).log(Level.SEVERE, null, ex);
         }
         return null;
@@ -172,7 +134,7 @@ public final class Api {
             isr = new InputStreamReader(connHttp.getInputStream());
             br = new BufferedReader(isr);
 
-            contenidoRespuesta = "";
+            String contenidoRespuesta = "";
 
             while ((lineaActual = br.readLine()) != null) {
                 contenidoRespuesta += lineaActual;
@@ -187,6 +149,49 @@ public final class Api {
         }
 
         return json;
+
+    }
+
+    /**
+     * Este metodo sirve para hacer cualquier petición al servidor
+     *
+     * EJEMPLO
+     *
+     * metodo="PUT"
+     *
+     * @param enlace
+     * @param metodo
+     * @return
+     * @throws Exception
+     */
+    public String hacerPeticion(String enlace, String metodo) throws Exception {
+
+        URL url = new URL(enlace);
+        HttpURLConnection connHttp
+                = (HttpURLConnection) url.openConnection();
+
+        connHttp.setRequestMethod(metodo);
+        connHttp.setRequestProperty("datatype", "json");
+
+        // crea la linea de comunicacioin
+        isr = new InputStreamReader(connHttp.getInputStream(), "UTF-8");
+
+        // crea el empudo que podra ver el contenido que estará en la linea de comunicación
+        br = new BufferedReader(isr);
+
+        String contenidoRespuesta = "";
+        lineaActual = null;
+
+        while ((lineaActual = br.readLine()) != null) {
+            contenidoRespuesta += lineaActual;
+        }
+
+        isr.close();
+
+        br.close();
+
+        connHttp.disconnect();
+        return contenidoRespuesta;
 
     }
 

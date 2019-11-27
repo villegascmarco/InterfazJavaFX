@@ -11,15 +11,16 @@ import com.google.gson.JsonElement;
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXComboBox;
 import com.jfoenix.controls.JFXTextArea;
-
 import com.jfoenix.controls.JFXTextField;
 import edu.softech.InterfazJavaFX.api.Api;
+import edu.softech.InterfazJavaFX.gui.WindowMain;
 import edu.softech.MySpa.modelo.Cliente;
 import edu.softech.MySpa.modelo.Usuario;
 import java.io.IOException;
 import java.net.ConnectException;
 import java.net.URISyntaxException;
 import java.net.URL;
+import java.util.Optional;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -32,12 +33,14 @@ import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Alert;
+import javafx.scene.control.ButtonType;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableColumn.CellDataFeatures;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.MouseEvent;
 import javafx.util.Callback;
+import tray.notification.NotificationType;
 
 /**
  * FXML Controller class
@@ -133,9 +136,11 @@ public class PaneClientesControlador implements Initializable {
     @FXML
     private JFXButton btnElminar;
 
-    Api api = new Api();
+    private Api api = new Api();
 
-    Gson gson = new Gson();
+    private Gson gson = new Gson();
+
+    private WindowMain windowMain = new WindowMain();
 
     private String opcion = null;
 
@@ -280,6 +285,7 @@ public class PaneClientesControlador implements Initializable {
 
     private void inicializarTabla() throws IOException {
         tblClientes.getColumns().clear();
+        limpiarCampos();
 
         tblClientes.setItems(obtenerDatos());
         tblClientes.autosize();
@@ -287,85 +293,71 @@ public class PaneClientesControlador implements Initializable {
 
         //idPersona
         colIdPersona = new TableColumn<>("idPersona");
-//        colIdPersona.setMinWidth(50);
         colIdPersona.setCellValueFactory(
                 new PropertyValueFactory<>("idPersona"));
 
         //Nombre
         colNombre = new TableColumn<>("Nombre");
-//        colNombre.setMinWidth(50);
         colNombre.setCellValueFactory(
                 new PropertyValueFactory<>("nombre"));
 
         //ApellidoPaterno
         colApellidoPaterno = new TableColumn<>("Apellido Paterno");
-//        colApellidoPaterno.setMinWidth(50);
         colApellidoPaterno.setCellValueFactory(
                 new PropertyValueFactory<>("apellidoPaterno"));
 
         //ApellidoMaterno
         colApellidoMaterno = new TableColumn<>("Apellido Materno");
-//        colApellidoMaterno.setMinWidth(50);
         colApellidoMaterno.setCellValueFactory(
                 new PropertyValueFactory<>("apellidoMaterno"));
 
         //Genero
         colGenero = new TableColumn<>("Genero");
-//        colGenero.setMinWidth(50);
         colGenero.setCellValueFactory(
                 new PropertyValueFactory<>("genero"));
 
         //Domicilio
         colDomicilio = new TableColumn<>("Domicilio");
-//        colDomicilio.setMinWidth(50);
         colDomicilio.setCellValueFactory(
                 new PropertyValueFactory<>("domicilio"));
 
         //Telefono
         coltelefono = new TableColumn<>("Telefono");
-//        coltelefono.setMinWidth(50);
         coltelefono.setCellValueFactory(
                 new PropertyValueFactory<>("telefono"));
 
         //Rfc
         colRfc = new TableColumn<>("Rfc");
-//        colRfc.setMinWidth(50);
         colRfc.setCellValueFactory(
                 new PropertyValueFactory<>("rfc"));
 
         //idCliente
         colIdCliente = new TableColumn<>("idCliente");
-//        colIdCliente.setMinWidth(50);
         colIdCliente.setCellValueFactory(
                 new PropertyValueFactory<>("idCliente"));
 
         //idPersona
         colIdPersona = new TableColumn<>("idPersona");
-//        colIdPersona.setMinWidth(50);
         colIdPersona.setCellValueFactory(
                 new PropertyValueFactory<>("idPersona"));
 
         //Numero Unico de Cliente
         colNumeroUnico = new TableColumn<>("NUC");
-//        colNumeroUnico.setMinWidth(50);
         colNumeroUnico.setCellValueFactory(
                 new PropertyValueFactory<>("numeroUnico"));
 
         //Correo electronico
         colCorreo = new TableColumn<>("Correo Electronico");
-//        colCorreo.setMinWidth(50);
         colCorreo.setCellValueFactory(
                 new PropertyValueFactory<>("correo"));
 
         //Estatus
         colEstatus = new TableColumn<>("Estatus");
-//        colEstatus.setMinWidth(50);
         colEstatus.setCellValueFactory(
                 new PropertyValueFactory<>("estatus"));
 
         //idUsuario
         colIdUsuario = new TableColumn<>("idUsuario");
-//        colIdUsuario.setMinWidth(50);
         colIdUsuario.setCellValueFactory(new Callback<CellDataFeatures<Cliente, Integer>, ObservableValue<Integer>>() {
             @Override
             public ObservableValue<Integer> call(CellDataFeatures<Cliente, Integer> param) {
@@ -376,7 +368,6 @@ public class PaneClientesControlador implements Initializable {
 
         //Nombre Usuario
         colNombreUsuario = new TableColumn<>("Nombre Usuario");
-//        colNombreUsuario.setMinWidth(50);
         colNombreUsuario.setCellValueFactory(new Callback<CellDataFeatures<Cliente, String>, ObservableValue<String>>() {
             @Override
             public ObservableValue<String> call(CellDataFeatures<Cliente, String> param) {
@@ -387,7 +378,6 @@ public class PaneClientesControlador implements Initializable {
 
 //        //Contraseña
 //        colContrasenia = new TableColumn<>("Contraseña");
-////        colContrasenia.setMinWidth(50);
 //        colContrasenia.setCellValueFactory(new Callback<CellDataFeatures<Cliente, String>, ObservableValue<String>>() {
 //            @Override
 //            public ObservableValue<String> call(CellDataFeatures<Cliente, String> param) {
@@ -425,7 +415,9 @@ public class PaneClientesControlador implements Initializable {
         btnGuardar.setOnAction(x -> {
             try {
                 cambiarCampos(UNC_DEFAULT, false);
-                prepararDatos();
+
+                ejecutarPeticion(prepararDatos());
+
             } catch (IOException ex) {
                 Logger.getLogger(PaneClientesControlador.class.getName()).log(Level.SEVERE, null, ex);
             } catch (URISyntaxException ex) {
@@ -435,13 +427,52 @@ public class PaneClientesControlador implements Initializable {
 
         btnNuevo.setOnAction(x -> {
             cambiarCampos(UNC_NUEVO, true);
+            limpiarCampos();
             opcion = "POST";
         });
 
         btnElminar.setOnAction(x -> {
-            cambiarCampos(UNC_ELIMINAR, false);
-            opcion = "DELETE";
+            try {
+                cambiarCampos(UNC_ELIMINAR, false);
+                opcion = "DELETE";
+
+                Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+                alert.setTitle("Confirmación");
+                alert.setHeaderText("Está a punto de eliminar a un cliente");
+                alert.setContentText("¿Está seguro?");
+
+                Optional<ButtonType> resultado = alert.showAndWait();
+                if (resultado.get() == ButtonType.OK) {
+                    api.manejarCliente(prepararDatos(), opcion);
+                } else {
+                    System.out.println("Chale");
+                }
+                cambiarCampos(UNC_DEFAULT, false);
+                inicializarTabla();
+                opcion = null;
+
+            } catch (IOException ex) {
+                Logger.getLogger(PaneClientesControlador.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (URISyntaxException ex) {
+                Logger.getLogger(PaneClientesControlador.class.getName()).log(Level.SEVERE, null, ex);
+            }
         });
+    }
+
+    private void limpiarCampos() {
+        tblClientes.getSelectionModel().clearSelection();
+
+        txtNombre.clear();
+        txtApellidoPaterno.clear();
+        txtApellidoMaterno.clear();
+        txtContrasenia.clear();
+        txtCorreoElectronico.clear();
+        txtDomicilio.clear();
+        txtRfc.clear();
+        txtTelefono.clear();
+        txtUsuario.clear();
+        cmbGenero.getSelectionModel().select(null);
+
     }
 
     private void cambiarCampos(String estilo, boolean editable) {
@@ -476,57 +507,72 @@ public class PaneClientesControlador implements Initializable {
         txtContrasenia.setEditable(editable);
     }
 
-    private boolean prepararDatos() throws IOException, URISyntaxException {
+    private Cliente prepararDatos() throws IOException, URISyntaxException {
+        Cliente c = new Cliente();
+        Usuario u = new Usuario();
 
-        if (opcion != null && tblClientes.getSelectionModel().getSelectedItem() != null) {
-            Cliente c = tblClientes.getSelectionModel().getSelectedItem();
-            Usuario u = c.getUsuario();
+        if (tblClientes.getSelectionModel().getSelectedItem() != null) {
+            c = tblClientes.getSelectionModel().getSelectedItem();
+            u = c.getUsuario();
+        }
+        if (opcion != null && cmbGenero.getSelectionModel().getSelectedItem() != null) {
 
             c.setNombre(txtNombre.getText());
             c.setApellidoPaterno(txtApellidoPaterno.getText());
             c.setApellidoMaterno(txtApellidoMaterno.getText());
             c.setGenero(cmbGenero.getSelectionModel().getSelectedItem().toString());
-            c.setRfc(txtRfc.getText());
-            c.setDomicilio(txtDomicilio.getText());
             c.setTelefono(txtTelefono.getText());
-            c.setCorreo(txtCorreoElectronico.getText());
+            c.setRfc(txtRfc.getText());
             u.setNombreUsuario(txtUsuario.getText());
-            //u.setContrasenia(txtContrasenia.getText());
-            Platform.runLater(() -> {
+            c.setCorreo(txtCorreoElectronico.getText());
+            u.setContrasenia(txtContrasenia.getText());
+            c.setDomicilio(txtDomicilio.getText());
 
-                double precio = 0;
-                Alert alerta = new Alert(Alert.AlertType.INFORMATION);
-                alerta.setTitle("Consultando servidor... ");
-                alerta.setContentText("Consultando datos del servidor...");
-
-                try {
-                    alerta.show();
-
-                    switch (opcion) {
-                        case "PUT":
-                            api.modificarCliente(c);
-                            opcion = null;
-                            break;
-                    }
-                    inicializarTabla();
-
-                    alerta.hide();
-                } catch (java.net.UnknownHostException uhe) {
-                    Alert a = new Alert(Alert.AlertType.ERROR);
-
-                    alerta.hide();
-
-                    a.setTitle("Sin servicio a internet");
-                    a.setContentText("No se pudo conectar con el servicio de divisas");
-                    a.showAndWait();
-                } catch (Exception ex) {
-                    Logger.getLogger(PaneClientesControlador.class.getName()).log(Level.SEVERE, null, ex);
-                }
-            });
-
+            c.setUsuario(u);
         }
 
-        return true;
+        return c;
+    }
+
+    private void ejecutarPeticion(Cliente c) {
+        Platform.runLater(() -> {
+            Usuario u = c.getUsuario();
+
+            double precio = 0;
+            Alert alerta = new Alert(Alert.AlertType.INFORMATION);
+            alerta.setTitle("Consultando servidor... ");
+            alerta.setContentText("Consultando datos del servidor...");
+
+            try {
+                alerta.show();
+
+                if (api.manejarCliente(c, opcion) != null) {
+                    windowMain.mostrarNotificacion("Agregado con"
+                            + " éxito", "El usuario "
+                            + u.getNombreUsuario() + " fue agregado "
+                            + "con exito", NotificationType.SUCCESS);
+                } else {
+                    windowMain.mostrarNotificacion("Error",
+                            "Ocurrio un problema al insertar al usuario",
+                            NotificationType.ERROR);
+                }
+
+                opcion = null;
+                inicializarTabla();
+
+                alerta.hide();
+            } catch (java.net.UnknownHostException uhe) {
+                Alert a = new Alert(Alert.AlertType.ERROR);
+
+                alerta.hide();
+
+                a.setTitle("Sin servicio a internet");
+                a.setContentText("No se pudo conectar con el servicio de divisas");
+                a.showAndWait();
+            } catch (IOException ex) {
+                Logger.getLogger(PaneClientesControlador.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        });
     }
 
     private ObservableList<Cliente> obtenerDatos() throws IOException {
@@ -549,7 +595,8 @@ public class PaneClientesControlador implements Initializable {
                 Cliente c;
 
                 for (JsonElement jsonElement : jsonArray) {
-                    c = gson.fromJson(jsonElement, Cliente.class);
+                    c = gson.fromJson(jsonElement, Cliente.class
+                    );
                     clientes.add(c);
                 }
 
@@ -570,8 +617,10 @@ public class PaneClientesControlador implements Initializable {
                 a.setTitle("Servidor no disponible");
                 a.setContentText("No se pudo conectar con el servicio");
                 a.showAndWait();
+
             } catch (Exception ex) {
-                Logger.getLogger(PaneClientesControlador.class.getName()).log(Level.SEVERE, null, ex);
+                Logger.getLogger(PaneClientesControlador.class
+                        .getName()).log(Level.SEVERE, null, ex);
             }
         });
 

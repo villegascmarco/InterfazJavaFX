@@ -8,10 +8,11 @@
   </information>
   <resources>
     <j2se version="1.6+" href="http://java.sun.com/products/autodl/j2se"/>
-    <jar href="InterfazJavaFX.jar" size="81987" download="eager" />
-    <jar href="lib\MySpa_modelo.jar" size="23258" download="eager" />
+    <jar href="InterfazJavaFX.jar" size="83571" download="eager" />
+    <jar href="lib\MySpa_modelo.jar" size="17333" download="eager" />
+    <jar href="lib\TrayNotification.jar" size="41019" download="eager" />
     <jar href="lib\gson-2.8.0.jar" size="231952" download="eager" />
-    <jar href="lib\jfoenix-8.0.2.jar" size="2442326" download="eager" />
+    <jar href="lib\jPhoenix.jar" size="2708772" download="eager" />
   </resources>
   <applet-desc  width="800" height="600" main-class="com.javafx.main.NoJavaFXFallback"  name="InterfazJavaFX" >
     <param name="requiredFXVersion" value="8.0+"/>

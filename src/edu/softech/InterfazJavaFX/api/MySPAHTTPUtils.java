@@ -6,7 +6,6 @@
 package edu.softech.InterfazJavaFX.api;
 
 import java.io.BufferedReader;
-import java.io.DataOutput;
 import java.io.DataOutputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -16,8 +15,7 @@ import java.net.HttpURLConnection;
  *
  * @author Esau
  */
-public class MySPAHTTPUtils
-{
+public class MySPAHTTPUtils {
 
     /**
      * Este metodo nos sirve para leer datos desde una conexión HTPP previamente
@@ -28,8 +26,7 @@ public class MySPAHTTPUtils
      * @throws Exception
      */
     public static String read(HttpURLConnection httpConn)
-            throws Exception
-    {
+            throws Exception {
         // crea la linea de comunicacioin
         InputStreamReader isr
                 = new InputStreamReader(httpConn.getInputStream(), "UTF-8");
@@ -40,37 +37,37 @@ public class MySPAHTTPUtils
         String contenido = "";
         String lineaActual = null;
 
-        while ((lineaActual = br.readLine()) != null)
+        while ((lineaActual = br.readLine()) != null) {
             contenido += lineaActual;
+        }
 
         return contenido;
     }
 
     /**
-     * Este metodo nos permite enviar datos a un servidor
-     * a través de una conexión HTTP previamente establecida
+     * Este metodo nos permite enviar datos a un servidor a través de una
+     * conexión HTTP previamente establecida
+     *
      * @param httpConn
      * @param contenido
-     * @throws IOException 
+     * @throws IOException
      */
     public static void write(HttpURLConnection httpConn,
-                             String contenido)
-            throws IOException
-    {
+            String contenido)
+            throws IOException {
         DataOutputStream dos;
         byte[] bytes;
-        
+
         bytes = contenido.getBytes();
-        
+
         dos = new DataOutputStream(httpConn.getOutputStream());
-        
+
         dos.write(bytes);
-        
+
         dos.close();
     }
-    
-    
+
     /**
-     * 
+     *
      */
 }
