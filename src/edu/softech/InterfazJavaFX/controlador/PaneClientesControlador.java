@@ -53,9 +53,6 @@ public class PaneClientesControlador implements Initializable {
     private TableView<Cliente> tblClientes;
 
     @FXML
-    private TableColumn<Cliente, Integer> colIdPersona;
-
-    @FXML
     private TableColumn<Cliente, String> colNombre;
 
     @FXML
@@ -77,9 +74,6 @@ public class PaneClientesControlador implements Initializable {
     private TableColumn<Cliente, String> colRfc;
 
     @FXML
-    private TableColumn<Cliente, Integer> colIdCliente;
-
-    @FXML
     private TableColumn<Cliente, String> colNumeroUnico;
 
     @FXML
@@ -89,10 +83,10 @@ public class PaneClientesControlador implements Initializable {
     private TableColumn<Cliente, Integer> colEstatus;
 
     @FXML
-    private TableColumn<Cliente, Integer> colIdUsuario;
+    private TableColumn<Cliente, String> colNombreUsuario;
 
     @FXML
-    private TableColumn<Cliente, String> colNombreUsuario;
+    private TableColumn<Cliente, String> colContrasenia;
 
     @FXML
     private JFXTextField txtNombre;
@@ -136,134 +130,24 @@ public class PaneClientesControlador implements Initializable {
     @FXML
     private JFXButton btnElminar;
 
+    @FXML
+    private JFXButton btnCancelar;
+
     private Api api = new Api();
 
     private Gson gson = new Gson();
 
     private WindowMain windowMain = new WindowMain();
 
-    private String opcion = null;
+    private String opcion = null;//Indica la opcion seleccionada por el cliente
 
+    /**
+     * Gama de colores según las opciones
+     */
     private final String UNC_EDITAR = "-jfx-unfocus-color: f68a1f;";
     private final String UNC_DEFAULT = "-jfx-unfocus-color: #4d4d4d;";
     private final String UNC_NUEVO = "-jfx-unfocus-color: #00C851;";
     private final String UNC_ELIMINAR = "-jfx-unfocus-color: #ff4444;";
-
-    public TableView<Cliente> getTblClientes() {
-        return tblClientes;
-    }
-
-    public TableColumn<Cliente, Integer> getColIdPersona() {
-        return colIdPersona;
-    }
-
-    public TableColumn<Cliente, String> getColNombre() {
-        return colNombre;
-    }
-
-    public TableColumn<Cliente, String> getColApellidoPaterno() {
-        return colApellidoPaterno;
-    }
-
-    public TableColumn<Cliente, String> getColApellidoMaterno() {
-        return colApellidoMaterno;
-    }
-
-    public TableColumn<Cliente, String> getColGenero() {
-        return colGenero;
-    }
-
-    public TableColumn<Cliente, String> getColDomicilio() {
-        return colDomicilio;
-    }
-
-    public TableColumn<Cliente, String> getColtelefono() {
-        return coltelefono;
-    }
-
-    public TableColumn<Cliente, String> getColRfc() {
-        return colRfc;
-    }
-
-    public TableColumn<Cliente, Integer> getColIdCliente() {
-        return colIdCliente;
-    }
-
-    public TableColumn<Cliente, String> getColNumeroUnico() {
-        return colNumeroUnico;
-    }
-
-    public TableColumn<Cliente, String> getColCorreo() {
-        return colCorreo;
-    }
-
-    public TableColumn<Cliente, Integer> getColEstatus() {
-        return colEstatus;
-    }
-
-    public TableColumn<Cliente, Integer> getColIdUsuario() {
-        return colIdUsuario;
-    }
-
-    public TableColumn<Cliente, String> getColNombreUsuario() {
-        return colNombreUsuario;
-    }
-
-    public JFXTextField getTxtNombre() {
-        return txtNombre;
-    }
-
-    public JFXTextField getTxtApellidoPaterno() {
-        return txtApellidoPaterno;
-    }
-
-    public JFXTextField getTxtApellidoMaterno() {
-        return txtApellidoMaterno;
-    }
-
-    public JFXComboBox getCmbGenero() {
-        return cmbGenero;
-    }
-
-    public JFXTextField getTxtRfc() {
-        return txtRfc;
-    }
-
-    public JFXTextArea getTxtDomicilio() {
-        return txtDomicilio;
-    }
-
-    public JFXTextField getTxtTelefono() {
-        return txtTelefono;
-    }
-
-    public JFXTextField getTxtCorreoElectronico() {
-        return txtCorreoElectronico;
-    }
-
-    public JFXTextField getTxtUsuario() {
-        return txtUsuario;
-    }
-
-    public JFXTextField getTxtContrasenia() {
-        return txtContrasenia;
-    }
-
-    public JFXButton getBtnNuevo() {
-        return btnNuevo;
-    }
-
-    public JFXButton getBtnGuardar() {
-        return btnGuardar;
-    }
-
-    public JFXButton getBtnEditar() {
-        return btnEditar;
-    }
-
-    public JFXButton getBtnElminar() {
-        return btnElminar;
-    }
 
     /**
      * Initializes the controller class.
@@ -290,11 +174,6 @@ public class PaneClientesControlador implements Initializable {
         tblClientes.setItems(obtenerDatos());
         tblClientes.autosize();
         tblClientes.setDisable(false);
-
-        //idPersona
-        colIdPersona = new TableColumn<>("idPersona");
-        colIdPersona.setCellValueFactory(
-                new PropertyValueFactory<>("idPersona"));
 
         //Nombre
         colNombre = new TableColumn<>("Nombre");
@@ -331,16 +210,6 @@ public class PaneClientesControlador implements Initializable {
         colRfc.setCellValueFactory(
                 new PropertyValueFactory<>("rfc"));
 
-        //idCliente
-        colIdCliente = new TableColumn<>("idCliente");
-        colIdCliente.setCellValueFactory(
-                new PropertyValueFactory<>("idCliente"));
-
-        //idPersona
-        colIdPersona = new TableColumn<>("idPersona");
-        colIdPersona.setCellValueFactory(
-                new PropertyValueFactory<>("idPersona"));
-
         //Numero Unico de Cliente
         colNumeroUnico = new TableColumn<>("NUC");
         colNumeroUnico.setCellValueFactory(
@@ -356,16 +225,6 @@ public class PaneClientesControlador implements Initializable {
         colEstatus.setCellValueFactory(
                 new PropertyValueFactory<>("estatus"));
 
-        //idUsuario
-        colIdUsuario = new TableColumn<>("idUsuario");
-        colIdUsuario.setCellValueFactory(new Callback<CellDataFeatures<Cliente, Integer>, ObservableValue<Integer>>() {
-            @Override
-            public ObservableValue<Integer> call(CellDataFeatures<Cliente, Integer> param) {
-                return new SimpleIntegerProperty(param.getValue().
-                        getUsuario().getIdUsuario()).asObject();
-            }
-        });
-
         //Nombre Usuario
         colNombreUsuario = new TableColumn<>("Nombre Usuario");
         colNombreUsuario.setCellValueFactory(new Callback<CellDataFeatures<Cliente, String>, ObservableValue<String>>() {
@@ -376,26 +235,26 @@ public class PaneClientesControlador implements Initializable {
 
         });
 
-//        //Contraseña
-//        colContrasenia = new TableColumn<>("Contraseña");
-//        colContrasenia.setCellValueFactory(new Callback<CellDataFeatures<Cliente, String>, ObservableValue<String>>() {
-//            @Override
-//            public ObservableValue<String> call(CellDataFeatures<Cliente, String> param) {
-//                return new SimpleStringProperty(param.getValue().getUsuario().getContrasenia());
-//            }
-//
-//        });
+        //Contraseña
+        colContrasenia = new TableColumn<>("Contraseña");
+        colContrasenia.setCellValueFactory(new Callback<CellDataFeatures<Cliente, String>, ObservableValue<String>>() {
+            @Override
+            public ObservableValue<String> call(CellDataFeatures<Cliente, String> param) {
+                return new SimpleStringProperty(param.getValue().getUsuario().getContrasenia());
+            }
+
+        });
         tblClientes.getColumns().addAll(
-                colIdPersona, colNombre, colApellidoPaterno,
+                colNombre, colApellidoPaterno,
                 colApellidoMaterno, colGenero, colDomicilio,
                 coltelefono, colRfc,
-                colIdCliente, colNumeroUnico, colCorreo, colEstatus,
-                colIdUsuario, colNombreUsuario
+                colNumeroUnico, colCorreo, colEstatus,
+                colNombreUsuario, colContrasenia
         );
     }
 
     private void llenarComboBoxes() {
-        cmbGenero.getItems().addAll("F", "M", "O");
+        cmbGenero.getItems().addAll("Hombre", "Mujer", "Otro");
     }
 
     private void inicializarOyentes() {
@@ -408,12 +267,16 @@ public class PaneClientesControlador implements Initializable {
         });
 
         btnEditar.setOnAction(x -> {
-            cambiarCampos(UNC_EDITAR, true);
             opcion = "PUT";
+            cambiarCampos(UNC_EDITAR, true);
         });
 
         btnGuardar.setOnAction(x -> {
             try {
+
+                if (opcion == null) {
+                    return;
+                }
                 cambiarCampos(UNC_DEFAULT, false);
 
                 ejecutarPeticion(prepararDatos());
@@ -426,15 +289,29 @@ public class PaneClientesControlador implements Initializable {
         });
 
         btnNuevo.setOnAction(x -> {
+
+            opcion = "POST";
             cambiarCampos(UNC_NUEVO, true);
             limpiarCampos();
-            opcion = "POST";
+        });
+
+        btnCancelar.setOnAction(x -> {
+            opcion = null;
+            limpiarCampos();
+            cambiarCampos(UNC_DEFAULT, false);
         });
 
         btnElminar.setOnAction(x -> {
             try {
-                cambiarCampos(UNC_ELIMINAR, false);
                 opcion = "DELETE";
+
+                if (tblClientes.getSelectionModel().getSelectedItem() == null) {
+                    opcion = null;
+                    cambiarCampos(UNC_DEFAULT, false);
+                    return;
+                }
+
+                cambiarCampos(UNC_ELIMINAR, false);
 
                 Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
                 alert.setTitle("Confirmación");
@@ -476,6 +353,13 @@ public class PaneClientesControlador implements Initializable {
     }
 
     private void cambiarCampos(String estilo, boolean editable) {
+        if (opcion == null) {
+            //No hacemos nada, opcion cancelar
+        } else if (tblClientes.getSelectionModel().getSelectedItem() == null && (opcion.equals("DELETE") || opcion.equals("PUT"))) {
+            opcion = null;
+            cambiarCampos(UNC_DEFAULT, false);
+            return;
+        }
         txtNombre.setStyle(estilo);
         txtNombre.setEditable(editable);
 
@@ -485,9 +369,9 @@ public class PaneClientesControlador implements Initializable {
         txtApellidoMaterno.setStyle(estilo);
         txtApellidoMaterno.setEditable(editable);
 
-//        cmbGenero.setStyle(estilo);
-//        cmbGenero.setEditable(editable);
-//
+        cmbGenero.setStyle(estilo);
+        cmbGenero.setDisable(!editable);
+
         txtRfc.setStyle(estilo);
         txtRfc.setEditable(editable);
 
@@ -520,7 +404,17 @@ public class PaneClientesControlador implements Initializable {
             c.setNombre(txtNombre.getText());
             c.setApellidoPaterno(txtApellidoPaterno.getText());
             c.setApellidoMaterno(txtApellidoMaterno.getText());
-            c.setGenero(cmbGenero.getSelectionModel().getSelectedItem().toString());
+
+            String genero = cmbGenero.getSelectionModel().getSelectedItem().toString();
+
+            if (genero.equals("Hombre")) {
+                c.setGenero("M");
+            } else if (genero.equals("Mujer")) {
+                c.setGenero("F");
+            } else if (genero.equals("Otro")) {
+                c.setGenero("O");
+            }
+
             c.setTelefono(txtTelefono.getText());
             c.setRfc(txtRfc.getText());
             u.setNombreUsuario(txtUsuario.getText());
@@ -636,7 +530,13 @@ public class PaneClientesControlador implements Initializable {
             txtApellidoPaterno.setText(c.getApellidoPaterno());
             txtApellidoMaterno.setText(c.getApellidoMaterno());
 
-            cmbGenero.getSelectionModel().select(c.getGenero());
+            if (c.getGenero().equals("M")) {
+                cmbGenero.getSelectionModel().select(0);
+            } else if (c.getGenero().equals("F")) {
+                cmbGenero.getSelectionModel().select(1);
+            } else if (c.getGenero().equals("O")) {
+                cmbGenero.getSelectionModel().select(2);
+            }
 
             txtRfc.setText(c.getRfc());
             txtDomicilio.setText(c.getDomicilio());

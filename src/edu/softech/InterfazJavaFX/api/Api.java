@@ -92,7 +92,7 @@ public final class Api {
         }
         try {
             JsonElement json = parser.parse(hacerPeticion(enlace, opcion));
-            System.out.println(json);
+            
             return json;
 
         } catch (MalformedURLException ex) {
