@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import com.jfoenix.controls.JFXButton?>
+<?import com.jfoenix.controls.JFXCheckBox?>
 <?import com.jfoenix.controls.JFXComboBox?>
 <?import com.jfoenix.controls.JFXScrollPane?>
 <?import com.jfoenix.controls.JFXTextArea?>
@@ -21,11 +22,13 @@
             <center>
                 <AnchorPane fx:id="apIzquierda" BorderPane.alignment="CENTER">
                     <children>
-                        <JFXScrollPane layoutX="7.0" layoutY="24.0" minWidth="0.0" AnchorPane.bottomAnchor="57.0" AnchorPane.leftAnchor="6.0" AnchorPane.rightAnchor="6.0" AnchorPane.topAnchor="23.0">
+                  <JFXTextField fx:id="txtBuscar" focusColor="#f68a1f" labelFloat="true" layoutX="9.0" layoutY="23.0" prefHeight="31.0" prefWidth="696.0" promptText="Buscar" AnchorPane.leftAnchor="9.0" AnchorPane.rightAnchor="8.0" />
+                        <JFXScrollPane layoutX="7.0" layoutY="68.0" minWidth="0.0" prefHeight="645.0" prefWidth="701.0" AnchorPane.bottomAnchor="57.0" AnchorPane.leftAnchor="6.0" AnchorPane.rightAnchor="6.0" AnchorPane.topAnchor="68.0">
                             <children>
-                                <TableView fx:id="tblClientes" />
+                                <TableView fx:id="tblClientes" prefHeight="644.0" prefWidth="701.0" />
                             </children>
                         </JFXScrollPane>
+                  <JFXCheckBox fx:id="chbVerInactivos" layoutX="587.0" layoutY="735.0" text="Ver Inactivos" AnchorPane.bottomAnchor="14.0" AnchorPane.rightAnchor="14.0" />
                     </children>
                 </AnchorPane>
             </center>

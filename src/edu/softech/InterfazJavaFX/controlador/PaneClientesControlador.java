@@ -9,6 +9,7 @@ import com.google.gson.Gson;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.jfoenix.controls.JFXButton;
+import com.jfoenix.controls.JFXCheckBox;
 import com.jfoenix.controls.JFXComboBox;
 import com.jfoenix.controls.JFXTextArea;
 import com.jfoenix.controls.JFXTextField;
@@ -25,11 +26,12 @@ import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javafx.application.Platform;
-import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.collections.transformation.FilteredList;
+import javafx.collections.transformation.SortedList;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Alert;
@@ -48,97 +50,103 @@ import tray.notification.NotificationType;
  * @author Villegas
  */
 public class PaneClientesControlador implements Initializable {
-
+    
+    @FXML
+    private JFXCheckBox chbVerInactivos;
+    
     @FXML
     private TableView<Cliente> tblClientes;
-
+    
     @FXML
     private TableColumn<Cliente, String> colNombre;
-
+    
     @FXML
     private TableColumn<Cliente, String> colApellidoPaterno;
-
+    
     @FXML
     private TableColumn<Cliente, String> colApellidoMaterno;
-
+    
     @FXML
     private TableColumn<Cliente, String> colGenero;
-
+    
     @FXML
     private TableColumn<Cliente, String> colDomicilio;
-
+    
     @FXML
     private TableColumn<Cliente, String> coltelefono;
-
+    
     @FXML
     private TableColumn<Cliente, String> colRfc;
-
+    
     @FXML
     private TableColumn<Cliente, String> colNumeroUnico;
-
+    
     @FXML
     private TableColumn<Cliente, String> colCorreo;
-
+    
     @FXML
     private TableColumn<Cliente, Integer> colEstatus;
-
+    
     @FXML
     private TableColumn<Cliente, String> colNombreUsuario;
-
+    
     @FXML
     private TableColumn<Cliente, String> colContrasenia;
-
+    
+    @FXML
+    private JFXTextField txtBuscar;
+    
     @FXML
     private JFXTextField txtNombre;
-
+    
     @FXML
     private JFXTextField txtApellidoPaterno;
-
+    
     @FXML
     private JFXTextField txtApellidoMaterno;
-
+    
     @FXML
     private JFXComboBox cmbGenero;
-
+    
     @FXML
     private JFXTextField txtRfc;
-
+    
     @FXML
     private JFXTextArea txtDomicilio;
-
+    
     @FXML
     private JFXTextField txtTelefono;
-
+    
     @FXML
     private JFXTextField txtCorreoElectronico;
-
+    
     @FXML
     private JFXTextField txtUsuario;
-
+    
     @FXML
     private JFXTextField txtContrasenia;
-
+    
     @FXML
     private JFXButton btnNuevo;
-
+    
     @FXML
     private JFXButton btnGuardar;
-
+    
     @FXML
     private JFXButton btnEditar;
-
+    
     @FXML
     private JFXButton btnElminar;
-
+    
     @FXML
     private JFXButton btnCancelar;
-
+    
     private Api api = new Api();
-
+    
     private Gson gson = new Gson();
-
+    
     private WindowMain windowMain = new WindowMain();
-
+    
     private String opcion = null;//Indica la opcion seleccionada por el cliente
 
     /**
@@ -158,20 +166,23 @@ public class PaneClientesControlador implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         try {
-            inicializarTabla();
+            inicializarTabla(true);
             llenarComboBoxes();
             inicializarOyentes();
-
+            
         } catch (IOException ex) {
             Logger.getLogger(PaneClientesControlador.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
-
-    private void inicializarTabla() throws IOException {
+    
+    private void inicializarTabla(boolean clientesActivos) throws IOException {
         tblClientes.getColumns().clear();
         limpiarCampos();
-
-        tblClientes.setItems(obtenerDatos());
+        tblClientes.setItems(obtenerDatos(clientesActivos));
+        inicializarColumnas();
+    }
+    
+    private void inicializarColumnas() {
         tblClientes.autosize();
         tblClientes.setDisable(false);
 
@@ -232,7 +243,7 @@ public class PaneClientesControlador implements Initializable {
             public ObservableValue<String> call(CellDataFeatures<Cliente, String> param) {
                 return new SimpleStringProperty(param.getValue().getUsuario().getNombreUsuario());
             }
-
+            
         });
 
         //Contraseña
@@ -242,7 +253,7 @@ public class PaneClientesControlador implements Initializable {
             public ObservableValue<String> call(CellDataFeatures<Cliente, String> param) {
                 return new SimpleStringProperty(param.getValue().getUsuario().getContrasenia());
             }
-
+            
         });
         tblClientes.getColumns().addAll(
                 colNombre, colApellidoPaterno,
@@ -251,73 +262,74 @@ public class PaneClientesControlador implements Initializable {
                 colNumeroUnico, colCorreo, colEstatus,
                 colNombreUsuario, colContrasenia
         );
+        
     }
-
+    
     private void llenarComboBoxes() {
         cmbGenero.getItems().addAll("Hombre", "Mujer", "Otro");
     }
-
+    
     private void inicializarOyentes() {
-
+        
         tblClientes.setOnMouseClicked((MouseEvent x) -> {
             llenarCampos();
         });
         tblClientes.setOnKeyReleased(x -> {
             llenarCampos();
         });
-
+        
         btnEditar.setOnAction(x -> {
             opcion = "PUT";
             cambiarCampos(UNC_EDITAR, true);
         });
-
+        
         btnGuardar.setOnAction(x -> {
             try {
-
+                
                 if (opcion == null) {
                     return;
                 }
                 cambiarCampos(UNC_DEFAULT, false);
-
+                
                 ejecutarPeticion(prepararDatos());
-
+                
             } catch (IOException ex) {
                 Logger.getLogger(PaneClientesControlador.class.getName()).log(Level.SEVERE, null, ex);
             } catch (URISyntaxException ex) {
                 Logger.getLogger(PaneClientesControlador.class.getName()).log(Level.SEVERE, null, ex);
             }
         });
-
+        
         btnNuevo.setOnAction(x -> {
-
+            
             opcion = "POST";
             cambiarCampos(UNC_NUEVO, true);
             limpiarCampos();
         });
-
+        
         btnCancelar.setOnAction(x -> {
             opcion = null;
             limpiarCampos();
             cambiarCampos(UNC_DEFAULT, false);
         });
-
+        
         btnElminar.setOnAction(x -> {
             try {
                 opcion = "DELETE";
-
+                
                 if (tblClientes.getSelectionModel().getSelectedItem() == null) {
                     opcion = null;
                     cambiarCampos(UNC_DEFAULT, false);
                     return;
                 }
-
+                
                 cambiarCampos(UNC_ELIMINAR, false);
-
+                
                 Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
                 alert.setTitle("Confirmación");
                 alert.setHeaderText("Está a punto de eliminar a un cliente");
                 alert.setContentText("¿Está seguro?");
-
+                
                 Optional<ButtonType> resultado = alert.showAndWait();
                 if (resultado.get() == ButtonType.OK) {
                     api.manejarCliente(prepararDatos(), opcion);
@@ -325,20 +337,34 @@ public class PaneClientesControlador implements Initializable {
                     System.out.println("Chale");
                 }
                 cambiarCampos(UNC_DEFAULT, false);
-                inicializarTabla();
+                inicializarTabla(true);
                 opcion = null;
-
+                
             } catch (IOException ex) {
                 Logger.getLogger(PaneClientesControlador.class.getName()).log(Level.SEVERE, null, ex);
             } catch (URISyntaxException ex) {
                 Logger.getLogger(PaneClientesControlador.class.getName()).log(Level.SEVERE, null, ex);
             }
         });
+        
+        chbVerInactivos.setOnAction(x -> {
+            try {
+                if (!chbVerInactivos.selectedProperty().get()) {
+                    inicializarTabla(true);
+                } else {
+                    inicializarTabla(false);
+                }
+            } catch (IOException ex) {
+                Logger.getLogger(PaneClientesControlador.class.getName()).log(Level.SEVERE, null, ex);
+            }
+            
+        });
+        
     }
-
+    
     private void limpiarCampos() {
         tblClientes.getSelectionModel().clearSelection();
-
+        
         txtNombre.clear();
         txtApellidoPaterno.clear();
         txtApellidoMaterno.clear();
@@ -349,9 +375,11 @@ public class PaneClientesControlador implements Initializable {
         txtTelefono.clear();
         txtUsuario.clear();
         cmbGenero.getSelectionModel().select(null);
-
+        txtBuscar.clear();
+        chbVerInactivos.setSelected(false);
+        
     }
-
+    
     private void cambiarCampos(String estilo, boolean editable) {
         if (opcion == null) {
             //No hacemos nada, opcion cancelar
@@ -362,51 +390,51 @@ public class PaneClientesControlador implements Initializable {
         }
         txtNombre.setStyle(estilo);
         txtNombre.setEditable(editable);
-
+        
         txtApellidoPaterno.setStyle(estilo);
         txtApellidoPaterno.setEditable(editable);
-
+        
         txtApellidoMaterno.setStyle(estilo);
         txtApellidoMaterno.setEditable(editable);
-
+        
         cmbGenero.setStyle(estilo);
         cmbGenero.setDisable(!editable);
-
+        
         txtRfc.setStyle(estilo);
         txtRfc.setEditable(editable);
-
+        
         txtDomicilio.setStyle(estilo);
         txtDomicilio.setEditable(editable);
-
+        
         txtTelefono.setStyle(estilo);
         txtTelefono.setEditable(editable);
-
+        
         txtCorreoElectronico.setStyle(estilo);
         txtCorreoElectronico.setEditable(editable);
-
+        
         txtUsuario.setStyle(estilo);
         txtUsuario.setEditable(editable);
-
+        
         txtContrasenia.setStyle(estilo);
         txtContrasenia.setEditable(editable);
     }
-
+    
     private Cliente prepararDatos() throws IOException, URISyntaxException {
         Cliente c = new Cliente();
         Usuario u = new Usuario();
-
+        
         if (tblClientes.getSelectionModel().getSelectedItem() != null) {
             c = tblClientes.getSelectionModel().getSelectedItem();
             u = c.getUsuario();
         }
         if (opcion != null && cmbGenero.getSelectionModel().getSelectedItem() != null) {
-
+            
             c.setNombre(txtNombre.getText());
             c.setApellidoPaterno(txtApellidoPaterno.getText());
             c.setApellidoMaterno(txtApellidoMaterno.getText());
-
+            
             String genero = cmbGenero.getSelectionModel().getSelectedItem().toString();
-
+            
             if (genero.equals("Hombre")) {
                 c.setGenero("M");
             } else if (genero.equals("Mujer")) {
@@ -414,32 +442,32 @@ public class PaneClientesControlador implements Initializable {
             } else if (genero.equals("Otro")) {
                 c.setGenero("O");
             }
-
+            
             c.setTelefono(txtTelefono.getText());
             c.setRfc(txtRfc.getText());
             u.setNombreUsuario(txtUsuario.getText());
             c.setCorreo(txtCorreoElectronico.getText());
             u.setContrasenia(txtContrasenia.getText());
             c.setDomicilio(txtDomicilio.getText());
-
+            
             c.setUsuario(u);
         }
-
+        
         return c;
     }
-
+    
     private void ejecutarPeticion(Cliente c) {
         Platform.runLater(() -> {
             Usuario u = c.getUsuario();
-
+            
             double precio = 0;
             Alert alerta = new Alert(Alert.AlertType.INFORMATION);
             alerta.setTitle("Consultando servidor... ");
             alerta.setContentText("Consultando datos del servidor...");
-
+            
             try {
                 alerta.show();
-
+                
                 if (api.manejarCliente(c, opcion) != null) {
                     windowMain.mostrarNotificacion("Agregado con"
                             + " éxito", "El usuario "
@@ -450,16 +478,16 @@ public class PaneClientesControlador implements Initializable {
                             "Ocurrio un problema al insertar al usuario",
                             NotificationType.ERROR);
                 }
-
+                
                 opcion = null;
-                inicializarTabla();
-
+                inicializarTabla(true);
+                
                 alerta.hide();
             } catch (java.net.UnknownHostException uhe) {
                 Alert a = new Alert(Alert.AlertType.ERROR);
-
+                
                 alerta.hide();
-
+                
                 a.setTitle("Sin servicio a internet");
                 a.setContentText("No se pudo conectar con el servicio de divisas");
                 a.showAndWait();
@@ -468,68 +496,80 @@ public class PaneClientesControlador implements Initializable {
             }
         });
     }
-
-    private ObservableList<Cliente> obtenerDatos() throws IOException {
+    
+    private ObservableList<Cliente> obtenerDatos(boolean clientesActivos) throws IOException {
         ObservableList<Cliente> clientes
                 = FXCollections.observableArrayList();
+        
         Platform.runLater(() -> {
-
+            
             double precio = 0;
             Alert alerta = new Alert(Alert.AlertType.INFORMATION);
             alerta.setTitle("Consultando servidor... ");
             alerta.setContentText("Consultando datos del servidor...");
-
+            
             try {
                 alerta.show();
-
+                
                 JsonArray jsonArray = api.consultarListado("cliente");
                 if (jsonArray == null) {
                     return;
                 }
                 Cliente c;
-
+                
                 for (JsonElement jsonElement : jsonArray) {
                     c = gson.fromJson(jsonElement, Cliente.class
                     );
-                    clientes.add(c);
+                    if (clientesActivos) {
+                        if (c.getEstatus() == 1) {
+                            clientes.add(c);
+                            
+                        }
+                    } else {
+                        if (c.getEstatus() == 0) {
+                            clientes.add(c);
+                            
+                        }
+                        
+                    }
                 }
-
+                filtrarDatos(clientes);
                 alerta.hide();
             } catch (java.net.UnknownHostException uhe) {
                 Alert a = new Alert(Alert.AlertType.ERROR);
-
+                
                 alerta.hide();
-
+                
                 a.setTitle("Sin servicio a internet");
                 a.setContentText("No se pudo conectar con el servicio");
                 a.showAndWait();
             } catch (ConnectException ex) {
                 Alert a = new Alert(Alert.AlertType.ERROR);
-
+                
                 alerta.hide();
-
+                
                 a.setTitle("Servidor no disponible");
                 a.setContentText("No se pudo conectar con el servicio");
                 a.showAndWait();
-
+                
             } catch (Exception ex) {
                 Logger.getLogger(PaneClientesControlador.class
                         .getName()).log(Level.SEVERE, null, ex);
             }
         });
-
+        
         return clientes;
     }
-
+    
     private void llenarCampos() {
         if (tblClientes.getSelectionModel().getSelectedItem() != null) {
             Cliente c = tblClientes.getSelectionModel().getSelectedItem();
             Usuario u = c.getUsuario();
-
+            
             txtNombre.setText(c.getNombre());
             txtApellidoPaterno.setText(c.getApellidoPaterno());
             txtApellidoMaterno.setText(c.getApellidoMaterno());
-
+            
             if (c.getGenero().equals("M")) {
                 cmbGenero.getSelectionModel().select(0);
             } else if (c.getGenero().equals("F")) {
@@ -537,17 +577,69 @@ public class PaneClientesControlador implements Initializable {
             } else if (c.getGenero().equals("O")) {
                 cmbGenero.getSelectionModel().select(2);
             }
-
+            
             txtRfc.setText(c.getRfc());
             txtDomicilio.setText(c.getDomicilio());
             txtTelefono.setText(c.getTelefono());
             txtCorreoElectronico.setText(c.getCorreo());
-
+            
             txtUsuario.setText(u.getNombreUsuario());
             txtContrasenia.setText(u.getContrasenia());
         }
         cambiarCampos(UNC_DEFAULT, false);
         opcion = null;
     }
-
+    
+    private void filtrarDatos(ObservableList<Cliente> dato) {
+        
+        FilteredList<Cliente> filteredData
+                = new FilteredList<>(dato, b -> true);
+        
+        txtBuscar.textProperty().addListener((observable, oldValue, newValue) -> {
+            
+            filteredData.setPredicate(cliente -> {
+                if (newValue == null || newValue.isEmpty()) {
+                    return true;//Mostrar todos
+                }
+                
+                String busqueda = newValue.toLowerCase();
+                
+                if (cliente.getNombre().toLowerCase().contains(busqueda)) {
+                    return true;
+                } else if (cliente.getApellidoPaterno().toLowerCase().contains(busqueda)) {
+                    return true;
+                } else if (cliente.getApellidoMaterno().toLowerCase().contains(busqueda)) {
+                    return true;
+                } else if (cliente.getCorreo().toLowerCase().contains(busqueda)) {
+                    return true;
+                } else if (cliente.getDomicilio().toLowerCase().contains(busqueda)) {
+                    return true;
+                } else if (cliente.getGenero().toLowerCase().contains(busqueda)) {
+                    return true;
+                } else if (cliente.getNumeroUnico().toLowerCase().contains(busqueda)) {
+                    return true;
+                } else if (cliente.getRfc().toLowerCase().contains(busqueda)) {
+                    return true;
+                } else if (cliente.getTelefono().toLowerCase().contains(busqueda)) {
+                    return true;
+                } else if (cliente.getUsuario().getNombreUsuario().toLowerCase().contains(busqueda)) {
+                    return true;
+                }
+                return false;
+                
+            });
+            
+        });
+        
+        SortedList<Cliente> sortedList = new SortedList<>(filteredData);
+        
+        tblClientes.getColumns().clear();
+        limpiarCampos();
+        
+        sortedList.comparatorProperty().bind(tblClientes.comparatorProperty());
+        tblClientes.setItems(sortedList);
+        inicializarColumnas();
+        
+    }
+    
 }
