@@ -80,7 +80,7 @@ public class PaneSucursalesControlador implements Initializable {
     @FXML
     TableColumn<Sucursal, String> colLongitud;
     @FXML
-    ImageView imgViewLocalizacion;
+    JFXButton btnLocalizacion;
 
     Api api = new Api();
     int nuevo = 0;
@@ -160,12 +160,14 @@ public class PaneSucursalesControlador implements Initializable {
                 cambiarCampos(UNC_DEFAULT, false);
             });
 
-            //LISTENER EN IMAGEN PARA MOSTRAR LOCALIZACION DE SUCURSAL
-            imgViewLocalizacion.setOnMouseClicked(evt -> {
-                try {
-                    obtenerLocalizacion();
-                } catch (Exception e) {
+            //BOTON PARA MOSTRAR LOCALIZACION DE SUCURSAL
+            btnLocalizacion.setOnAction(evt -> {
+                if (txtNombre.getText() != null) {
+                    try {
+                        obtenerLocalizacion();
+                    } catch (Exception e) {
 
+                    }
                 }
             });
 
@@ -197,7 +199,6 @@ public class PaneSucursalesControlador implements Initializable {
         txtDomicilio.setEditable(true);
         txtLatitud.setEditable(true);
         txtLongitud.setEditable(true);
-//        btnGuardar.setDisable(false);
         nuevo = 1;
     }
 
@@ -207,7 +208,6 @@ public class PaneSucursalesControlador implements Initializable {
         txtDomicilio.setEditable(true);
         txtLatitud.setEditable(true);
         txtLongitud.setEditable(true);
-//        btnGuardar.setDisable(false);
 
     }
 
@@ -276,7 +276,7 @@ public class PaneSucursalesControlador implements Initializable {
                             Logger.getLogger(PaneSucursalesControlador.class.getName()).log(Level.SEVERE, null, ex);
                         }
                     });
-//                btnGuardar.setDisable(true);
+                    limpiarCampos();
                     break;
                 }
                 case 1: {
@@ -299,15 +299,12 @@ public class PaneSucursalesControlador implements Initializable {
                             Logger.getLogger(PaneSucursalesControlador.class.getName()).log(Level.SEVERE, null, ex);
                         }
                     });
-
-//                btnGuardar.setDisable(true); 
+                    limpiarCampos();
                     break;
                 }
                 case 0:
-                    System.out.println("no hace nachos");
                     break;
                 default:
-                    System.out.println("no hace nachos");
                     break;
             }
         }
@@ -385,8 +382,20 @@ public class PaneSucursalesControlador implements Initializable {
 
     //METODO PARA ABRIR NUEVA VENTANA DE NAVEGADOR CON LOCALIZACION DE SUCURSAL
     public void obtenerLocalizacion() throws Exception {
-        String url = "http://localhost:8080/MySpa/mapa.html?nombre=" + txtNombre.getText() + "&lati=" + txtLatitud.getText() + "&long=" + txtLongitud.getText();
-        Desktop.getDesktop().browse(new URI(url));
+        String nom = URLEncoder.encode(txtNombre.getText(), "UTF-8");
+        String dom = (txtDomicilio.getText());
+        String lat = URLEncoder.encode(txtLatitud.getText(), "UTF-8");
+        String lon = URLEncoder.encode(txtLongitud.getText(), "UTF-8");
+        String url = "http://localhost:8080/MySpa/mapa.html?nombre=" + nom + "&domicilio=" + dom + "&lati=" + lat + "&long=" + lon;
+        String acum = "";
+        for (int i = 0; i < url.length(); i++) {
+            if (url.charAt(i) == ' ') {
+                acum += "%20";
+            } else {
+                acum += url.charAt(i);
+            }
+        }
+        Desktop.getDesktop().browse(new URI(acum));
     }
 
     //METODO PARA TRAER TODAS LAS SUCURSALES
