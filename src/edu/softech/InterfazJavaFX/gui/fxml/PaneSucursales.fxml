@@ -17,7 +17,7 @@
     <children>
         <BorderPane style="-fx-background-color: white;" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
             <center>
-                <AnchorPane prefHeight="718.0" prefWidth="615.0" style="-fx-background-color: e1e2e1;" BorderPane.alignment="CENTER">
+                <AnchorPane prefHeight="718.0" prefWidth="615.0" style="-fx-background-color: white;" BorderPane.alignment="CENTER">
                     <children>
                         <JFXScrollPane layoutX="7.0" layoutY="24.0" AnchorPane.bottomAnchor="57.0" AnchorPane.leftAnchor="6.0" AnchorPane.rightAnchor="6.0" AnchorPane.topAnchor="23.0">
                             <children>
@@ -34,19 +34,23 @@
             <right>
                 <AnchorPane prefHeight="710.0" prefWidth="312.0" BorderPane.alignment="CENTER">
                     <children>
-                        <VBox prefHeight="710.0" prefWidth="312.0" spacing="30.0" style="-fx-background-color: e1e2e1;" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                        <VBox prefHeight="710.0" prefWidth="312.0" spacing="30.0" style="-fx-background-color: white;" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                             <children>
                                 <JFXTextField fx:id="txtNombre" focusColor="#f68a1f" labelFloat="true" prefHeight="31.0" prefWidth="242.0" promptText="Nombre" />
                                 <JFXTextField fx:id="txtDomicilio" focusColor="#f68a1f" labelFloat="true" prefHeight="31.0" prefWidth="242.0" promptText="Domicilio" />
                                 <JFXTextField fx:id="txtLatitud" focusColor="#f68a1f" labelFloat="true" prefHeight="31.0" prefWidth="242.0" promptText="Latitud" />
                                 <JFXTextField fx:id="txtLongitud" focusColor="#f68a1f" labelFloat="true" prefHeight="31.0" prefWidth="242.0" promptText="Longitud" />
                                 <Label text="Localización:" />
-                                <ImageView fx:id="imgViewLocalizacion" fitHeight="193.0" fitWidth="261.0" pickOnBounds="true" preserveRatio="true">
-                                    <image>
-                                        <Image url="@../../../../../res/localizacion.png" />
-                                    </image>
-                                </ImageView>
-                                <FlowPane alignment="CENTER" hgap="15.0" prefHeight="200.0" prefWidth="200.0" vgap="15.0">
+                        <JFXButton fx:id="btnLocalizacion" prefHeight="122.0" prefWidth="261.0" text=" ">
+                           <graphic>
+                              <ImageView fitHeight="71.0" fitWidth="103.0" pickOnBounds="true" preserveRatio="true">
+                                 <image>
+                                    <Image url="@../../../../../res/localizacion.png" />
+                                 </image>
+                              </ImageView>
+                           </graphic>
+                        </JFXButton>
+                                <FlowPane hgap="25.0" prefHeight="200.0" prefWidth="200.0" vgap="15.0">
                                     <children>
                                         <JFXButton fx:id="btnNuevo" prefHeight="31.0" prefWidth="103.0" style="-fx-background-color: #00C851;" text="Nuevo" textFill="WHITE">
                                             <graphic>
