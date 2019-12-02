@@ -9,18 +9,18 @@ import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
+import edu.softech.InterfazJavaFX.gui.WindowMain;
 import edu.softech.MySpa.modelo.Cliente;
-import edu.softech.MySpa.modelo.Usuario;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
-import java.net.URISyntaxException;
 import java.net.URL;
 import java.net.URLEncoder;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import tray.notification.NotificationType;
 
 /**
  *
@@ -41,6 +41,8 @@ public final class Api {
     private JsonParser parser = null;
 
     private URL url;
+
+    private WindowMain windowMain;
 
     /**
      * Al ser una consulta de un listado, este metodo regresa un arreglo de json
@@ -63,42 +65,46 @@ public final class Api {
             json = parser.parse(hacerPeticion(ruta, "GET")).getAsJsonArray();
 
         } catch (Exception ex) {
-            Logger.getLogger(Api.class.getName()).log(Level.SEVERE, null, ex);
+            windowMain.mostrarNotificacion("Error de conexión", "El servidor no está activo", NotificationType.ERROR);
         }
 
         return json;
     }
 
     public JsonElement manejarCliente(Cliente c, String opcion) {
-        String enlace = RUTA + "cliente?";
-        if (!opcion.equals("DELETE")) {
-            enlace += "nombre=" + URLEncoder.encode(c.getNombre())
-                    + "&apellidoPaterno=" + URLEncoder.encode(c.getApellidoPaterno())
-                    + "&apellidoMaterno=" + URLEncoder.encode(c.getApellidoMaterno())
-                    + "&genero=" + URLEncoder.encode(c.getGenero())
-                    + "&telefono=" + URLEncoder.encode(c.getTelefono())
-                    + "&rfc=" + URLEncoder.encode(c.getRfc())
-                    + "&nombreUsuario=" + c.getUsuario().getNombreUsuario()
-                    + "&correo=" + URLEncoder.encode(c.getCorreo())
-                    + "&contrasenia=" + c.getUsuario().getContrasenia()
-                    + "&domicilio=" + URLEncoder.encode(c.getDomicilio());
-        } else {
-            enlace += "numeroUnicoCliente=" + URLEncoder.encode(c.getNumeroUnico())
-                    + "&nombreUsuario=" + URLEncoder.encode(c.getUsuario().getNombreUsuario());
-        }
-
-        if (opcion.equals("PUT")) {
-            enlace += "&numeroUnicoCliente=" + URLEncoder.encode(c.getNumeroUnico());
-        }
         try {
+            String enlace = RUTA + "cliente?";
+            if (!opcion.equals("DELETE")) {
+                enlace += "nombre=" + URLEncoder.encode(c.getNombre())
+                        + "&apellidoPaterno=" + URLEncoder.encode(c.getApellidoPaterno())
+                        + "&apellidoMaterno=" + URLEncoder.encode(c.getApellidoMaterno())
+                        + "&genero=" + URLEncoder.encode(c.getGenero())
+                        + "&telefono=" + URLEncoder.encode(c.getTelefono())
+                        + "&rfc=" + URLEncoder.encode(c.getRfc())
+                        + "&nombreUsuario=" + c.getUsuario().getNombreUsuario()
+                        + "&correo=" + URLEncoder.encode(c.getCorreo())
+                        + "&contrasenia=" + c.getUsuario().getContrasenia()
+                        + "&domicilio=" + URLEncoder.encode(c.getDomicilio());
+            } else {
+                enlace += "numeroUnicoCliente=" + URLEncoder.encode(c.getNumeroUnico())
+                        + "&nombreUsuario=" + URLEncoder.encode(c.getUsuario().getNombreUsuario());
+            }
+
+            if (opcion.equals("PUT")) {
+                enlace += "&numeroUnicoCliente=" + URLEncoder.encode(c.getNumeroUnico());
+            }
             JsonElement json = parser.parse(hacerPeticion(enlace, opcion));
-            
+            if (json.isJsonNull()) {
+                return null;
+            }
             return json;
 
         } catch (MalformedURLException ex) {
             Logger.getLogger(Api.class.getName()).log(Level.SEVERE, null, ex);
         } catch (IOException ex) {
             Logger.getLogger(Api.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (NullPointerException e) {
+            return null;
         } catch (Exception ex) {
             Logger.getLogger(Api.class.getName()).log(Level.SEVERE, null, ex);
         }

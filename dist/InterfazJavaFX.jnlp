@@ -8,7 +8,7 @@
   </information>
   <resources>
     <j2se version="1.6+" href="http://java.sun.com/products/autodl/j2se"/>
-    <jar href="InterfazJavaFX.jar" size="87701" download="eager" />
+    <jar href="InterfazJavaFX.jar" size="89916" download="eager" />
     <jar href="lib\MySpa_modelo.jar" size="17333" download="eager" />
     <jar href="lib\TrayNotification.jar" size="41019" download="eager" />
     <jar href="lib\gson-2.8.0.jar" size="231952" download="eager" />
