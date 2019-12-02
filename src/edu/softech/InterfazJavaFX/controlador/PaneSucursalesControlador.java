@@ -7,7 +7,9 @@ package edu.softech.InterfazJavaFX.controlador;
 
 import com.google.gson.*;
 import com.jfoenix.controls.JFXButton;
+import com.jfoenix.controls.JFXCheckBox;
 import edu.softech.InterfazJavaFX.api.*;
+import edu.softech.InterfazJavaFX.gui.WindowMain;
 import edu.softech.MySpa.modelo.Sucursal;
 import java.awt.Desktop;
 import java.io.IOException;
@@ -38,6 +40,7 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.web.WebEngine;
 import javafx.scene.web.WebView;
 import javafx.stage.Stage;
+import tray.notification.NotificationType;
 
 /**
  * FXML Controller class
@@ -81,7 +84,10 @@ public class PaneSucursalesControlador implements Initializable {
     TableColumn<Sucursal, String> colLongitud;
     @FXML
     JFXButton btnLocalizacion;
+    @FXML
+    JFXCheckBox chbVerInactivos;
 
+    WindowMain windowmain = new WindowMain();
     Api api = new Api();
     int nuevo = 0;
     Gson gson = new Gson();
@@ -100,7 +106,7 @@ public class PaneSucursalesControlador implements Initializable {
             txtDomicilio.setEditable(false);
             txtLatitud.setEditable(false);
             txtLongitud.setEditable(false);
-            inicializarTabla();
+            inicializarTabla(true);
 
             //LISTENER PARA QUE CAMBIEN LOS DATOS CADA QUE SE MUEVA CON LAS FLECHAS EN LA TABLA
             tblSucursales.setOnKeyReleased(x -> {
@@ -171,12 +177,26 @@ public class PaneSucursalesControlador implements Initializable {
                 }
             });
 
+            //CHECKBOX PARA MOSTRAR SUCURSALES INACTIVOS
+            chbVerInactivos.setOnAction(evt -> {
+                try {
+                    if (!chbVerInactivos.selectedProperty().get()) {
+                        inicializarTabla(true);
+                    } else {
+                        inicializarTabla(false);
+                    }
+                } catch (IOException ex) {
+                    Logger.getLogger(PaneClientesControlador.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            });
+
         } catch (Exception ex) {
             Logger.getLogger(PaneSucursalesControlador.class.getName()).log(Level.SEVERE, null, ex);
         }
 
     }
 
+    //METODO PARA CONSULTAR SUCURSALES INACTIVAS
     //METODO PARA CANCELAR CUALQUIER ACCION
     private void limpiarCampos() {
         tblSucursales.getSelectionModel().clearSelection();
@@ -231,9 +251,13 @@ public class PaneSucursalesControlador implements Initializable {
 
             JsonObject json = api.eliminarSucursal(objeto);
 
+            windowmain.mostrarNotificacion("Alerta", "Sucursal " + su.getNombre() + " eliminada", NotificationType.WARNING);
+            limpiarCampos();
+            cambiarCampos(UNC_DEFAULT, false);
+
             Platform.runLater(() -> {
                 try {
-                    tblSucursales.setItems(obtenerDatos());
+                    tblSucursales.setItems(obtenerDatos(true));
                 } catch (IOException ex) {
                     Logger.getLogger(PaneSucursalesControlador.class.getName()).log(Level.SEVERE, null, ex);
                 }
@@ -253,9 +277,7 @@ public class PaneSucursalesControlador implements Initializable {
                     txtDomicilio.setEditable(false);
                     txtLatitud.setEditable(false);
                     txtLongitud.setEditable(false);
-                    Alert a = new Alert(Alert.AlertType.INFORMATION);
-                    Stage stage = (Stage) a.getDialogPane().getScene().getWindow();
-                    stage.getIcons().add(new Image(this.getClass().getResource("/res/lotus.png").toString()));
+
                     Sucursal su = new Sucursal();
                     su = tblSucursales.getSelectionModel().getSelectedItem();
                     String id = URLEncoder.encode(String.valueOf(su.getIdSucursal()), "UTF-8");
@@ -265,13 +287,11 @@ public class PaneSucursalesControlador implements Initializable {
                     String lon = URLEncoder.encode(txtLongitud.getText(), "UTF-8");
                     String objeto = "sucursal?idSucursal=" + id + "&nombre=" + nom + "&domicilio=" + dom + "&latitud=" + lat + "&longitud=" + lon;
                     JsonObject json = api.actualizarSucursal(objeto);
-                    a.setTitle("Aviso");
-                    a.setHeaderText(null);
-                    a.setContentText("Actualización exitósa!");
-                    a.showAndWait();
+
+                    windowmain.mostrarNotificacion("Aviso", "¡Actualización exitósa!", NotificationType.SUCCESS);
                     Platform.runLater(() -> {
                         try {
-                            tblSucursales.setItems(obtenerDatos());
+                            tblSucursales.setItems(obtenerDatos(true));
                         } catch (IOException ex) {
                             Logger.getLogger(PaneSucursalesControlador.class.getName()).log(Level.SEVERE, null, ex);
                         }
@@ -294,7 +314,7 @@ public class PaneSucursalesControlador implements Initializable {
                     JsonObject json = api.insertarSucursal(objeto);
                     Platform.runLater(() -> {
                         try {
-                            tblSucursales.setItems(obtenerDatos());
+                            tblSucursales.setItems(obtenerDatos(true));
                         } catch (IOException ex) {
                             Logger.getLogger(PaneSucursalesControlador.class.getName()).log(Level.SEVERE, null, ex);
                         }
@@ -311,10 +331,12 @@ public class PaneSucursalesControlador implements Initializable {
     }
 
     //METODO PARA LLENAR LA TABLA CON SUCURSALES ACTIVAS
-    private void inicializarTabla() throws IOException {
+    private void inicializarTabla(boolean sucursalesActivas) throws IOException {
+        tblSucursales.getColumns().clear();
+
         Platform.runLater(() -> {
             try {
-                tblSucursales.setItems(obtenerDatos());
+                tblSucursales.setItems(obtenerDatos(sucursalesActivas));
             } catch (IOException ex) {
                 Logger.getLogger(PaneSucursalesControlador.class.getName()).log(Level.SEVERE, null, ex);
             }
@@ -323,11 +345,6 @@ public class PaneSucursalesControlador implements Initializable {
         colEstatus = new TableColumn<>("Estatus");
         colEstatus.setCellValueFactory(
                 new PropertyValueFactory<>("estatus"));
-
-        //idSucursal
-        colID = new TableColumn<>("ID");
-        colID.setCellValueFactory(
-                new PropertyValueFactory<>("idSucursal"));
 
         //Nombre
         colNombre = new TableColumn<>("Nombre");
@@ -352,7 +369,7 @@ public class PaneSucursalesControlador implements Initializable {
                 new PropertyValueFactory<>("longitud"));
 
         tblSucursales.getColumns().addAll(
-                colEstatus, colID, colNombre, colDomicilio,
+                colEstatus, colNombre, colDomicilio,
                 colLatitud, colLongitud
         );
 
@@ -399,7 +416,7 @@ public class PaneSucursalesControlador implements Initializable {
     }
 
     //METODO PARA TRAER TODAS LAS SUCURSALES
-    private ObservableList<Sucursal> obtenerDatos() throws IOException {
+    private ObservableList<Sucursal> obtenerDatos(boolean sucursalesActivas) throws IOException {
         ObservableList<Sucursal> sucursales
                 = FXCollections.observableArrayList();
 
@@ -409,7 +426,18 @@ public class PaneSucursalesControlador implements Initializable {
 
         for (JsonElement jsonElement : jsonArray) {
             s = gson.fromJson(jsonElement, Sucursal.class);
-            sucursales.add(s);
+            if (sucursalesActivas) {
+                if (s.getEstatus() == 1) {
+                    sucursales.add(s);
+
+                }
+            } else {
+                if (s.getEstatus() == 0) {
+                    sucursales.add(s);
+
+                }
+
+            }
         }
 
         return sucursales;
