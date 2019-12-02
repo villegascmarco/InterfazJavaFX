@@ -200,33 +200,8 @@ public final class Api {
         }
 
         String ruta = RUTA + acum;//http://localhost:8080/MySpa/api/sucursal?
-        URL url = new URL(ruta);
 
-        HttpURLConnection connHttp = (HttpURLConnection) url.openConnection();
-        connHttp.setDoOutput(true);
-        connHttp.setRequestMethod("DELETE");
-        connHttp.setRequestProperty("datatype", "json");
-
-        respuestaServidor = connHttp.getResponseCode();
-
-        if (respuestaServidor == HttpURLConnection.HTTP_OK) {
-
-            isr = new InputStreamReader(connHttp.getInputStream());
-            br = new BufferedReader(isr);
-
-            contenidoRespuesta = "";
-
-            while ((lineaActual = br.readLine()) != null) {
-                contenidoRespuesta += lineaActual;
-            }
-
-            br.close();
-
-            connHttp.disconnect();
-
-            json = parser.parse(contenidoRespuesta).getAsJsonObject();
-
-        }
+        json = parser.parse(hacerPeticion(ruta, "DELETE")).getAsJsonObject();
 
         return json;
     }
@@ -246,33 +221,8 @@ public final class Api {
         }
 
         String ruta = RUTA + acum;//http://localhost:8080/MySpa/api/sucursal?
-        URL url = new URL(ruta);
 
-        HttpURLConnection connHttp = (HttpURLConnection) url.openConnection();
-        connHttp.setDoOutput(true);
-        connHttp.setRequestMethod("PUT");
-        connHttp.setRequestProperty("datatype", "json");
-
-        respuestaServidor = connHttp.getResponseCode();
-
-        if (respuestaServidor == HttpURLConnection.HTTP_OK) {
-
-            isr = new InputStreamReader(connHttp.getInputStream());
-            br = new BufferedReader(isr);
-
-            contenidoRespuesta = "";
-
-            while ((lineaActual = br.readLine()) != null) {
-                contenidoRespuesta += lineaActual;
-            }
-
-            br.close();
-
-            connHttp.disconnect();
-
-            json = parser.parse(contenidoRespuesta).getAsJsonObject();
-
-        }
+        json = parser.parse(hacerPeticion(ruta, "PUT")).getAsJsonObject();
 
         return json;
 
@@ -293,33 +243,8 @@ public final class Api {
         }
 
         String ruta = RUTA + acum;//http://localhost:8080/MySpa/api/sucursal?
-        URL url = new URL(ruta);
 
-        HttpURLConnection connHttp = (HttpURLConnection) url.openConnection();
-        connHttp.setDoOutput(true);
-        connHttp.setRequestMethod("POST");
-        connHttp.setRequestProperty("Content-Type", "application/json");
-
-        respuestaServidor = connHttp.getResponseCode();
-
-        if (respuestaServidor == HttpURLConnection.HTTP_OK) {
-
-            isr = new InputStreamReader(connHttp.getInputStream());
-            br = new BufferedReader(isr);
-
-            contenidoRespuesta = "";
-
-            while ((lineaActual = br.readLine()) != null) {
-                contenidoRespuesta += lineaActual;
-            }
-
-            br.close();
-
-            connHttp.disconnect();
-
-            json = parser.parse(contenidoRespuesta).getAsJsonObject();
-
-        }
+        json = parser.parse(hacerPeticion(ruta, "POST")).getAsJsonObject();
 
         return json;
 
