@@ -11,5 +11,5 @@ package edu.softech.InterfazJavaFX.api;
  */
 public class MySpaCommons
 {
-    public static final String URL_SERVER = "http://localhost:8084/myspa";
+    public static final String URL_SERVER = "http://localhost:18835/my-spa/api/";
 }

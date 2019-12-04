@@ -1,12 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import com.jfoenix.controls.JFXButton?>
+<?import com.jfoenix.controls.JFXCheckBox?>
 <?import com.jfoenix.controls.JFXComboBox?>
-<?import com.jfoenix.controls.JFXScrollPane?>
 <?import com.jfoenix.controls.JFXTextField?>
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Label?>
-<?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
@@ -15,45 +14,35 @@
 <?import javafx.scene.layout.FlowPane?>
 <?import javafx.scene.layout.VBox?>
 
-<AnchorPane id="AnchorPane" prefHeight="770.0" prefWidth="1025.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1">
+<AnchorPane id="AnchorPane" prefHeight="770.0" prefWidth="1025.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="edu.softech.InterfazJavaFX.controlador.PaneSalaControlador">
    <children>
       <BorderPane prefHeight="200.0" prefWidth="200.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <center>
-            <AnchorPane prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: e1e2e1;" BorderPane.alignment="CENTER">
+            <AnchorPane prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: white;" BorderPane.alignment="CENTER">
                <children>
-                  <JFXScrollPane AnchorPane.bottomAnchor="57.0" AnchorPane.leftAnchor="6.0" AnchorPane.rightAnchor="6.0" AnchorPane.topAnchor="23.0">
-                     <children>
-                        <TableView prefHeight="200.0" prefWidth="200.0">
-                           <columns>
-                              <TableColumn prefWidth="75.0" text="ID" />
-                              <TableColumn prefWidth="75.0" text="Nombre" />
-                              <TableColumn prefWidth="75.0" text="Descripcion" />
-                              <TableColumn prefWidth="75.0" text="Estatus" />
-                              <TableColumn prefWidth="75.0" text="Sucursal" />
-                           </columns>
-                           <columnResizePolicy>
-                              <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
-                           </columnResizePolicy>
-                        </TableView>
-                     </children>
-                  </JFXScrollPane>
+                  <JFXTextField fx:id="txtBuscar" focusColor="#f68a1f" labelFloat="true" prefHeight="31.0" prefWidth="696.0" promptText="Buscar" AnchorPane.leftAnchor="20.0" AnchorPane.rightAnchor="20.0" AnchorPane.topAnchor="20.0" />
+                  <TableView fx:id="tblSalas" prefHeight="200.0" prefWidth="200.0" AnchorPane.bottomAnchor="50.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="70.0">
+                     <columnResizePolicy>
+                        <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
+                     </columnResizePolicy>
+                  </TableView>
+                  <JFXCheckBox fx:id="chbInactivos" text="Ver Inactivos" AnchorPane.bottomAnchor="20.0" AnchorPane.rightAnchor="20.0" />
                </children>
             </AnchorPane>
          </center>
          <right>
             <AnchorPane fx:id="apDerecha" prefHeight="769.0" prefWidth="312.0" style="-fx-background-color: e1e2e1;" BorderPane.alignment="CENTER">
                <children>
-                  <VBox prefHeight="710.0" prefWidth="312.0" spacing="30.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                  <VBox prefHeight="710.0" prefWidth="312.0" spacing="30.0" style="-fx-background-color: white;" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                      <children>
-                        <JFXTextField fx:id="txtNombre" focusColor="#f68a1f" labelFloat="true" prefHeight="31.0" prefWidth="242.0" promptText="Nombre" />
-                        <JFXTextField fx:id="txtDescripcion" focusColor="#f68a1f" labelFloat="true" prefHeight="31.0" prefWidth="242.0" promptText="Descripcion" />
-                        <FlowPane alignment="CENTER" hgap="15.0" prefHeight="200.0" prefWidth="200.0" rowValignment="TOP" vgap="15.0">
+                        <VBox alignment="CENTER">
                            <children>
                               <Label text="Fotografía:" />
                               <ImageView fx:id="imgFotografia" fitHeight="150.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true" />
                            </children>
-                        </FlowPane>
-                        <JFXComboBox fx:id="cmbEstatus" focusColor="#f68a1f" labelFloat="true" prefWidth="272.0" promptText="Estatus:" />
+                        </VBox>
+                        <JFXTextField fx:id="txtNombre" focusColor="#f68a1f" labelFloat="true" prefHeight="31.0" prefWidth="242.0" promptText="Nombre" />
+                        <JFXTextField fx:id="txtDescripcion" focusColor="#f68a1f" labelFloat="true" prefHeight="31.0" prefWidth="242.0" promptText="Descripcion" />
                         <JFXComboBox fx:id="cmbSucursal" focusColor="#f68a1f" labelFloat="true" prefWidth="272.0" promptText="Sucursal:" />
                         <FlowPane alignment="CENTER" columnHalignment="CENTER" hgap="15.0" prefHeight="200.0" prefWidth="200.0" rowValignment="TOP" vgap="15.0">
                            <children>
@@ -93,7 +82,19 @@
                                     </ImageView>
                                  </graphic>
                               </JFXButton>
+                              <JFXButton fx:id="btnCancelar" prefHeight="31.0" prefWidth="226.0" style="-fx-background-color: #6A6262;" text="Cancelar" textFill="WHITE">
+                                 <graphic>
+                                    <ImageView fitHeight="18.0" fitWidth="19.0" pickOnBounds="true" preserveRatio="true">
+                                       <image>
+                                          <Image url="@../../../../../res/icoCancelar32px.png" />
+                                       </image>
+                                    </ImageView>
+                                 </graphic>
+                              </JFXButton>
                            </children>
+                           <VBox.margin>
+                              <Insets bottom="25.0" />
+                           </VBox.margin>
                         </FlowPane>
                      </children>
                      <padding>
