@@ -585,7 +585,7 @@ public class PaneClientesControlador implements Initializable {
             } catch (Exception ex) {
                 alerta.showAndDismiss(Duration.ZERO);
 
-                windowMain.mostrarNotificacion("Error", "", NotificationType.ERROR);
+                windowMain.mostrarNotificacion("Error", "Aquí", NotificationType.ERROR);
 
             }
         });

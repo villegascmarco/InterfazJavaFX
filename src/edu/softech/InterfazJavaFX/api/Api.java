@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package edu.softech.InterfazJavaFX.api;
 
 import com.google.gson.JsonArray;
@@ -22,10 +17,6 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import tray.notification.NotificationType;
 
-/**
- *
- * @author Villegas
- */
 public final class Api {
 
     private static final String RUTA = "http://localhost:8084/MySpa/api/";
@@ -39,6 +30,8 @@ public final class Api {
     private String lineaActual = null;
 
     private JsonParser parser = null;
+
+    private String contenidoRespuesta = null;
 
     private URL url;
 
@@ -94,6 +87,7 @@ public final class Api {
                 enlace += "&numeroUnicoCliente=" + URLEncoder.encode(c.getNumeroUnico());
             }
             JsonElement json = parser.parse(hacerPeticion(enlace, opcion));
+
             if (json.isJsonNull()) {
                 return null;
             }
@@ -198,6 +192,70 @@ public final class Api {
 
         connHttp.disconnect();
         return contenidoRespuesta;
+
+    }
+
+    public JsonObject eliminarSucursal(String objeto) throws Exception {
+        parser = new JsonParser();
+        JsonObject json = null;
+        String acum = "";
+
+        for (int i = 0; i < objeto.length(); i++) {
+            if (objeto.charAt(i) == ' ') {
+                acum += "%20";
+            } else {
+                acum += objeto.charAt(i);
+            }
+        }
+
+        String ruta = RUTA + acum;//http://localhost:8080/MySpa/api/sucursal?
+
+        json = parser.parse(hacerPeticion(ruta, "DELETE")).getAsJsonObject();
+
+        return json;
+    }
+
+    //METODO PARA ACTUALIZAR UNA SUCURSAL MEDIANTE METODO PUT
+    public JsonObject actualizarSucursal(String objeto) throws Exception {
+        parser = new JsonParser();
+
+        JsonObject json = null;
+        String acum = "";
+        for (int i = 0; i < objeto.length(); i++) {
+            if (objeto.charAt(i) == ' ') {
+                acum += "%20";
+            } else {
+                acum += objeto.charAt(i);
+            }
+        }
+
+        String ruta = RUTA + acum;//http://localhost:8080/MySpa/api/sucursal?
+
+        json = parser.parse(hacerPeticion(ruta, "PUT")).getAsJsonObject();
+
+        return json;
+
+    }
+
+    //METODO PARA INSERTAR UNA SUCURSAL MEDIANTE EL METODO POST
+    public JsonObject insertarSucursal(String objeto) throws Exception {
+        parser = new JsonParser();
+
+        JsonObject json = null;
+        String acum = "";
+        for (int i = 0; i < objeto.length(); i++) {
+            if (objeto.charAt(i) == ' ') {
+                acum += "%20";
+            } else {
+                acum += objeto.charAt(i);
+            }
+        }
+
+        String ruta = RUTA + acum;//http://localhost:8080/MySpa/api/sucursal?
+
+        json = parser.parse(hacerPeticion(ruta, "POST")).getAsJsonObject();
+
+        return json;
 
     }
 
