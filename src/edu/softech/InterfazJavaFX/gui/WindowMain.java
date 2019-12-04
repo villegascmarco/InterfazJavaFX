@@ -50,11 +50,19 @@ public class WindowMain extends Application {
 
         tray.setTitle(titulo);
         tray.setMessage(mensaje);
-//        tray.setRectangleFill(Paint.valueOf("#2A9A84"));
         tray.setAnimationType(AnimationType.POPUP);
         tray.setNotificationType(tipo);
-        tray.showAndDismiss(Duration.seconds(2));
+        tray.showAndDismiss(Duration.seconds(5));
+    }
 
+    public TrayNotification mostrarAlerts(String titulo, String mensaje, NotificationType tipo) {
+        tray = new TrayNotification();
+
+        tray.setTitle(titulo);
+        tray.setMessage(mensaje);
+        tray.setAnimationType(AnimationType.POPUP);
+        tray.setNotificationType(tipo);
+        return tray;
     }
 
 }

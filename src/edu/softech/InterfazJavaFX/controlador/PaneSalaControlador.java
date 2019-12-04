@@ -27,6 +27,8 @@ import java.net.MalformedURLException;
 import java.net.URISyntaxException;
 import java.net.URL;
 import java.net.URLEncoder;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
@@ -191,8 +193,34 @@ public class PaneSalaControlador implements Initializable
 
     private void llenarComboBoxes()
     {
-        // por hacer
-        cmbSucursal.getItems().add(api);
+        Platform.runLater(() ->
+        {
+
+            try
+            {
+                JsonArray jsonArray = api.consultarListado("sucursal");
+                if (jsonArray == null)
+                    return;
+
+                Sucursal sucursalAux;
+
+                for (JsonElement jsonElement : jsonArray)
+                {
+                    sucursalAux = gson.fromJson(jsonElement, Sucursal.class);
+
+                    if (sucursalAux.getEstatus() == 1)
+                        cmbSucursal.getItems().add(
+                                sucursalAux.getIdSucursal() + " " + sucursalAux.getNombre());
+                }
+            }
+            catch (IOException ex)
+            {
+                Logger.getLogger(PaneSalaControlador.class.getName()).log(
+                        Level.SEVERE,
+                        null, ex);
+            }
+
+        });
     }
 
     private void inicializarOyentes()
@@ -378,6 +406,17 @@ public class PaneSalaControlador implements Initializable
             /*
              * FALTA
              */
+            String sucursalIdString = cmbSucursal.getSelectionModel().getSelectedItem().toString().split(
+                    " ")[0];
+
+            try
+            {
+                sala.getSucursal().setIdSucursal(Integer.valueOf(
+                        sucursalIdString));
+            }
+            catch (Exception e)
+            {
+            }
         }
 
         return sala;
@@ -516,6 +555,8 @@ public class PaneSalaControlador implements Initializable
             /*
              * asignar sucursal
              */
+            cmbSucursal.getSelectionModel().select(
+                    sucursal.getIdSucursal() + " " + sucursal.getNombre());
         }
         cambiarCampos(UNC_DEFAULT, false);
         opcion = null;
