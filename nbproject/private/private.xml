@@ -3,8 +3,14 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
+<<<<<<< HEAD
             <file>file:/C:/Users/Esau/Documents/Proyectos%20git/InterfazJavaFX/src/edu/softech/InterfazJavaFX/controlador/PaneClientesControlador.java</file>
             <file>file:/C:/Users/Esau/Documents/Proyectos%20git/InterfazJavaFX/src/edu/softech/InterfazJavaFX/controlador/PaneSalaControlador.java</file>
+=======
+            <file>file:/D:/Documentos/InterfazJavaFX/src/edu/softech/InterfazJavaFX/api/Api.java</file>
+            <file>file:/D:/Documentos/InterfazJavaFX/src/edu/softech/InterfazJavaFX/controlador/PaneSucursalesControlador.java</file>
+            <file>file:/D:/Documentos/InterfazJavaFX/src/edu/softech/InterfazJavaFX/controlador/PaneClientesControlador.java</file>
+>>>>>>> 1271bae18d5af86f529e7c9d7bcdc1c2e28fef01
         </group>
     </open-files>
 </project-private>
