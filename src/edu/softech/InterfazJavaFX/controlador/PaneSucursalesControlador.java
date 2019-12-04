@@ -15,7 +15,6 @@ import java.awt.Desktop;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.net.URI;
-import java.net.URISyntaxException;
 import java.net.URL;
 import java.net.URLEncoder;
 import java.util.Optional;
@@ -25,7 +24,8 @@ import java.util.logging.Logger;
 import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.event.EventHandler;
+import javafx.collections.transformation.FilteredList;
+import javafx.collections.transformation.SortedList;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Alert;
@@ -35,10 +35,7 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
-import javafx.scene.web.WebEngine;
-import javafx.scene.web.WebView;
 import javafx.stage.Stage;
 import tray.notification.NotificationType;
 
@@ -55,6 +52,8 @@ public class PaneSucursalesControlador implements Initializable {
     TextField txtDomicilio;
     @FXML
     TextField txtLatitud;
+    @FXML
+    TextField txtBuscar;
     @FXML
     TextField txtLongitud;
     @FXML
@@ -337,41 +336,11 @@ public class PaneSucursalesControlador implements Initializable {
         Platform.runLater(() -> {
             try {
                 tblSucursales.setItems(obtenerDatos(sucursalesActivas));
+                inicializarColumnas();
             } catch (IOException ex) {
                 Logger.getLogger(PaneSucursalesControlador.class.getName()).log(Level.SEVERE, null, ex);
             }
         });
-        //Estatus
-        colEstatus = new TableColumn<>("Estatus");
-        colEstatus.setCellValueFactory(
-                new PropertyValueFactory<>("estatus"));
-
-        //Nombre
-        colNombre = new TableColumn<>("Nombre");
-        colNombre.setMinWidth(50);
-        colNombre.setCellValueFactory(
-                new PropertyValueFactory<>("nombre"));
-
-        //Domicilio       
-        colDomicilio = new TableColumn<>("Domicilio");
-        colDomicilio.setMinWidth(120);
-        colDomicilio.setCellValueFactory(
-                new PropertyValueFactory<>("domicilio"));
-
-        //Latitud
-        colLatitud = new TableColumn<>("Latitud");
-        colLatitud.setCellValueFactory(
-                new PropertyValueFactory<>("latitud"));
-
-        //Longitud
-        colLongitud = new TableColumn<>("Longitud");
-        colLongitud.setCellValueFactory(
-                new PropertyValueFactory<>("longitud"));
-
-        tblSucursales.getColumns().addAll(
-                colEstatus, colNombre, colDomicilio,
-                colLatitud, colLongitud
-        );
 
         tblSucursales.setOnMouseClicked((MouseEvent event) -> {
             if (event.getClickCount() > 0) {
@@ -420,26 +389,37 @@ public class PaneSucursalesControlador implements Initializable {
         ObservableList<Sucursal> sucursales
                 = FXCollections.observableArrayList();
 
-        JsonArray jsonArray = api.consultarListado("sucursal");
+        Platform.runLater(() -> {
 
-        Sucursal s;
+            JsonArray jsonArray;
+            try {
+                jsonArray = api.consultarListado("sucursal");
 
-        for (JsonElement jsonElement : jsonArray) {
-            s = gson.fromJson(jsonElement, Sucursal.class);
-            if (sucursalesActivas) {
-                if (s.getEstatus() == 1) {
-                    sucursales.add(s);
-
-                }
-            } else {
-                if (s.getEstatus() == 0) {
-                    sucursales.add(s);
-
-                }
-
+            if (jsonArray == null) {
+                return;
             }
-        }
+            Sucursal s;
 
+            for (JsonElement jsonElement : jsonArray) {
+                s = gson.fromJson(jsonElement, Sucursal.class);
+                if (sucursalesActivas) {
+                    if (s.getEstatus() == 1) {
+                        sucursales.add(s);
+
+                    }
+                } else {
+                    if (s.getEstatus() == 0) {
+                        sucursales.add(s);
+
+                    }
+
+                }
+            }
+            filtrarDatos(sucursales);
+            } catch (IOException ex) {
+                Logger.getLogger(PaneSucursalesControlador.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        });
         return sucursales;
     }
 
@@ -457,6 +437,86 @@ public class PaneSucursalesControlador implements Initializable {
         txtLongitud.setStyle(estilo);
         txtLongitud.setEditable(editable);
 
+    }
+
+    private void filtrarDatos(ObservableList<Sucursal> dato) {
+
+        FilteredList<Sucursal> filteredData
+                = new FilteredList<>(dato, b -> true);
+
+        txtBuscar.textProperty().addListener((observable, oldValue, newValue) -> {
+
+            filteredData.setPredicate(sucursal -> {
+                if (newValue == null || newValue.isEmpty()) {
+                    return true;//Mostrar todos
+                }
+                try {
+
+                    String busqueda = newValue.toLowerCase();
+
+                    if (sucursal.getNombre().toLowerCase().contains(busqueda)) {
+                        return true;
+                    } else if (sucursal.getDomicilio().toLowerCase().contains(busqueda)) {
+                        return true;
+                    } else if (("" + sucursal.getLatitud()).contains(busqueda)) {
+                        return true;
+                    } else if (("" + sucursal.getLongitud()).contains(busqueda)) {
+                        return true;
+                    }
+
+                    return false;
+                } catch (Exception e) {
+                    return false;
+                }
+
+            });
+
+        });
+
+        SortedList<Sucursal> sortedList = new SortedList<>(filteredData);
+
+        tblSucursales.getColumns().clear();
+
+        limpiarCampos();
+
+        sortedList.comparatorProperty().bind(tblSucursales.comparatorProperty());
+        tblSucursales.setItems(sortedList);
+        inicializarColumnas();
+
+    }
+
+    public void inicializarColumnas() {
+        //Estatus
+        colEstatus = new TableColumn<>("Estatus");
+        colEstatus.setCellValueFactory(
+                new PropertyValueFactory<>("estatus"));
+
+        //Nombre
+        colNombre = new TableColumn<>("Nombre");
+        colNombre.setMinWidth(50);
+        colNombre.setCellValueFactory(
+                new PropertyValueFactory<>("nombre"));
+
+        //Domicilio       
+        colDomicilio = new TableColumn<>("Domicilio");
+        colDomicilio.setMinWidth(120);
+        colDomicilio.setCellValueFactory(
+                new PropertyValueFactory<>("domicilio"));
+
+        //Latitud
+        colLatitud = new TableColumn<>("Latitud");
+        colLatitud.setCellValueFactory(
+                new PropertyValueFactory<>("latitud"));
+
+        //Longitud
+        colLongitud = new TableColumn<>("Longitud");
+        colLongitud.setCellValueFactory(
+                new PropertyValueFactory<>("longitud"));
+
+        tblSucursales.getColumns().addAll(
+                colEstatus, colNombre, colDomicilio,
+                colLatitud, colLongitud
+        );
     }
 
 }
