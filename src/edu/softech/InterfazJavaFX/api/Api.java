@@ -9,7 +9,10 @@ import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
+import edu.softech.InterfazJavaFX.gui.WindowMain;
 import edu.softech.MySpa.modelo.Cliente;
+import edu.softech.MySpa.modelo.Producto_Sucursal;
+import edu.softech.MySpa.modelo.Tratamiento;
 import edu.softech.MySpa.modelo.Usuario;
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -21,6 +24,7 @@ import java.net.URL;
 import java.net.URLEncoder;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import tray.notification.NotificationType;
 
 /**
  *
@@ -42,6 +46,8 @@ public final class Api {
 
     private URL url;
 
+    private WindowMain windowMain = new WindowMain();
+
     /**
      * Al ser una consulta de un listado, este metodo regresa un arreglo de json
      *
@@ -56,14 +62,19 @@ public final class Api {
 
         parser = new JsonParser();
 
-        JsonArray json = null;
+        JsonArray json = new JsonArray();
 
         try {
 
             json = parser.parse(hacerPeticion(ruta, "GET")).getAsJsonArray();
 
         } catch (Exception ex) {
+
+            windowMain.mostrarNotificacion("Error de conexión", "El servidor no está activo", NotificationType.ERROR);
+            ex.printStackTrace();
+
             Logger.getLogger(Api.class.getName()).log(Level.SEVERE, null, ex);
+
         }
 
         return json;
@@ -92,7 +103,7 @@ public final class Api {
         }
         try {
             JsonElement json = parser.parse(hacerPeticion(enlace, opcion));
-            
+
             return json;
 
         } catch (MalformedURLException ex) {
@@ -102,6 +113,89 @@ public final class Api {
         } catch (Exception ex) {
             Logger.getLogger(Api.class.getName()).log(Level.SEVERE, null, ex);
         }
+        return null;
+    }
+
+    public JsonElement manejarProducto(Producto_Sucursal p_s, String opcion) {
+        String enlace = RUTA + "producto?";
+        switch (opcion) {
+            case "DELETE":
+                enlace += "idProducto=" + URLEncoder.encode(Integer.toString(p_s.getProducto().getIdProducto()));
+                break;
+            case "POST":
+                enlace += "nombre=" + URLEncoder.encode(p_s.getProducto().getNombre())
+                        + "&marca=" + URLEncoder.encode(p_s.getProducto().getMarca())
+                        + "&precioUso=" + URLEncoder.encode(Float.toString(p_s.getProducto().getPrecioUso()))
+                        + "&idSucursal=" + URLEncoder.encode(Integer.toString(p_s.getSucursal().getIdSucursal()))
+                        + "&stock=" + URLEncoder.encode(Integer.toString(p_s.getStock()));
+                break;
+            case "PUT":
+                enlace += "idProducto=" + URLEncoder.encode(Integer.toString(p_s.getProducto().getIdProducto()))
+                        + "&nombre=" + URLEncoder.encode(p_s.getProducto().getNombre())
+                        + "&marca=" + URLEncoder.encode(p_s.getProducto().getMarca())
+                        + "&precioUso=" + URLEncoder.encode(Float.toString(p_s.getProducto().getPrecioUso()))
+                        + "&idSucursal=" + URLEncoder.encode(Integer.toString(p_s.getSucursal().getIdSucursal()))
+                        + "&stock=" + URLEncoder.encode(Integer.toString(p_s.getStock()));
+        }
+        try {
+            System.out.println(enlace);
+            JsonElement json = parser.parse(hacerPeticion(enlace, opcion));
+
+            if (json.isJsonNull()) {
+                return null;
+            }
+
+            return json;
+
+        } catch (MalformedURLException ex) {
+            Logger.getLogger(Api.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (IOException ex) {
+            Logger.getLogger(Api.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (NullPointerException e) {
+            Logger.getLogger(Api.class.getName()).log(Level.SEVERE, null, e);
+            return null;
+        } catch (Exception ex) {
+            Logger.getLogger(Api.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return null;
+    }
+    
+    public JsonElement manejarTratamiento(Tratamiento t, String opcion) {
+        try {
+            String enlace = RUTA + "tratamiento?";
+            
+            switch(opcion) {
+                case "DELETE":
+                    enlace += "idTratamiento=" + URLEncoder.encode(Integer.toString(t.getIdTratamiento()));
+                    break;
+                case "POST":
+                    enlace += "nombre=" + URLEncoder.encode(t.getNombre())
+                            + "&descripcion=" + URLEncoder.encode(t.getDescripcion())
+                            + "&costo=" + URLEncoder.encode(Float.toString(t.getCosto()));
+                    break;
+                case "PUT":
+                    enlace += "idTratamiento=" +URLEncoder.encode(Integer.toString(t.getIdTratamiento()))
+                            + "&nombre=" + URLEncoder.encode(t.getNombre())
+                            + "&descripcion=" + URLEncoder.encode(t.getDescripcion())
+                            + "&costo=" + URLEncoder.encode(Float.toString(t.getCosto()));
+                    break;
+            }
+            
+            JsonElement json = parser.parse(hacerPeticion(enlace, opcion));
+            
+            return json;
+            
+        } catch (MalformedURLException ex) {
+            Logger.getLogger(Api.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (IOException ex) {
+            Logger.getLogger(Api.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (NullPointerException e) {
+            Logger.getLogger(Api.class.getName()).log(Level.SEVERE, null, e);
+            return null;
+        } catch (Exception ex) {
+            Logger.getLogger(Api.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
         return null;
     }
 

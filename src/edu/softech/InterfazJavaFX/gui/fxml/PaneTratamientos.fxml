@@ -1,12 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import com.jfoenix.controls.JFXButton?>
-<?import com.jfoenix.controls.JFXComboBox?>
+<?import com.jfoenix.controls.JFXCheckBox?>
 <?import com.jfoenix.controls.JFXScrollPane?>
 <?import com.jfoenix.controls.JFXTextArea?>
 <?import com.jfoenix.controls.JFXTextField?>
 <?import javafx.geometry.Insets?>
-<?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
@@ -15,42 +14,36 @@
 <?import javafx.scene.layout.FlowPane?>
 <?import javafx.scene.layout.VBox?>
 
-<AnchorPane fx:id="windowTratamientos" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="770.0" prefWidth="1025.0" style="-fx-background-color: #cccab5;" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="edu.softech.InterfazJavaFX.controlador.PaneTratamientosControlador">
+<AnchorPane fx:id="windowTratamientos" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="770.0" prefWidth="1025.0" style="-fx-background-color: white;" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="edu.softech.InterfazJavaFX.controlador.PaneTratamientosControlador">
    <children>
       <BorderPane prefHeight="770.0" prefWidth="1025.0" style="-fx-background-color: green;" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <center>
-            <AnchorPane style="-fx-background-color: e1e2e1;" BorderPane.alignment="CENTER">
+            <AnchorPane style="-fx-background-color: white;" BorderPane.alignment="CENTER">
                <children>
-                  <JFXScrollPane layoutX="16.0" layoutY="14.0" prefHeight="373.0" prefWidth="681.0" AnchorPane.bottomAnchor="57.0" AnchorPane.leftAnchor="6.0" AnchorPane.rightAnchor="6.0" AnchorPane.topAnchor="23.0">
+                  <JFXTextField fx:id="txtBuscar" focusColor="#f68a1f" labelFloat="true" layoutX="6.0" layoutY="33.0" prefHeight="9.0" prefWidth="701.0" promptText="Buscar" />
+                  <JFXScrollPane layoutX="16.0" layoutY="76.0" prefHeight="637.0" prefWidth="701.0" AnchorPane.bottomAnchor="57.0" AnchorPane.leftAnchor="6.0" AnchorPane.rightAnchor="6.0" AnchorPane.topAnchor="76.0">
                      <children>
-                        <TableView fx:id="tbProductos" prefHeight="689.0" prefWidth="681.0">
-                           <columns>
-                              <TableColumn fx:id="colIdTratamiento" prefWidth="75.0" text="ID Tratamiento" />
-                              <TableColumn fx:id="colNombre" prefWidth="75.0" text="Nombre" />
-                              <TableColumn fx:id="colDescripcion" prefWidth="75.0" text="Descripción" />
-                              <TableColumn fx:id="colCosto" prefWidth="75.0" text="Costo" />
-                              <TableColumn fx:id="colEstatus" prefWidth="75.0" text="Estatus" />
-                           </columns>
+                        <TableView fx:id="tblTratamientos" prefHeight="689.0" prefWidth="681.0">
                            <columnResizePolicy>
                               <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
                            </columnResizePolicy>
                         </TableView>
                      </children>
                   </JFXScrollPane>
+                  <JFXCheckBox fx:id="chbVerInactivos" layoutX="602.0" layoutY="731.0" text="Ver Inactivos" />
                </children>
             </AnchorPane>
          </center>
          <right>
             <JFXScrollPane BorderPane.alignment="CENTER">
                <children>
-                  <AnchorPane prefWidth="312.0" style="-fx-background-color: e1e2e1;">
+                  <AnchorPane prefWidth="312.0" style="-fx-background-color: white;">
                      <children>
                         <VBox prefHeight="770.0" prefWidth="312.0" spacing="30.0">
                            <children>
                               <JFXTextField fx:id="txtNombre" alignment="TOP_LEFT" focusColor="#f68a1f" labelFloat="true" promptText="Nombre" />
-                              <JFXTextArea fx:id="txtaDescripcion" focusColor="#f68a1f" labelFloat="true" prefHeight="111.0" prefWidth="272.0" promptText="Descripción" />
+                              <JFXTextArea fx:id="txtDescripcion" focusColor="#f68a1f" labelFloat="true" prefHeight="111.0" prefWidth="272.0" promptText="Descripción" />
                               <JFXTextField fx:id="txtCosto" focusColor="#f68a1f" labelFloat="true" promptText="Costo" />
-                              <JFXComboBox fx:id="cmbEstatus" focusColor="#f68a1f" labelFloat="true" prefWidth="272.0" promptText="Estatus" />
                               <FlowPane alignment="CENTER" hgap="20.0" rowValignment="TOP" vgap="20.0">
                                  <children>
                                     <JFXButton fx:id="btnNuevo" prefHeight="31.0" prefWidth="103.0" style="-fx-background-color: #00C851;" text="Nuevo" textFill="WHITE">
@@ -85,6 +78,15 @@
                                           <ImageView fitHeight="13.0" fitWidth="13.0" pickOnBounds="true" preserveRatio="true">
                                              <image>
                                                 <Image url="@../../../../../../res/icoEliminar.png" />
+                                             </image>
+                                          </ImageView>
+                                       </graphic>
+                                    </JFXButton>
+                                    <JFXButton fx:id="btnCancelar" prefHeight="31.0" prefWidth="226.0" style="-fx-background-color: #6A6262;" text="Cancelar" textFill="WHITE">
+                                       <graphic>
+                                          <ImageView fitHeight="18.0" fitWidth="19.0" pickOnBounds="true" preserveRatio="true">
+                                             <image>
+                                                <Image url="@../../../../../res/icoCancelar32px.png" />
                                              </image>
                                           </ImageView>
                                        </graphic>
