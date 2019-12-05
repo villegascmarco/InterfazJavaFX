@@ -380,6 +380,7 @@ public class PaneSalaControlador implements Initializable
     {
         tblSalas.getSelectionModel().clearSelection();
 
+        imgFotografia.setImage(null);
         txtNombre.clear();
         txtDescripcion.clear();
         cmbSucursal.getSelectionModel().select(null);

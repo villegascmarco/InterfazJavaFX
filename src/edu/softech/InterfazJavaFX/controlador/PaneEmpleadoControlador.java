@@ -338,7 +338,14 @@ public class PaneEmpleadoControlador implements Initializable
 
             e.setEstatus(1);
 
-            e.setFoto("");
+            try
+            {
+                e.setFoto(ImgController.encode(imgFotografia.getImage()));
+            }
+            catch (Exception ex)
+            {
+                e.setFoto("");
+            }
             e.setRutaFOto("");
         }
 
@@ -405,6 +412,15 @@ public class PaneEmpleadoControlador implements Initializable
         {
             Empleado e = tblEmpleados.getSelectionModel().getSelectedItem();
             Usuario u = e.getUsuario();
+            
+            try
+            {
+                imgFotografia.setImage(ImgController.decode(e.getFoto()));
+            }
+            catch (Exception ex)
+            {
+                imgFotografia.setImage(null);
+            }
 
             txtNombre.setText(e.getNombre());
             txtApellidoPaterno.setText(e.getApellidoPaterno());
