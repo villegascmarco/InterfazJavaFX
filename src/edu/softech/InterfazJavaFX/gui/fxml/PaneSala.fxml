@@ -37,10 +37,19 @@
                      <children>
                         <VBox alignment="CENTER">
                            <children>
-                              <Label text="Fotografía:" />
                               <ImageView fx:id="imgFotografia" fitHeight="150.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true" />
                            </children>
                         </VBox>
+                        <FlowPane alignment="CENTER" columnHalignment="CENTER" prefHeight="0.0" prefWidth="272.0">
+                           <children>
+                              <Label text="Fotografía:" />
+                              <JFXButton fx:id="btnImgEscoger" prefHeight="12.0" prefWidth="63.0" style="-fx-border-color: f68a1f;" text="Escoger">
+                                 <FlowPane.margin>
+                                    <Insets left="10.0" />
+                                 </FlowPane.margin>
+                              </JFXButton>
+                           </children>
+                        </FlowPane>
                         <JFXTextField fx:id="txtNombre" focusColor="#f68a1f" labelFloat="true" prefHeight="31.0" prefWidth="242.0" promptText="Nombre" />
                         <JFXTextField fx:id="txtDescripcion" focusColor="#f68a1f" labelFloat="true" prefHeight="31.0" prefWidth="242.0" promptText="Descripcion" />
                         <JFXComboBox fx:id="cmbSucursal" focusColor="#f68a1f" labelFloat="true" prefWidth="272.0" promptText="Sucursal:" />

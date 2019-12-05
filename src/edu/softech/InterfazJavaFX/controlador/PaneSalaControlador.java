@@ -21,6 +21,7 @@ import edu.softech.MySpa.modelo.Cliente;
 import edu.softech.MySpa.modelo.Sala;
 import edu.softech.MySpa.modelo.Sucursal;
 import edu.softech.MySpa.modelo.Usuario;
+import java.io.File;
 import java.io.IOException;
 import java.net.ConnectException;
 import java.net.MalformedURLException;
@@ -48,9 +49,11 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableColumn.CellDataFeatures;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
+import javafx.stage.FileChooser;
 import javafx.util.Callback;
 import tray.notification.NotificationType;
 
@@ -111,6 +114,9 @@ public class PaneSalaControlador implements Initializable
 
     @FXML
     private TableColumn<Sala, String> colSucursal;
+
+    @FXML
+    private JFXButton btnImgEscoger;
 
     private Api api = new Api();
 
@@ -347,6 +353,27 @@ public class PaneSalaControlador implements Initializable
             }
 
         });
+
+        btnImgEscoger.setOnAction(evt ->
+        {
+            FileChooser fileChooser = new FileChooser();
+            fileChooser.setTitle("Open Resource File");
+            File file = fileChooser.showOpenDialog(null);
+
+            Image image = new Image(file.toURI().toString());
+
+            try
+            {
+                imgFotografia.setImage(ImgController.decode(
+                        ImgController.encode(image)));
+            }
+            catch (IOException ex)
+            {
+                Logger.getLogger(PaneSalaControlador.class.getName()).log(
+                        Level.SEVERE,
+                        null, ex);
+            }
+        });
     }
 
     private void limpiarCampos()
@@ -409,10 +436,13 @@ public class PaneSalaControlador implements Initializable
             String sucursalIdString = cmbSucursal.getSelectionModel().getSelectedItem().toString().split(
                     " ")[0];
 
+            // COMBO E IMAGEN
             try
             {
                 sala.getSucursal().setIdSucursal(Integer.valueOf(
                         sucursalIdString));
+                
+                sala.setFoto(ImgController.encode(imgFotografia.getImage()));
             }
             catch (Exception e)
             {
@@ -500,7 +530,7 @@ public class PaneSalaControlador implements Initializable
                 for (JsonElement jsonElement : jsonArray)
                 {
 
-                    System.out.println(jsonArray.toString());
+                    //System.out.println(jsonArray.toString());
                     salaAux = gson.fromJson(jsonElement, Sala.class);
 
                     if (activos && salaAux.getEstatus() == 1)
@@ -548,6 +578,18 @@ public class PaneSalaControlador implements Initializable
         {
             Sala sala = tblSalas.getSelectionModel().getSelectedItem();
             Sucursal sucursal = sala.getSucursal();
+
+            Platform.runLater(() ->
+            {
+                try
+                {
+                    imgFotografia.setImage(ImgController.decode(sala.getFoto()));
+                }
+                catch (Exception ex)
+                {
+                    imgFotografia.setImage(null);
+                }
+            });
 
             txtNombre.setText(sala.getNombre());
             txtDescripcion.setText(sala.getDescripcion());
@@ -604,13 +646,24 @@ public class PaneSalaControlador implements Initializable
                                     String opcion)
     {
         System.out.println(opcion);
-        System.out.println(sala.toString());
+        //System.out.println(sala.toString());
         String enlace = MySpaCommons.URL_SERVER + "sala?";
-        if (!opcion.equals("DELETE"))
+        if (!opcion.equals("DELETE")) {
             enlace += "nombre=" + URLEncoder.encode(sala.getNombre())
                     + "&descripcion=" + URLEncoder.encode(sala.getDescripcion())
-                    + "&foto=" + URLEncoder.encode("") //
                     + "&idSucursal=" + URLEncoder.encode("" + 1);
+            
+            try
+            {
+                //enlace += "&foto=" + URLEncoder.encode(sala.getFoto());
+                enlace += "&foto=" +URLEncoder.encode("");
+                //System.out.println(URLEncoder.encode(sala.getFoto()));
+            }
+            catch (Exception e)
+            {
+                enlace += "&foto=" +URLEncoder.encode("");
+            }
+        }
         else
             enlace += "idSala=" + URLEncoder.encode("" + sala.getIdSala());
 
@@ -618,7 +671,7 @@ public class PaneSalaControlador implements Initializable
             enlace += "&idSala=" + URLEncoder.encode("" + sala.getIdSala());
         try
         {
-            // System.out.println(enlace);
+             //System.out.println(enlace);
             JsonParser parser = new JsonParser();
             JsonElement json = parser.parse(api.hacerPeticion(enlace, opcion));
 
