@@ -30,9 +30,10 @@ import tray.notification.NotificationType;
  *
  * @author Villegas
  */
-public final class Api {
+public final class Api
+{
 
-    private static final String RUTA = "http://localhost:8084/MySpa/api/";
+    private static final String RUTA = "http://localhost:18835/my-spa/api/";
 
     int respuestaServidor = 0;
 
@@ -56,21 +57,27 @@ public final class Api {
      * @throws MalformedURLException
      * @throws IOException
      */
-    public JsonArray consultarListado(String objeto) throws
-            MalformedURLException, IOException {
+    public JsonArray consultarListado(String objeto)
+            throws
+            MalformedURLException, IOException
+    {
         String ruta = RUTA + objeto + "/listado";//http://localhost:8084/MySpa/api/cliente/listado
 
         parser = new JsonParser();
 
         JsonArray json = new JsonArray();
 
-        try {
+        try
+        {
 
             json = parser.parse(hacerPeticion(ruta, "GET")).getAsJsonArray();
 
-        } catch (Exception ex) {
+        }
+        catch (Exception ex)
+        {
 
-            windowMain.mostrarNotificacion("Error de conexión", "El servidor no está activo", NotificationType.ERROR);
+            windowMain.mostrarNotificacion("Error de conexión",
+                    "El servidor no está activo", NotificationType.ERROR);
             ex.printStackTrace();
 
             Logger.getLogger(Api.class.getName()).log(Level.SEVERE, null, ex);
@@ -80,12 +87,16 @@ public final class Api {
         return json;
     }
 
-    public JsonElement manejarCliente(Cliente c, String opcion) {
+    public JsonElement manejarCliente(Cliente c,
+                                      String opcion)
+    {
         String enlace = RUTA + "cliente?";
-        if (!opcion.equals("DELETE")) {
+        if (!opcion.equals("DELETE"))
             enlace += "nombre=" + URLEncoder.encode(c.getNombre())
-                    + "&apellidoPaterno=" + URLEncoder.encode(c.getApellidoPaterno())
-                    + "&apellidoMaterno=" + URLEncoder.encode(c.getApellidoMaterno())
+                    + "&apellidoPaterno=" + URLEncoder.encode(
+                            c.getApellidoPaterno())
+                    + "&apellidoMaterno=" + URLEncoder.encode(
+                            c.getApellidoMaterno())
                     + "&genero=" + URLEncoder.encode(c.getGenero())
                     + "&telefono=" + URLEncoder.encode(c.getTelefono())
                     + "&rfc=" + URLEncoder.encode(c.getRfc())
@@ -93,109 +104,158 @@ public final class Api {
                     + "&correo=" + URLEncoder.encode(c.getCorreo())
                     + "&contrasenia=" + c.getUsuario().getContrasenia()
                     + "&domicilio=" + URLEncoder.encode(c.getDomicilio());
-        } else {
-            enlace += "numeroUnicoCliente=" + URLEncoder.encode(c.getNumeroUnico())
-                    + "&nombreUsuario=" + URLEncoder.encode(c.getUsuario().getNombreUsuario());
-        }
+        else
+            enlace += "numeroUnicoCliente=" + URLEncoder.encode(
+                    c.getNumeroUnico())
+                    + "&nombreUsuario=" + URLEncoder.encode(
+                            c.getUsuario().getNombreUsuario());
 
-        if (opcion.equals("PUT")) {
-            enlace += "&numeroUnicoCliente=" + URLEncoder.encode(c.getNumeroUnico());
-        }
-        try {
+        if (opcion.equals("PUT"))
+            enlace += "&numeroUnicoCliente=" + URLEncoder.encode(
+                    c.getNumeroUnico());
+        try
+        {
             JsonElement json = parser.parse(hacerPeticion(enlace, opcion));
 
             return json;
 
-        } catch (MalformedURLException ex) {
+        }
+        catch (MalformedURLException ex)
+        {
             Logger.getLogger(Api.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (IOException ex) {
+        }
+        catch (IOException ex)
+        {
             Logger.getLogger(Api.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (Exception ex) {
+        }
+        catch (Exception ex)
+        {
             Logger.getLogger(Api.class.getName()).log(Level.SEVERE, null, ex);
         }
         return null;
     }
 
-    public JsonElement manejarProducto(Producto_Sucursal p_s, String opcion) {
+    public JsonElement manejarProducto(Producto_Sucursal p_s,
+                                       String opcion)
+    {
         String enlace = RUTA + "producto?";
-        switch (opcion) {
+        switch (opcion)
+        {
             case "DELETE":
-                enlace += "idProducto=" + URLEncoder.encode(Integer.toString(p_s.getProducto().getIdProducto()));
+                enlace += "idProducto=" + URLEncoder.encode(Integer.toString(
+                        p_s.getProducto().getIdProducto()));
                 break;
             case "POST":
-                enlace += "nombre=" + URLEncoder.encode(p_s.getProducto().getNombre())
-                        + "&marca=" + URLEncoder.encode(p_s.getProducto().getMarca())
-                        + "&precioUso=" + URLEncoder.encode(Float.toString(p_s.getProducto().getPrecioUso()))
-                        + "&idSucursal=" + URLEncoder.encode(Integer.toString(p_s.getSucursal().getIdSucursal()))
-                        + "&stock=" + URLEncoder.encode(Integer.toString(p_s.getStock()));
+                enlace += "nombre=" + URLEncoder.encode(
+                        p_s.getProducto().getNombre())
+                        + "&marca=" + URLEncoder.encode(
+                                p_s.getProducto().getMarca())
+                        + "&precioUso=" + URLEncoder.encode(Float.toString(
+                                p_s.getProducto().getPrecioUso()))
+                        + "&idSucursal=" + URLEncoder.encode(Integer.toString(
+                                p_s.getSucursal().getIdSucursal()))
+                        + "&stock=" + URLEncoder.encode(Integer.toString(
+                                p_s.getStock()));
                 break;
             case "PUT":
-                enlace += "idProducto=" + URLEncoder.encode(Integer.toString(p_s.getProducto().getIdProducto()))
-                        + "&nombre=" + URLEncoder.encode(p_s.getProducto().getNombre())
-                        + "&marca=" + URLEncoder.encode(p_s.getProducto().getMarca())
-                        + "&precioUso=" + URLEncoder.encode(Float.toString(p_s.getProducto().getPrecioUso()))
-                        + "&idSucursal=" + URLEncoder.encode(Integer.toString(p_s.getSucursal().getIdSucursal()))
-                        + "&stock=" + URLEncoder.encode(Integer.toString(p_s.getStock()));
+                enlace += "idProducto=" + URLEncoder.encode(Integer.toString(
+                        p_s.getProducto().getIdProducto()))
+                        + "&nombre=" + URLEncoder.encode(
+                                p_s.getProducto().getNombre())
+                        + "&marca=" + URLEncoder.encode(
+                                p_s.getProducto().getMarca())
+                        + "&precioUso=" + URLEncoder.encode(Float.toString(
+                                p_s.getProducto().getPrecioUso()))
+                        + "&idSucursal=" + URLEncoder.encode(Integer.toString(
+                                p_s.getSucursal().getIdSucursal()))
+                        + "&stock=" + URLEncoder.encode(Integer.toString(
+                                p_s.getStock()));
         }
-        try {
+        try
+        {
             System.out.println(enlace);
             JsonElement json = parser.parse(hacerPeticion(enlace, opcion));
 
-            if (json.isJsonNull()) {
+            if (json.isJsonNull())
                 return null;
-            }
 
             return json;
 
-        } catch (MalformedURLException ex) {
+        }
+        catch (MalformedURLException ex)
+        {
             Logger.getLogger(Api.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (IOException ex) {
+        }
+        catch (IOException ex)
+        {
             Logger.getLogger(Api.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (NullPointerException e) {
+        }
+        catch (NullPointerException e)
+        {
             Logger.getLogger(Api.class.getName()).log(Level.SEVERE, null, e);
             return null;
-        } catch (Exception ex) {
+        }
+        catch (Exception ex)
+        {
             Logger.getLogger(Api.class.getName()).log(Level.SEVERE, null, ex);
         }
         return null;
     }
-    
-    public JsonElement manejarTratamiento(Tratamiento t, String opcion) {
-        try {
+
+    public JsonElement manejarTratamiento(Tratamiento t,
+                                          String opcion)
+    {
+        try
+        {
             String enlace = RUTA + "tratamiento?";
-            
-            switch(opcion) {
+
+            switch (opcion)
+            {
                 case "DELETE":
-                    enlace += "idTratamiento=" + URLEncoder.encode(Integer.toString(t.getIdTratamiento()));
+                    enlace += "idTratamiento=" + URLEncoder.encode(
+                            Integer.toString(t.getIdTratamiento()));
                     break;
                 case "POST":
                     enlace += "nombre=" + URLEncoder.encode(t.getNombre())
-                            + "&descripcion=" + URLEncoder.encode(t.getDescripcion())
-                            + "&costo=" + URLEncoder.encode(Float.toString(t.getCosto()));
+                            + "&descripcion=" + URLEncoder.encode(
+                                    t.getDescripcion())
+                            + "&costo=" + URLEncoder.encode(Float.toString(
+                                    t.getCosto()));
                     break;
                 case "PUT":
-                    enlace += "idTratamiento=" +URLEncoder.encode(Integer.toString(t.getIdTratamiento()))
+                    enlace += "idTratamiento=" + URLEncoder.encode(
+                            Integer.toString(t.getIdTratamiento()))
                             + "&nombre=" + URLEncoder.encode(t.getNombre())
-                            + "&descripcion=" + URLEncoder.encode(t.getDescripcion())
-                            + "&costo=" + URLEncoder.encode(Float.toString(t.getCosto()));
+                            + "&descripcion=" + URLEncoder.encode(
+                                    t.getDescripcion())
+                            + "&costo=" + URLEncoder.encode(Float.toString(
+                                    t.getCosto()));
                     break;
             }
-            
+
             JsonElement json = parser.parse(hacerPeticion(enlace, opcion));
-            
+
             return json;
-            
-        } catch (MalformedURLException ex) {
-            Logger.getLogger(Api.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (IOException ex) {
-            Logger.getLogger(Api.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (NullPointerException e) {
-            Logger.getLogger(Api.class.getName()).log(Level.SEVERE, null, e);
-            return null;
-        } catch (Exception ex) {
+
+        }
+        catch (MalformedURLException ex)
+        {
             Logger.getLogger(Api.class.getName()).log(Level.SEVERE, null, ex);
         }
-        
+        catch (IOException ex)
+        {
+            Logger.getLogger(Api.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        catch (NullPointerException e)
+        {
+            Logger.getLogger(Api.class.getName()).log(Level.SEVERE, null, e);
+            return null;
+        }
+        catch (Exception ex)
+        {
+            Logger.getLogger(Api.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
         return null;
     }
 
@@ -206,7 +266,9 @@ public final class Api {
      * @return
      * @throws Exception
      */
-    private JsonObject consultarObjeto(String objeto) throws Exception {
+    private JsonObject consultarObjeto(String objeto)
+            throws Exception
+    {
         System.out.println("---------------Metodo incompleto---------------");
         parser = new JsonParser();
 
@@ -223,16 +285,16 @@ public final class Api {
 
         respuestaServidor = connHttp.getResponseCode();
 
-        if (respuestaServidor == HttpURLConnection.HTTP_OK) {
+        if (respuestaServidor == HttpURLConnection.HTTP_OK)
+        {
 
             isr = new InputStreamReader(connHttp.getInputStream());
             br = new BufferedReader(isr);
 
             String contenidoRespuesta = "";
 
-            while ((lineaActual = br.readLine()) != null) {
+            while ((lineaActual = br.readLine()) != null)
                 contenidoRespuesta += lineaActual;
-            }
 
             br.close();
 
@@ -258,7 +320,10 @@ public final class Api {
      * @return
      * @throws Exception
      */
-    public String hacerPeticion(String enlace, String metodo) throws Exception {
+    public String hacerPeticion(String enlace,
+                                String metodo)
+            throws Exception
+    {
 
         URL url = new URL(enlace);
         HttpURLConnection connHttp
@@ -276,9 +341,8 @@ public final class Api {
         String contenidoRespuesta = "";
         lineaActual = null;
 
-        while ((lineaActual = br.readLine()) != null) {
+        while ((lineaActual = br.readLine()) != null)
             contenidoRespuesta += lineaActual;
-        }
 
         isr.close();
 
@@ -286,6 +350,70 @@ public final class Api {
 
         connHttp.disconnect();
         return contenidoRespuesta;
+
+    }
+
+    public JsonObject eliminarSucursal(String objeto)
+            throws Exception
+    {
+        parser = new JsonParser();
+        JsonObject json = null;
+        String acum = "";
+
+        for (int i = 0; i < objeto.length(); i++)
+            if (objeto.charAt(i) == ' ')
+                acum += "%20";
+            else
+                acum += objeto.charAt(i);
+
+        String ruta = RUTA + acum;//http://localhost:8080/MySpa/api/sucursal?
+
+        json = parser.parse(hacerPeticion(ruta, "DELETE")).getAsJsonObject();
+
+        return json;
+    }
+
+    //METODO PARA INSERTAR UNA SUCURSAL MEDIANTE EL METODO POST
+    public JsonObject insertarSucursal(String objeto)
+            throws Exception
+    {
+        parser = new JsonParser();
+
+        JsonObject json = null;
+        String acum = "";
+        for (int i = 0; i < objeto.length(); i++)
+            if (objeto.charAt(i) == ' ')
+                acum += "%20";
+            else
+                acum += objeto.charAt(i);
+
+        String ruta = RUTA + acum;//http://localhost:8080/MySpa/api/sucursal?
+
+        json = parser.parse(hacerPeticion(ruta, "POST")).getAsJsonObject();
+
+        return json;
+
+    }
+
+    //METODO PARA ACTUALIZAR UNA SUCURSAL MEDIANTE METODO PUT
+    public JsonObject actualizarSucursal(String objeto)
+            throws Exception
+    {
+        parser = new JsonParser();
+
+        JsonObject json = null;
+        String acum = "";
+        for (int i = 0; i < objeto.length(); i++)
+            if (objeto.charAt(i) == ' ')
+                acum += "%20";
+            else
+                acum += objeto.charAt(i);
+
+        String ruta = RUTA + acum;//http://localhost:8080/MySpa/api/sucursal?
+
+        json = parser.parse(hacerPeticion(ruta, "PUT")).getAsJsonObject();
+
+        return json;
 
     }
 

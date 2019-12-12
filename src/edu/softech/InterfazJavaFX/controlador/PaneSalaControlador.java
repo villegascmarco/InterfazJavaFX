@@ -659,20 +659,23 @@ public class PaneSalaControlador implements Initializable
                 //enlace += "&foto=" + URLEncoder.encode(sala.getFoto());
                 enlace += "&foto=" +URLEncoder.encode("");
                 //System.out.println(URLEncoder.encode(sala.getFoto()));
+                System.out.println(
+                        ImgController.encode(imgFotografia.getImage()).length()
+                );
             }
             catch (Exception e)
             {
                 enlace += "&foto=" +URLEncoder.encode("");
             }
         }
-        else
+        else 
             enlace += "idSala=" + URLEncoder.encode("" + sala.getIdSala());
 
         if (opcion.equals("PUT"))
             enlace += "&idSala=" + URLEncoder.encode("" + sala.getIdSala());
         try
         {
-             //System.out.println(enlace);
+             // System.out.println(enlace);
             JsonParser parser = new JsonParser();
             JsonElement json = parser.parse(api.hacerPeticion(enlace, opcion));
 

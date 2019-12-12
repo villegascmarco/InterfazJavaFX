@@ -376,7 +376,7 @@ public class PaneClientesControlador implements Initializable {
         txtUsuario.clear();
         cmbGenero.getSelectionModel().select(null);
         txtBuscar.clear();
-        chbVerInactivos.setSelected(false);
+
         
     }
     
