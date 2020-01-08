@@ -123,9 +123,8 @@ public class PaneProductosControlador implements Initializable {
     private final String UNC_DEFAULT = "-jfx-unfocus-color: #4d4d4d;";
     private final String UNC_NUEVO = "-jfx-unfocus-color: #00C851;";
     private final String UNC_ELIMINAR = "-jfx-unfocus-color: #ff4444;";
-    
-//    private static Method columnToFitMethod;
 
+//    private static Method columnToFitMethod;
     /**
      * Initializes the controller class.
      */
@@ -152,7 +151,7 @@ public class PaneProductosControlador implements Initializable {
     private void inicializarColumnas() {
         tblProductos.autosize();
         tblProductos.setDisable(false);
-        
+
 //        try {
 //            columnToFitMethod = TableViewSkin.class.getDeclaredMethod("resizeColumnToFitContent", TableColumn.class, int.class);
 //
@@ -160,7 +159,6 @@ public class PaneProductosControlador implements Initializable {
 //            System.out.println(ex.getMessage());
 //            ex.printStackTrace();
 //        }
-
         // Columna Nombre
         colNombre = new TableColumn<>("Nombre");
         colNombre.setCellValueFactory((CellDataFeatures<Producto_Sucursal, String> param)
@@ -185,7 +183,7 @@ public class PaneProductosControlador implements Initializable {
         colStock = new TableColumn<>("Stock");
         colStock.setCellValueFactory(
                 new PropertyValueFactory<>("stock"));
-        
+
         // Columna Estatus
         colEstatus = new TableColumn<>("Estatus");
         colEstatus.setCellValueFactory((CellDataFeatures<Producto_Sucursal, Integer> param)
@@ -198,7 +196,7 @@ public class PaneProductosControlador implements Initializable {
                 colSucursal,
                 colStock,
                 colEstatus);
-        
+
 //        tblProductos.getItems().addListener(new ListChangeListener<Producto_Sucursal>() {
 //            @Override
 //            public void onChanged(ListChangeListener.Change<? extends Producto_Sucursal> ps) {
@@ -309,7 +307,7 @@ public class PaneProductosControlador implements Initializable {
     }
 
     private void limpiarCampos() {
-        
+
 //        tblProductos.getSelectionModel().clearSelection();
         txtNombre.clear();
         txtMarca.clear();
@@ -317,13 +315,13 @@ public class PaneProductosControlador implements Initializable {
         txtStock.clear();
         txtSucursal.clear();
         txtBuscar.clear();
-        
+
     }
 
     private void cambiarCampos(String estilo, boolean editable) {
         if (opcion == null) {
-            
-        } else if (tblProductos.getSelectionModel().getSelectedItem() == null 
+
+        } else if (tblProductos.getSelectionModel().getSelectedItem() == null
                 && (opcion.equals("DELETE") || opcion.equals("PUT"))) {
             opcion = null;
             cambiarCampos(UNC_DEFAULT, false);
@@ -337,8 +335,6 @@ public class PaneProductosControlador implements Initializable {
 
         txtPrecioUso.setStyle(estilo);
         txtPrecioUso.setEditable(editable);
-        
-        
 
         txtStock.setStyle(estilo);
         txtStock.setEditable(editable);
@@ -358,7 +354,7 @@ public class PaneProductosControlador implements Initializable {
             sucursal = producto_sucursal.getSucursal();
         }
 
-        if (opcion != null ) {
+        if (opcion != null) {
             producto.setNombre(txtNombre.getText());
             producto.setMarca(txtMarca.getText());
             producto.setPrecioUso(Float.parseFloat(txtPrecioUso.getText()));
@@ -383,11 +379,11 @@ public class PaneProductosControlador implements Initializable {
                 alerta.showAndWait();
 
                 if (api.manejarProducto(producto_sucursal, opcion) != null) {
-                    windowMain.mostrarNotificacion("Éxito", "El movimiento con el producto"
-                            + producto.getNombre() + "fue todo un éxito",
+                    windowMain.mostrarNotificacion("Éxito", "El movimiento con el producto "
+                            + producto.getNombre() + " fue todo un éxito",
                             NotificationType.SUCCESS);
                 } else {
-                    windowMain.mostrarNotificacion("Error",
+                    windowMain.mostrarNotificacion("Error.",
                             "Ocurrio un problema al realizar el movimiento",
                             NotificationType.ERROR);
                 }
@@ -406,7 +402,8 @@ public class PaneProductosControlador implements Initializable {
                 System.out.println(ex.getMessage());
                 ex.printStackTrace();
             } catch (NullPointerException e) {
-                TrayNotification a = windowMain.mostrarAlerts("Error", "Debe insertar todo los campos", NotificationType.ERROR);
+                TrayNotification a = windowMain.mostrarAlerts("Error",
+                        "Debe insertar todo los campos", NotificationType.ERROR);
                 a.showAndDismiss(Duration.seconds(5));
             }
 
@@ -451,8 +448,8 @@ public class PaneProductosControlador implements Initializable {
                         "No se pudo conectar con el servicio", NotificationType.ERROR);
                 ce.printStackTrace();
             } catch (Exception ex) {
-                windowMain.mostrarNotificacion("Error"
-                        , "Cheque la consola para más información", NotificationType.ERROR);
+                windowMain.mostrarNotificacion("Error",
+                         "Cheque la consola para más información", NotificationType.ERROR);
                 ex.printStackTrace();
             }
 
