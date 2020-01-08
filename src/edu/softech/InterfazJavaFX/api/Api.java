@@ -33,7 +33,10 @@ import tray.notification.NotificationType;
 public final class Api
 {
 
+    // Editado
     private static final String RUTA = "http://localhost:18835/my-spa/api/";
+//    private static final String RUTA = "http://localhost:8080/my-spa/api/";
+
 
     int respuestaServidor = 0;
 
